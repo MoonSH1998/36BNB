@@ -1,0 +1,11 @@
+@import "screen/signup.css";
+
+/*  ↑ screen  */
+
+@import "component/screenheader.css";
+
+/*  ↑  component */
+
+body {
+  background-color: white;
+}

@@ -1,0 +1,23 @@
+.screen_header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.screen_header :first-child {
+  width: 75%;
+  justify-content: flex-start;
+  color: inherit;
+  font-size: 25px;
+  opacity: 0.7;
+}
+.screen_header :nth-child(2) {
+  font-size: 40px;
+  opacity: 0.7;
+}
+
+.screen_header :last-child {
+  margin: 20px 0px 10px 0px;
+  opacity: 0.7;
+}
