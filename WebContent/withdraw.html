@@ -13,20 +13,16 @@
 				<i class="fas fa-angle-left"></i>
 				</a>
 			</div>
-			<div>회원가입</div>
-			<span>아래 정보를 모두 입력해주세요</span>
+			<div>회원탈퇴</div>
+			<span>회원 탈퇴를 원할 시 아래 양식을 입력해주세요</span>
 		</header>
 
 
-	<div class="section pad-24 mtop-30 signup_main">
+	<div class="section pad-24 mtop-30 withdraw_main">
 		<input id="name" type="text" placeholder="이름">
 		<input id="stu_num" type="text" placeholder="학번">
-		<input id="birth" type="text" placeholder="생년월일">
-		<input id="phone_num" type="text" placeholder="전화번호">
-		<input id="email" type="email" placeholder="이메일">
 		<input id="ps" type="password" class="mtop-10" placeholder="비밀번호">
-		<input type="submit" class="signup_btn" value="회원가입" onclick="signup()">
-			<a href="login.html" class="signup_screen_login"><span>로그인</span></a>
+		<input type="submit" class="signup_btn" value="회원탈퇴" onclick="withdraw()">
 	</div>
 		
 				
@@ -54,31 +50,15 @@
 	$("#stu_num").focus();
 	return;
 		}
-		var birth = $("#birth").val().trim();
-	if (birth == "") {
-	alert("생년월일을 입력해 주세요.");
-	$("#birth").focus();
-	return;
-		}
-		var phone_num = $("#phone_num").val().trim();
-	if (phone_num == "") {
-	alert("전화번호를 입력해 주세요.");
-	$("#phone_num").focus();
-	return;
-		}
-		var email = $("#email").val().trim();
-	if (email == "") {
-	alert("이메일을 입력해 주세요.");
-	$("#email").focus();
-	return;
-		}
 		var ps = $("#ps").val().trim();
 	if (ps == "") {
 	alert("패스워드를 입력해 주세요.");
 	$("#ps").focus();
 	return;
 	}				
-	var url ="jsp/signup.jsp?name=" + name + "&stu_num=" + stu_num + "&birth=" + birth+ "&phone_num=" + phone_num + "&email=" + emil + "&ps=" + ps;
+	
+	//아래부터 수정
+	var url ="jsp/withdraw.jsp?name=" + name + "&stu_num=" + stu_num + "&ps=" + ps;
 	
 		AJAX.call(url, null, function(data) {
 	var code = data.trim();

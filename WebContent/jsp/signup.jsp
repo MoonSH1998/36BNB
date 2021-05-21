@@ -12,15 +12,15 @@
 	
 				
 			UserDAO dao = new UserDAO();
-				int code = UserDAO(uname, ustu_num, ubirth, uphone_num, uemail, ups);
+				int code = dao.signup( ustu_num);
 			if (code == 1) {
 				out.print("OK"); 
 			}
 			else if (code == 2) {
 				out.print("EX"); 
 			}
-			else { 
-				session.setAttribute("stu_num", ustu_num);
+			else if (code == -1) { 
+				
 				out.print("ER");
 			}
 			%>

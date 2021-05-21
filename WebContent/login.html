@@ -34,10 +34,6 @@
 </html>
 	<script src="js/jquery-3.6.0.min.js"></script>
 	<script src="js/core.js"></script>
-	<script
-		src="https://kit.fontawesome.com/6478f529f2.js"
-		crossorigin="anonymous">
-	</script>
 	<script>
 
 	function signup() {
@@ -79,17 +75,17 @@
 		}
 	
 	
-	// 	var url ="jsp/signup.jsp?id=" + id + " &ps=" + ps;
+	 	var url ="jsp/signup.jsp?id=" + id + " &ps=" + ps;
 	
-	// 		AJAX.call(url, null, function(data) {
-	// var code = data.trim();
-	// if(code == "NE") {
-	// 		alert("아이디가 존재하지 않습니다.");
-	// }
-	// else if(code == "PE") {
-	// 	alert("패스워드가 일치하지 않습니다.");
-	// 	}
-	// else {
+	 		AJAX.call(url, null, function(data) {
+	 var code = data.trim();
+	 if(code == "NE") {
+	 		alert("아이디가 존재하지 않습니다.");
+	 }
+	 else if(code == "PE") {
+	 	alert("패스워드가 일치하지 않습니다.");
+	 	}
+	 else {
 	// 	window.location.href = "main.html";
 	// 	}
 	// 	});
