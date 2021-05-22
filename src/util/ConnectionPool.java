@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.apache.tomcat.jdbc.pool.DataSource;
+import javax.sql.DataSource;
 public class ConnectionPool {
 private static DataSource _ds = null;
 public static Connection get() throws NamingException, SQLException {
