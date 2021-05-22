@@ -12,7 +12,7 @@
 	
 				
 			UserDAO dao = new UserDAO();
-				int code = dao.signup( ustu_num);
+				int code = dao.signup(ustu_num);
 			if (code == 1) {
 				out.print("OK"); 
 			}
@@ -20,7 +20,6 @@
 				out.print("EX"); 
 			}
 			else if (code == -1) { 
-				
 				out.print("ER");
 			}
 			%>

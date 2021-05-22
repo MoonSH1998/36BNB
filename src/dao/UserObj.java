@@ -19,5 +19,5 @@ public class UserObj {
     public String getPhone_num() { return this.phone_num; }
     public String getEmail() { return this.email; }
     public String getps() { return this.ps; }
-
+    
 }

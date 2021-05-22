@@ -1,7 +1,11 @@
 package util;
-import java.sql.*;
-import javax.naming.*;
-import javax.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import org.apache.tomcat.jdbc.pool.DataSource;
 public class ConnectionPool {
 private static DataSource _ds = null;
 public static Connection get() throws NamingException, SQLException {

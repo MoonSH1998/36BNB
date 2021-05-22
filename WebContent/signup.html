@@ -78,7 +78,7 @@
 	$("#ps").focus();
 	return;
 	}				
-	var url ="jsp/signup.jsp?name=" + name + "&stu_num=" + stu_num + "&birth=" + birth+ "&phone_num=" + phone_num + "&email=" + emil + "&ps=" + ps;
+	var url ="jsp/signup.jsp?name=" + name + "&stu_num=" + stu_num + "&birth=" + birth+ "&phone_num=" + phone_num + "&email=" + email + "&ps=" + ps;
 	
 		AJAX.call(url, null, function(data) {
 	var code = data.trim();

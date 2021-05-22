@@ -31,33 +31,23 @@ import util.ConnectionPool;
 				Connection conn = null;
 				PreparedStatement stmt = null;
 				ResultSet rs = null;
-				String sql = "SELECT stu_num FROM user WHERE stu_num = ?";
+				
 				try {
-					
+					String sql = "SELECT stu_num FROM user WHERE stu_num = ?";
 					conn = ConnectionPool.get();
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, ustu_num);
 					rs = stmt.executeQuery();
 				
-				if (!rs.next()) {
-					return 0; //이미존재
-				}
-				
-				else if (!ustu_num.equals(rs.getString("stu_num"))) 
-					return 1; //가입가능
-				
-				} catch(Exception e) {
-					e.printStackTrace();
+				if (!rs.next()) 	return 1; //가입가능
+				if (!ustu_num.equals(rs.getString("stu_num"))) return 2; //존재
+				return -1;
 					} finally {
-						try {
 							if(rs!=null) rs.close();
 							if(stmt!=null) stmt.close();
-						}catch(Exception e) {
-							e.printStackTrace();
-						} 
-					}
-				return -1;//오류
-				}
+							if (conn != null) conn.close();
+			}
+			}
 			
 	
 			public int signup_ex(String uname, String ustu_num, String ubirth, String uphone_num, String uemail, String ups) throws NamingException, SQLException 
