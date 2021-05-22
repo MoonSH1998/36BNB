@@ -62,10 +62,10 @@
 	
 		AJAX.call(url, null, function(data) {
 	var code = data.trim();
-	 if(code == "EX") {
-	 		alert("이미 가입한 회원입니다.");
+	 if(code == "OK") {
+	 		alert("회원탈퇴가 정상적으로 처리되었습니다.");
 	 }
-	 else if(code == "OK") {
+	 else if(code == "NE") {
 	 	alert("회원 가입이 완료되었습니다.");
 	 	window.location.href = "main.html";
 	 	}

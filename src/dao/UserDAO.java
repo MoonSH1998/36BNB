@@ -7,7 +7,9 @@ import util.ConnectionPool;
 
 
 	public class UserDAO {
-			public boolean insert(String uname, String ustu_num, String ubirth, String uphone_num, String uemail, String ups) throws NamingException, SQLException {
+		
+		
+		public boolean insert(String uname, String ustu_num, String ubirth, String uphone_num, String uemail, String ups) throws NamingException, SQLException {
 				Connection conn = ConnectionPool.get();
 				PreparedStatement stmt = null;
 					try {
