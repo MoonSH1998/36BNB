@@ -14,7 +14,6 @@
 				int code = dao.signup(ustu_num);
 			if (code == 1) {
 				out.print("OK"); 
-			
 			}
 			else if (code == 2) {
 				out.print("EX"); 

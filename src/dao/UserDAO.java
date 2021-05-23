@@ -91,8 +91,7 @@ import util.ConnectionPool;
 					rs = stmt.executeQuery();
 				
 					if (!rs.next())  return 2;
-					else if (rs.next())  return 1;
-				//	if (ustu_num.equals(rs.getString("stu_num"))) return 1; //존재
+					if(ustu_num.equals(rs.getString("stu_num"))) return 1;
 				
 					} finally {
 							if(rs!=null) rs.close();
