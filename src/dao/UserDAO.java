@@ -8,7 +8,7 @@ import util.ConnectionPool;
 
 	public class UserDAO {
 		
-		
+	
 		public boolean insert(String uname, String ustu_num, String ubirth, String uphone_num, String uemail, String ups) throws NamingException, SQLException {
 				Connection conn = ConnectionPool.get();
 				PreparedStatement stmt = null;
@@ -41,7 +41,7 @@ import util.ConnectionPool;
 					stmt.setString(1, ustu_num);
 					rs = stmt.executeQuery();
 				
-					if (!rs.next()) 	return 1; //가입가능
+					if (!rs.next())  return 1;//가입가능11
 					if (ustu_num.equals(rs.getString("stu_num"))) return 2; //존재
 				
 					} finally {
@@ -75,6 +75,32 @@ import util.ConnectionPool;
 				}
 				}
 			
+			public int withdraw(String uname, String ustu_num, String ups) throws NamingException, SQLException 
+			{
+				Connection conn = null;
+				PreparedStatement stmt = null;
+				ResultSet rs = null;
+				
+				try {
+					String sql = "select * FROM user WHERE name = ?  and stu_num = ? and  ps = ?";
+					conn = ConnectionPool.get();
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, uname);
+					stmt.setString(2, ustu_num);
+					stmt.setString(3, ups);
+					rs = stmt.executeQuery();
+				
+					if (!rs.next())  return 2;
+					else if (rs.next())  return 1;
+				//	if (ustu_num.equals(rs.getString("stu_num"))) return 1; //존재
+				
+					} finally {
+							if(rs!=null) rs.close();
+							if(stmt!=null) stmt.close();
+							if (conn != null) conn.close();
+			}
+				 return -1;
+			}
 							
 			public ArrayList<UserObj> getList() throws NamingException, SQLException {
 				Connection conn = ConnectionPool.get();
