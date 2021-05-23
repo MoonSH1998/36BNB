@@ -9,7 +9,7 @@ import util.ConnectionPool;
 	public class UserDAO {
 		
 		
-		public boolean signup(String uname, String ustu_num, String ubirth, String uphone_num, String uemail, String ups) throws NamingException, SQLException {
+		public boolean insert(String uname, String ustu_num, String ubirth, String uphone_num, String uemail, String ups) throws NamingException, SQLException {
 				Connection conn = ConnectionPool.get();
 				PreparedStatement stmt = null;
 					try {
@@ -42,7 +42,7 @@ import util.ConnectionPool;
 					rs = stmt.executeQuery();
 				
 					if (!rs.next()) 	return 1; //가입가능
-					if (!ustu_num.equals(rs.getString("stu_num"))) return 2; //존재
+					if (ustu_num.equals(rs.getString("stu_num"))) return 2; //존재
 				
 					} finally {
 							if(rs!=null) rs.close();
@@ -65,7 +65,7 @@ import util.ConnectionPool;
 				stmt.setString(1, ustu_num);
 				rs = stmt.executeQuery();
 				if (!rs.next()) return 1;
-				else if (!ustu_num.equals(rs.getString("stu_num"))) return 2;
+				else if (ustu_num.equals(rs.getString("stu_num"))) return 2;
 				return 0;
 				
 				} finally {
