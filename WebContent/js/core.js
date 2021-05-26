@@ -19,3 +19,17 @@ alert("에러가 발생하였습니다. 관리자에게 문의해주세요.");
 jQuery.ajax(callobj);
 }
 };
+var Page = {
+init: function (cbfunc) {
+AJAX.call("jsp/session.jsp", null, function(data) {
+var uid = data.trim();
+if (uid == "null") {
+alert("로그인이 필요한 서비스 입니다.");
+window.location.href = "login.html";
+}
+else {
+if (cbfunc != null) cbfunc(uid);
+}
+});
+},
+};

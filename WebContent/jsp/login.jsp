@@ -14,9 +14,9 @@ request.setCharacterEncoding("utf-8");
        out.print("PE"); // out.print("패스워드가 일치하지 않습니다.");
     }
     else {
-   		 session.setAttribute("id", uid);
-   		 out.print("OK"); // response.sendRedirect("main.jsp");
-    }
-%>
-    
- 
+    	session.setAttribute("id", uid);
+    	out.print("OK");
+    	}
+    	%>
+    	
+    	
