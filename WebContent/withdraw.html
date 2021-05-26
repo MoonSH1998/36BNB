@@ -19,8 +19,8 @@
 
 
 	<div class="section pad-24 mtop-30 withdraw_main">
+		<input id="id" type="email" placeholder="아이디">
 		<input id="name" type="text" placeholder="이름">
-		<input id="stu_num" type="text" placeholder="학번">
 		<input id="ps" type="password" class="mtop-10" placeholder="비밀번호">
 		<input type="submit" class="signup_btn" value="회원탈퇴" onclick="withdraw()">
 	</div>
@@ -38,16 +38,16 @@
 	<script>
 
 	function withdraw() {
+		var id = $("#id").val().trim();
+	if (id == "") {
+	alert("아이디를 입력해 주세요.");
+	$("#id").focus();
+	return;
+	}
 		var name = $("#name").val().trim();
 	if (name == "") {
 	alert("이름을 입력해 주세요.");
 	$("#name").focus();
-	return;
-	}
-		var stu_num = $("#stu_num").val().trim();
-	if (stu_num == "") {
-	alert("학번을 입력해 주세요.");
-	$("#stu_num").focus();
 	return;
 		}
 		var ps = $("#ps").val().trim();
@@ -57,16 +57,16 @@
 	return;
 	}				
 	
-	var url ="jsp/withdraw.jsp?name=" + name + "&stu_num=" + stu_num + "&ps=" + ps;
+	var url ="jsp/withdraw.jsp?id=" + id + "&name=" + name + "&ps=" + ps;
 	
 		AJAX.call(url, null, function(data) {
 	var code = data.trim();
-	 if(code == "NA") {
+	 if(code == "NE") {
 	 		alert("회원 정보를 찾을 수 없습니다.");
 	 }
 	 else if(code == "OK") {
 	 	alert("회원 탈퇴가 완료되었습니다.");
-	 	window.location.href = "main.html";
+	 	window.location.href = "login.html";
 	 	}
 	 else if (code =="ER"){
 	 		alert("회원 탈퇴 처리 중 오류가 발생하였습니다.");

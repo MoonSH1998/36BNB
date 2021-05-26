@@ -4,11 +4,11 @@ DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE mysns;
 
 CREATE TABLE IF NOT EXISTS user(
-	name varchar(128) ,
-	stu_num varchar(128) PRIMARY KEY , 
+	id varchar(128) PRIMARY KEY ,
+	name varchar(128),
+	stu_num varchar(128) , 
     birth varchar(32) ,
     phone_num varchar(32),
-    email varchar(128),
     ps VARCHAR(32)
       
 );
