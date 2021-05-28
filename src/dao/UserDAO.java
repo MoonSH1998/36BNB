@@ -1,45 +1,44 @@
 package dao;
 import java.sql.*;
-import java.util.ArrayList;
 import javax.naming.NamingException;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import util.ConnectionPool;
 
 
 	public class UserDAO {
 		
 	
-		public boolean insert(String uid, String uname, String ustu_num, String ubirth, String uphone_num, String ups) throws NamingException, SQLException {
+		public boolean insert(String uid, String jsonstr) throws NamingException, SQLException {
 				Connection conn = ConnectionPool.get();
 				PreparedStatement stmt = null;
 					try {
-							String sql = "INSERT INTO user(id, name, stu_num, birth, phone_num, ps) VALUES(?, ?, ?, ?, ?, ?)";
+							String sql = "INSERT INTO user(id, jsonstr) VALUES(?, ?)";
 							stmt = conn.prepareStatement(sql);
 							stmt.setString(1, uid);
-							stmt.setString(2, uname); 
-							stmt.setString(3, ustu_num);
-							stmt.setString(4, ubirth);
-							stmt.setString(5, uphone_num);
-							stmt.setString(6, ups);
+							stmt.setString(2, jsonstr);
+							
 							int count = stmt.executeUpdate();
 							return (count == 1) ? true : false;
-							} finally {
+						} finally {
 							if (stmt != null) stmt.close();
 							if (conn != null) conn.close();
-							}
-			}
-		public boolean delete(String uid, String uname, String ups) throws NamingException, SQLException {
+					}
+				}
+
+		public boolean delete(String uid) throws NamingException, SQLException {
 			Connection conn = ConnectionPool.get();
 			PreparedStatement stmt = null;
 			try {
-				String sql = "DELETE FROM user WHERE id = ? and name = ? and ps =?";
+				String sql = "DELETE FROM user WHERE id = ?";
 				stmt = conn.prepareStatement(sql);
 				stmt.setString(1, uid);
-				stmt.setString(2, uname);
-				stmt.setString(3, ups);
 		
 				int count = stmt.executeUpdate();
 				return (count == 1) ? true : false;
-				
 			} finally {
 				if (stmt != null) stmt.close(); 
 				if (conn != null) conn.close();
@@ -64,22 +63,26 @@ import util.ConnectionPool;
 				if (conn != null) conn.close();
 			}
 		}
-		
+			
 	
 		
-		public int login(String uid, String ups) throws NamingException, SQLException {
-			Connection conn = null;
+		public int login(String uid, String ups) throws NamingException, SQLException, ParseException {
+			Connection conn = ConnectionPool.get();
 			PreparedStatement stmt = null;
 			ResultSet rs = null;
 			try {
-			String sql = "SELECT id, ps FROM user WHERE id = ?";
-			conn = ConnectionPool.get();
+			String sql = "SELECT jsonstr FROM user WHERE id = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, uid);
+			
 			rs = stmt.executeQuery();
 			if (!rs.next()) return 1;
-			if (!ups.equals(rs.getString("ps"))) return 2;
+			String jsonstr = rs.getString("jsonstr");
+			JSONObject obj = (JSONObject) (new JSONParser()).parse(jsonstr);
+			String ps = obj.get("ps").toString();
+			if (!ups.equals(ps)) return 2;
 			return 0;
+
 		
 		    } finally {
 				if (rs != null) rs.close();
@@ -88,21 +91,23 @@ import util.ConnectionPool;
 		    }
 		}	
 							
-			public ArrayList<UserObj> getList() throws NamingException, SQLException {
+		public String getList() throws NamingException, SQLException{
 				Connection conn = ConnectionPool.get();
 				PreparedStatement stmt = null;
 				ResultSet rs = null;
 				try {
-				    String sql = "SELECT * FROM user ORDER BY ts DESC";
-				    stmt = conn.prepareStatement(sql);
-				    rs = stmt.executeQuery();
-				    
-				    ArrayList<UserObj> users = new ArrayList<UserObj>();
-			        while(rs.next()) {
-			        	users.add(new UserObj(rs.getString("name"), rs.getString("stu_nume"), rs.getString("birth"), rs.getString("phone_num"), rs.getString("email"), rs.getString("ps")));
-			        }
-				    return users;
+					String sql = "SELECT jsonstr FROM user";
+					stmt = conn.prepareStatement(sql);
+					rs = stmt.executeQuery();
 					
+					String str = "[";
+					int cnt = 0;
+					while(rs.next()) {
+					if (cnt++ > 0) str += ", ";
+					str += rs.getString("jsonstr");
+					}
+					return str + "]";
+
 				} finally {
 					if (rs != null) rs.close(); 
 					if (stmt != null) stmt.close(); 

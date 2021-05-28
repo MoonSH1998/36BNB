@@ -4,15 +4,13 @@
 request.setCharacterEncoding("utf-8");
 	
 	String uid = request.getParameter("id");
-	String uname = request.getParameter("name");
-	String ups = request.getParameter("ps");
 
 		UserDAO dao = new UserDAO();
 		if (dao.exists(uid) == false) {
 		out.print("NE");
 		return;
 		}
-		if (dao.delete(uid, uname, ups)) {
+		if (dao.delete(uid)) {
 		out.print("OK");
 		return;
 	}

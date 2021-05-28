@@ -19,14 +19,9 @@ $(document).ready(function() {
 Page.init(start);
 });
 function start(uid) {
-AJAX.call("jsp/userList.jsp", null, function(data) {
-	function start(uid) {
-		AJAX.call("jsp/userList.jsp", null, function(data) {
+	AJAX.call("jsp/userList.jsp", null, function(data) {
 		var users = JSON.parse(data.trim());
-		show(users);
 		});
-		}
-});
 }
 function show(users) {
 	var str = "";
@@ -36,9 +31,9 @@ function show(users) {
 	str += "<tr>";
 	str += "<td>" + users[i].id + "</td>";
 	str += "<td>" + users[i].name + "</td>";
-	str += "<td><small>&nbsp;(" + users[i].ts + ")</small></td>";
+	
 	str += "</tr>";
-	}
-	$("#list").html(str);
-	}
-	</script>
+}
+$("#list").html(str);
+}
+</script>

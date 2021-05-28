@@ -18,13 +18,14 @@
 		</header>
 
 
-	<div class="section pad-24 mtop-30 signup_main">
+	<div class="section  signup_main">
 		<input id="id" type="email" placeholder="아이디로 사용할 이메일주소">
 		<input id="name" type="text" placeholder="이름">
 		<input id="stu_num" type="text" placeholder="학번">
 		<input id="birth" type="text" placeholder="생년월일">
 		<input id="phone_num" type="text" placeholder="전화번호">
-		<input id="ps" type="password" class="mtop-10" placeholder="비밀번호">
+		<input id="ps" type="password" placeholder="비밀번호">
+
 		<input type="submit" class="signup_btn" value="회원가입" onclick="signup()">
 			<a href="login.html" class="signup_screen_login"><span>로그인</span></a>
 	</div>
@@ -43,7 +44,7 @@
 
 	function signup() {
 		var id = $("#id").val().trim();
-	if (name == "") {
+	if (id == "") {
 	alert("아이디로 사용할 이메일을 입력해주세요.");
 	$("#id").focus();
 	return;
@@ -77,21 +78,24 @@
 	alert("패스워드를 입력해 주세요.");
 	$("#ps").focus();
 	return;
-	}				
-	var url ="jsp/signup.jsp?id=" + id + "&name=" + name + "&stu_num=" + stu_num + "&birth=" + birth+ "&phone_num=" + phone_num + "&ps=" + ps;
-	
-		AJAX.call(url, null, function(data) {
+	}			
+
+	var usrobj = {id: id, name: name, stu_num: stu_num,  birth: birth, phone_num: phone_num, ps: ps};
+	var params = {id: id, jsonstr: JSON.stringify(usrobj)};
+	var url ="jsp/signup.jsp";
+	AJAX.call(url, params, function(data) {
 	var code = data.trim();
-	 if(code == "EX") {
-	 		alert("이미 가입한 회원입니다.");
-	 }
-	 else if(code == "OK") {
-	 	alert("회원 가입이 완료되었습니다.");
-	 	window.location.href = "main.html";
-	 	}
-	 else if (code =="ER"){
-	 		alert("회원가입 중 오류가 발생했습니다.");
-	 	}
-	 	});
-	}	
-	</script>
+	if(code == "EX") {
+	alert("이미 가입한 회원입니다.");
+	}
+	else if(code == "ER") {
+	alert("회원가입 처리중 에러가 발생하였습니다.");
+	}
+	else {
+	alert("회원 가입이 완료되었습니다.");
+	window.location.href = "main.html";
+	}
+	});
+	}
+	
+</script>

@@ -4,21 +4,19 @@
 request.setCharacterEncoding("utf-8");
 	
 	String uid = request.getParameter("id");
-	String uname = request.getParameter("name");
-	String ustu_num = request.getParameter("stu_num");
-	String ubirth = request.getParameter("birth");
-	String uphone_num = request.getParameter("phone_num");
-	String ups = request.getParameter("ps");
+	String jsonstr = request.getParameter("jsonstr");
 
 		UserDAO dao = new UserDAO();
-		if (dao.exists(uid) == true) {
+		if (dao.exists(uid)) {
 		out.print("EX");
 		return;
 		}
-		if (dao.insert(uid, uname, ustu_num, ubirth, uphone_num, ups)) {
-		out.print("OK");
+		if (dao.insert(uid, jsonstr) == true ) {
+			session.setAttribute("id", uid);
+			out.print("OK");
 	}
 		else {
 		out.print("ER");
 	}
 	%>
+	
