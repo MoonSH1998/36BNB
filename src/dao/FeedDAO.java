@@ -8,7 +8,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import util.*;
+import util.ConnectionPool;
 
 
 	public class FeedDAO {
@@ -19,21 +19,24 @@ import util.*;
 		ResultSet rs = null;
 		try {
 			
-			JSONParser jsonParser = new JSONParser();
+	
+			synchronized(this) {
+			String sql = "SELECT no FROM feed ORDER BY no DESC LIMIT 1";
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			
+			int max = (!rs.next()) ? 0 : rs.getInt("no");
+			stmt.close();
+			
+			JSONObject jsonobj = (JSONObject) (new JSONParser()).parse(jsonstr);
+			jsonobj.put("no", max + 1);
 		
-		synchronized(this) {
-		String sql = "SELECT no FROM feed ORDER BY no DESC LIMIT 1";
-		stmt = conn.prepareStatement(sql);
-		rs = stmt.executeQuery();
-		int max = (!rs.next()) ? 0 : rs.getInt("no");
-		stmt.close();
-		JSONObject jsonobj = (JSONObject) (new JSONParser()).parse(jsonstr);
-		jsonobj.put("no", max + 1);
 		sql = "INSERT INTO feed(no, id, jsonstr) VALUES(?, ?, ?)";
 		stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, max + 1);
 		stmt.setString(2, jsonobj.get("id").toString());
 		stmt.setString(3, jsonobj.toJSONString());
+		
 		int count = stmt.executeUpdate();
 		return (count == 1) ? true : false;
 		}
