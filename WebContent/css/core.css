@@ -1,8 +1,9 @@
 @import "screen/signup_withdraw.css";
-
+@import "screen/main.css";
 /*  ↑ screen  */
 
 @import "component/screen_header.css";
+@import "component/nav-bar.css";
 
 /*  ↑  component */
 

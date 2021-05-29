@@ -1,5 +1,5 @@
 var AJAX = {
-call: function (url, params, func) {
+call: function (url, params, func, isfd) {
 var callobj = {
 url: url,
 type: "post",
@@ -16,6 +16,10 @@ alert("에러가 발생하였습니다. 관리자에게 문의해주세요.");
 }
 },
 };
+if (isfd) {
+callobj.processData = false;
+callobj.contentType = false;
+}
 jQuery.ajax(callobj);
 }
 };
