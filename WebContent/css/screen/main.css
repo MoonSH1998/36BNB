@@ -1,31 +1,76 @@
-.signup_main,
-.withdraw_main {
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
+body {
+  height: 120vh;
 }
 
-.signup_btn,
-.signup_main input,
-.withdraw_main input {
-  border: 2px solid #e5e5e5;
-  border-radius: 8px;
-  margin: 8px 16px 8px 16px;
-  width: 80%;
-  height: 53px;
-  padding-left: 12px;
-}
-
-.signup_btn {
-  background-color: #fa716f;
+.main_head {
+  background-color: #7cb9f2;
+  height: 33%;
+  width: 100%;
+  position: absolute;
+  display: felx;
+  top: 0px;
+  left: 0px;
   color: white;
 }
 
-.signup_screen_login {
-  margin-top: 6px;
-  text-decoration: none;
-  font-size: 15px;
-  color: inherit;
-  opacity: 0.65;
+.main_head :nth-child(2) {
+  font-size: 24px;
+  margin: 60px 0px 10px 20px;
+}
+.main_head :nth-child(3) {
+  margin-left: 20px;
+  font-size: 12px;
+}
+.main_head :nth-child(3) span {
+  margin-left: 8px;
+  font-weight: bolder;
+  font-size: 14px;
+}
+
+.go_need_btn {
+  width: 110px;
+  height: 30px;
+  margin: 10% 0px 30px 25px;
+  background-color: #fa716f;
+  border: 1px solid #fa716f;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bell {
+  position: absolute;
+  right: 5%;
+  top: 10%;
+  font-size: 18px;
+}
+.empty_box {
+  height: 30%;
+}
+.main_feed1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 3% 0px 3%;
+  width: 94%;
+  height: 18%;
+  background-color: #f8f2ee;
+  border: 1px solid rgb(0, 0, 0, 0.15);
+  border-radius: 8px 8px 0px 0px;
+  border-bottom: none;
+}
+
+.main_feed2 {
+  display: flex;
+  width: 94%;
+  height: 9%;
+  margin: 0px 3% 0px 3%;
+  border: 1px solid rgb(0, 0, 0, 0.15);
+  border-radius: 0px 0px 8px 8px;
+  margin-bottom: 20px;
+}
+
+.nav__list :first-child a {
+  color: #7cb9f2;
+  font-weight: bold;
 }
