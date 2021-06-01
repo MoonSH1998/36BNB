@@ -1,0 +1,26 @@
+.line {
+  margin-top: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 4% 0px 4% 0px;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+body {
+  width: 100%;
+}
+.feed_add {
+  margin: 12px 0px 600px 0px;
+  padding: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 0 auto;
+  color: white;
+  font-size: 14px;
+  width: 85%;
+  height: 30px;
+  border-radius: 8px;
+  background-color: #7cb9f2;
+}

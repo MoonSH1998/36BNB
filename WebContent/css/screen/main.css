@@ -1,15 +1,18 @@
 body {
-  height: 120vh;
+	max-height:1200vh;
+  height:auto;
+  width:100%
 }
 
 .main_head {
   background-color: #7cb9f2;
   height: 33%;
   width: 100%;
-  position: absolute;
-  display: felx;
   top: 0px;
-  left: 0px;
+  left:0px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
   color: white;
 }
 
@@ -51,13 +54,14 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0px 3% 0px 3%;
+  margin: 0px 2% 0px 2%;
   width: 94%;
   height: 18%;
   background-color: #f8f2ee;
-  border: 1px solid rgb(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: 8px 8px 0px 0px;
   border-bottom: none;
+  
 }
 
 .main_feed2 {
@@ -65,7 +69,7 @@ body {
   width: 94%;
   height: 9%;
   margin: 0px 3% 0px 3%;
-  border: 1px solid rgb(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: 0px 0px 8px 8px;
   margin-bottom: 20px;
 }

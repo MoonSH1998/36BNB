@@ -6,26 +6,50 @@
 		<link rel="stylesheet" href="css/core.css">
 		<title>MySNS</title>
 	</head>
-			
-			
 		<body>
-<div class="page-hdr">MySNS</div>
-<div class="page-body">
-<div class="section pad-24 mtop-30">
-<input id="id" type="email" placeholder="아이디 (이메일주소)">
-<textarea id="content" class="mtop-10" placeholder="이곳에 글을 작성해 주세요."> </textarea>
-<div class="section pad-4 mtop-30">
-<div class="desc">아래에서 이미지를 선택해주세요.</div>
-<input id="image" type="file" >
-</div>
-<input type="submit" class="mtop-30" value="업로드하기" onclick="upload()">
-</div>
-</div>
-<div class="page-footer">Copyright: mysns.com, 202x</div>
+		
+
+		 <SELECT id=type>
+         <OPTION VALUE=sell>sell</OPTION>
+         <OPTION VALUE=buy>buy</OPTION>
+         </SELECT>
+      
+ 		
+         
+         <div class="start_date">거래희망 시작 날</div>
+        <input type="date" id="start" 
+       value="xxxx-xx-xx"
+       min="2021-01-01" max="2022-12-31">
+       
+       
+       <div class="end_date">거래희망 종료 날</div>
+       <input type="date" id="end" 
+       value="xxxx-xx-xx"
+       min="2021-01-01" max="2022-12-31">
+         
+         
+		<textarea id="content" onfocus="this.placeholder='이곳에 글을 작성해 주세요'"></textarea>
+		
+		
+		
+		<div>거래 대상의 성별을 선택해주세요</div>
+		 <SELECT id=trader>
+         <OPTION VALUE=남성>man</OPTION>
+         <OPTION VALUE=여성>woman</OPTION>
+         <OPTION VALUE=성별무관>no</OPTION>
+         </SELECT>
+      
+		<div class="desc">아래에서 이미지를 선택해주세요.</div>
+		<input id="image" type="file">	
+		
+		
+		
+
+<input type="submit"  value="업로드하기" onclick="upload()">
+
 </body>
 </html>
-</html>
-</html>
+
 
 <script src="js/jquery-3.6.0.min.js"></script>
 <script src="js/core.js"></script>
@@ -34,17 +58,37 @@
 			$(document).ready(function() {
 				Page.init(setup);	
 			});
+			var loginId = null;
 			function setup(uid){
-				alert("로그인 아이디 : " + uid);
+				loginId = uid;
 			}
+
+			
 			
 			function upload() {
-			var id = $("#id").val().trim();
-			if (id == "") {
-			alert("아이디를 입력해 주세요.");
-			$("#id").focus();
+			id = loginId;
+			
+			var start = $("#start").val().trim();
+			if (start == "") {
+			alert("거래 시작 날을 입력해주세요.");
+			$("#start").focus();
 			return;
 			}
+			
+			var end = $("#end").val().trim();
+			if (end == "") {
+			alert("거래 종료 날을 입력해주세요.");
+			$("#end").focus();
+			return;
+			}
+			
+			var type = $("#type").val().trim();
+			if (type == "") {
+			$("type").focus();
+			return;
+			}
+			
+			
 			var content = $("#content").val().trim();
 			if (content == "") {
 			alert("작성글을 입력해 주세요.");
@@ -52,8 +96,17 @@
 			return;
 			}
 			
+			
+			
+			var trader = $("#trader").val().trim();
+			if (trader == "") {
+			$("#trader").focus();
+			return;
+			}
+			
+			
 			var imgobj = $("#image")[0].files[0];
-			var jsonobj = {id: id, content: content, ts: getTime()};
+			var jsonobj = {id: id, type: type, start:start, end:end, trader:trader, content: content, ts: getTime()};
 			if (imgobj != null) {
 				jsonobj.images = [imgobj.name];
 			}

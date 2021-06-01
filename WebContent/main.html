@@ -14,29 +14,23 @@
 			<div class="go_need_btn">방 찾아보기</div>
 		</div>
 		<div class="empty_box"></div>
-		<div class="main_feed1">		
-		
+		<div class="main_feed1">
+				
 		</div>			
 		<div class="main_feed2">
 
 		</div>
 
-		
-		<div class="page-body">
-		<div class="page-mnu">
+		<div id="list"></div>
+
 		<div class="menu" onclick="addFeed()">글쓰기</div>
 		<div class="menu" onclick="">친구보기</div>
 		<div class="menu" onclick="">내정보</div>
-		</div>
 
 	
 		
-		<table id="list" class="section mtop-20 pad-16"></table>
-		<div class="section mtop-10 mbot-30 pad-16">
+		
 		<div class="button" onclick="getNext()">작성글 더보기</div>
-		</div>
-		</div>
-
 
 		
 		<nav class="nav">
@@ -67,10 +61,9 @@
 				</li>
 			</ul>
 		</nav>
-
-
 		</body>
 		</html>
+		
 		<script src="js/jquery-3.6.0.min.js"></script>
 		<script src="js/core.js"></script>
 		<script>
@@ -80,43 +73,69 @@
 
 
 		var minNo = -1;
+		var feedList = [];
 		function start(uid) {
+		var feeds = DataCache.get("mainCache");
+		if (feeds != null) {
+		console.log("[start] fetch the existing feed list from DataCache ...");
+		feedList = feeds;
+		show(feeds);
+		}
+		else {
 		AJAX.call("jsp/feedGetGroup.jsp", null, function(data) {
 		var feeds = JSON.parse(data.trim());
-		if (feeds.length > 0) {
-		minNo = feeds[feeds.length - 1].no;
-		}
+		console.log("[start] fetch a new feed list from the server ...");
+		feedList = feeds;
+		DataCache.set("mainCache", feedList);
 		show(feeds);
 		});
 		}
+		}
+		
 		function show(feeds) {
-			var str = "";
-			for (var i=0; i<feeds.length; i++) {
-			var img = feeds[i].images, imgstr = "";
-			if (img != null) {
-			imgstr = "<img src='images/" + img + "' width=100%>";
-			}
-			str += "<tr>";
-			str += "<td><small>" + feeds[i].id + "</small></td>";
-			str += "<td><small>&nbsp;(" + feeds[i].ts + ")</small></td>";
-			str += "</tr>";
-			str += "<tr><td colspan=2>" + imgstr + "</td></tr>";
-			str += "<tr><td colspan=2>" + feeds[i].content + "</td></tr>";
-			str += "<tr><td colspan=2 height=40><hr></td></tr>";
-			}
-			$("#list").append(str);
-		}	
-
-		function getNext() {
-			var params = {maxNo: minNo};
-			AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {
-			var feeds = JSON.parse(data.trim());
+			// set minNo to detect the end of the list
 			if (feeds.length > 0) {
 			minNo = feeds[feeds.length - 1].no;
 			}
-			show(feeds);
-			});
+			var str = "";
+			for (var i=0; i<feeds.length; i++) {
+			str += getFeedCode(feeds[i]);
 			}
+			$("#list").append(str);
+			}
+			function getFeedCode(feed) {
+			var name = (feed.user == null) ? feed.id : feed.user.name;
+			var str = "<div class='feed' onclick='showFeed(" + feed.no + ")'>";
+
+			str += "<div class='author'>";
+			str += "<div class='photo'></div>";
+			str += "<div class='name'>" + name + "</div>";
+			str += "</div>";
+			if (feed.images != null) {
+			var imgurl = "images/" + feed.images[0];
+			str += "<div class='image' style='background-image: url(\"" + imgurl + "\")'></div>";
+			}
+			str += "<div class='text'>" + feed.content + "</div>";
+			str += "</div>";
+			return str;
+			}
+			function showFeed(fno) {
+				for (var i=0; i<feedList.length; i++) {
+				if (feedList[i].no == fno) {
+				Page.go("feedView.html", feedList[i]);
+				return;
+				}
+				}
+				}
+			function getNext() {
+				var params = {limit: minNo};
+				AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {
+				var feeds = JSON.parse(data.trim());
+				feedList = feedList.concat(feeds);
+				DataCache.set("mainCache", feedList);
+				show(feeds);
+				});
+				}
 			function addFeed() {
 			window.location.href = "feedAdd.html";
 			}

@@ -9,12 +9,12 @@
 	</head>
 	<body>
 		<header class="screen_header">
-			<div><a href ="login.html">
-				<i class="fas fa-angle-left"></i>
-				</a>
+			<div>
+				<a href ="login.html">
+				<i class="fas fa-angle-left"></i></a>
 			</div>
-			<div>회원가입</div>
-			<span>아래 정보를 모두 입력해주세요</span>
+			<span class="screen_header_title">회원가입</span>
+			<span class="screen_header_subtitle">아래 정보를 모두 입력해주세요</span>
 		</header>
 
 
@@ -23,6 +23,10 @@
 		<input id="name" type="text" placeholder="이름">
 		<input id="stu_num" type="text" placeholder="학번">
 		<input id="birth" type="text" placeholder="생년월일">
+		<SELECT id=sex>
+         <OPTION VALUE=man>남자</OPTION>
+         <OPTION VALUE=woman>여자</OPTION>
+         </SELECT>
 		<input id="phone_num" type="text" placeholder="전화번호">
 		<input id="ps" type="password" placeholder="비밀번호">
 
@@ -67,6 +71,12 @@
 	$("#birth").focus();
 	return;
 		}
+		var sex = $("#sex").val().trim();
+	if (birth == "") {
+	alert("성별을 선택해 주세요.");
+	$("#sex").focus();
+	return;
+		}
 		var phone_num = $("#phone_num").val().trim();
 	if (phone_num == "") {
 	alert("전화번호를 입력해 주세요.");
@@ -80,7 +90,7 @@
 	return;
 	}			
 
-	var usrobj = {id: id, name: name, stu_num: stu_num,  birth: birth, phone_num: phone_num, ps: ps};
+	var usrobj = {id: id, name: name, stu_num: stu_num,  birth: birth,sex: sex, phone_num: phone_num, ps: ps};
 	var params = {id: id, jsonstr: JSON.stringify(usrobj)};
 	var url ="jsp/signup.jsp";
 	AJAX.call(url, params, function(data) {

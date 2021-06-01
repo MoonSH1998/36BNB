@@ -21,8 +21,7 @@
 				String name = item.getFieldName();
 				if(item.isFormField()) {
 					String value = item.getString("utf-8");
-			//if (name.equals("id")) uid = value;
-			//else if (name.equals("content")) ucon = value;
+			
 			if (name.equals("jsonstr")) jsonstr = value;
 			}
 				else {
@@ -35,7 +34,6 @@
 				}
 			}
 			FeedDAO dao = new FeedDAO();
-			//if (dao.insert(uid, ucon, ufname)) {
 		 	if (dao.insert(jsonstr) == true) {
 			out.print("OK"); // response.sendRedirect("main.jsp");
 			}
