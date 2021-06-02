@@ -9,33 +9,22 @@
 	</head>
 	<body>
 		<header class="screen_header">
-			<div>
-				<a href ="login.html">
-				<i class="fas fa-angle-left"></i></a>
-			</div>
-			<span class="screen_header_title">회원가입</span>
-			<span class="screen_header_subtitle">아래 정보를 모두 입력해주세요</span>
+			<a href ="login.html"><img src="img/back_arrow.svg"></a>
 		</header>
 
-
 	<div class="section  signup_main">
-		<input id="id" type="email" placeholder="아이디로 사용할 이메일주소">
+		<span class="title">회원가입</span>
+		<p>아래 정보를 모두 입력해주세요</p>
+		<input id="id" type="email" placeholder="이메일">
 		<input id="name" type="text" placeholder="이름">
 		<input id="stu_num" type="text" placeholder="학번">
 		<input id="birth" type="text" placeholder="생년월일">
-		<SELECT id=sex>
-         <OPTION VALUE=man>남자</OPTION>
-         <OPTION VALUE=woman>여자</OPTION>
-         </SELECT>
 		<input id="phone_num" type="text" placeholder="전화번호">
 		<input id="ps" type="password" placeholder="비밀번호">
 
 		<input type="submit" class="signup_btn" value="회원가입" onclick="signup()">
-			<a href="login.html" class="signup_screen_login"><span>로그인</span></a>
+			<a href="login.html"><span>로그인</span></a>
 	</div>
-		
-				
-
 	</body>
 </html>
 		<script

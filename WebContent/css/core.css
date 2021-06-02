@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+
 @import "screen/signup_withdraw.css";
 @import "screen/main.css";
 @import "screen/login.css";
@@ -11,6 +13,9 @@
 
 /*  ↑  component */
 
+/*기본글꼴통일*/
 body {
   background-color: white;
+  font-family: "Noto Sans KR", sans-serif !important;
+  font-size: 14px;     
 }

@@ -1,9 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+
 .signup_main,
 .withdraw_main {
   align-items: center;
   justify-content: center;
   display: flex;
   flex-direction: column;
+}
+
+.title{
+  margin-top: 4px;
+  font-size: 24px;
 }
 
 .signup_btn,
@@ -15,6 +22,7 @@
   width: 80%;
   height: 53px;
   padding-left: 12px;
+  font-family: "Noto Sans KR", sans-serif !important;
 }
 
 .signup_btn {
@@ -22,10 +30,12 @@
   color: white;
 }
 
-.signup_screen_login {
+a:link, 
+a:visited
+{
   margin-top: 6px;
   text-decoration: none;
-  font-size: 15px;
-  color: inherit;
-  opacity: 0.65;
+  font-size: 14px;
+  color :#78746D;
+  text-decoration:none;
 }
