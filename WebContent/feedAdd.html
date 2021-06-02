@@ -38,8 +38,9 @@
          <OPTION VALUE=여성>woman</OPTION>
          <OPTION VALUE=성별무관>no</OPTION>
          </SELECT>
-      
+      	<input id="price" type="text"> <span>원</span>
 		<div class="desc">아래에서 이미지를 선택해주세요.</div>
+		
 		<input id="image" type="file">	
 		
 		
@@ -87,7 +88,12 @@
 			$("type").focus();
 			return;
 			}
-			
+			var price = $("#price").val().trim();
+			if (price == "") {
+			alert("1박당 희망 가격을 적어주세요.");
+			$("#price").focus();
+			return;
+			}
 			
 			var content = $("#content").val().trim();
 			if (content == "") {
@@ -106,7 +112,7 @@
 			
 			
 			var imgobj = $("#image")[0].files[0];
-			var jsonobj = {id: id, type: type, start:start, end:end, trader:trader, content: content, ts: getTime()};
+			var jsonobj = {id: id, type: type, start:start, end:end,price:price, trader:trader, content: content, ts: getTime()};
 			if (imgobj != null) {
 				jsonobj.images = [imgobj.name];
 			}
