@@ -2,6 +2,7 @@ ul {
   list-style: none;
 }
 .nav {
+
   position: fixed;
   justify-content: space-between;
   bottom: 0;

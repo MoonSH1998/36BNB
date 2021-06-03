@@ -7,6 +7,8 @@
 </head>
 
 <body>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
 
 
 <div id="content" class="section"></div>
@@ -25,11 +27,9 @@ function start(uid, feed) {
 
 function getFeedCode(feed){
 	var name = (feed.user == null) ? feed.id : feed.user.name;
-	var str = "<div class='feed'>";
-	str += "<div class='autor'>";
-	str += "<div class='photo'></div>";
-	str += "<div class='name'>" + feed.name + "</div>";
-	str += "</div>";
+	var str = "<div class='feedview'>";
+	str +=  feed.id + "</div>";
+	
 	str += "<div class='text'>" + feed.content + "</div>";
 	if (feed.images != null){
 		var imgurl = "images/" + feed.images[0];

@@ -55,16 +55,19 @@ body {
 
 }
 .main_feed1 {
+	padding:5px;
 	position : relative;
 	margin-top:20px;
-  width: 95%;
-  height: 60%;
-  background-color: #f8f2ee;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+ 	 width: 95%;
+ 	 height: 60%;
+ 	 background-color: #f8f2ee;
+ 	 border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 8px 8px 0px 0px;
   border-bottom: none;
 	position : relative;
   color:red;
+  background-image: imgurl;
+				
 }
 .main_feed1 span{
 	display:flex;
@@ -94,7 +97,7 @@ body {
   justify-content: flex-end;
   width: 95%;
   height: 40%;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 0px 0px 8px 8px;
   margin-bottom: 20px;
   color:black;
