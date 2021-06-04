@@ -2,7 +2,7 @@ ul {
   list-style: none;
 }
 .nav {
-
+ margin-top:20px;
   position: fixed;
   justify-content: space-between;
   bottom: 0;

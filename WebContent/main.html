@@ -7,28 +7,22 @@
 </head>
 <body>
 		
-		<div class="main_head">
+	<div class="main_head">
 			<span class= "bell"><i  class="far fa-bell" ></i></span>
 			<div>두유가 찾는방<br>여기 다 모아놨어요</div>
 			<div>오늘<span>#개</span>의 방이 추가되었어요!</div>
 			<div class="go_need_btn">방 찾아보기</div>
 		</div>
-	 	<div class="empty_box"></div>
-	<!--	<div class="main_feed1">
-				
-		</div>			
-		<div class="main_feed2">
-
-		</div>
- -->
 		
 		<div id="list"></div>
+		
+		<!--   이건 나중에 써먹기.
 		<div class="menu" onclick="addFeed()">글쓰기</div>
 		<div class="menu" onclick="">친구보기</div>
 		<div class="menu" onclick="">내정보</div>
 		<div class="button" onclick="getNext()">작성글 더보기</div>
-
-		
+ -->
+		<div class="empty_box"></div>
 		<nav class="nav">
 			<ul class="nav__list">
 				<li class="nav__btn"> 
@@ -104,12 +98,12 @@
 				function getFeedCode(feed) {
 					if (feed.images == null){
 				var name = (feed.user == null) ? feed.id : feed.user.name;
-				var str = "<div class='feed' onclick='showFeed(" + feed.no + ")'>"
-				str += "<div class='main_feed1'><span>" + feed.trader + "</span>"
+				var str = "<div class='feed'>"
+				str += "<div class='main_feed1'  onclick='showFeed(" + feed.no + ")'><span>" + feed.trader + "</span>"
 				str += "<span>" + feed.price + "</span>";
 				str += "</div>";
 				
-				str += "<div class='main_feed2'><span>" + feed.ts + "</span>";
+				str += "<div class='main_feed2'  onclick='showFeed(" + feed.no + ")'><span>" + feed.ts + "</span>";
 				str += "<span>" + feed.content + "</span>"
 				str += "<span>" + feed.start + "  ~  " + feed.end  + "까지 방" + feed.type + "해요. </span>";
 				str += "</div>";
@@ -119,16 +113,18 @@
 					else {
 				var imgurl = "images/" + feed.images;
 				var name = (feed.user == null) ? feed.id : feed.user.name;
-				var str = "<div class='feed' onclick='showFeed(" + feed.no + ")'>"
-				str += "<div class='main_feed1'  style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'><span>" + feed.trader + "</span>"
+				var str = "<div class='feed' >"
+				str += "<div class='main_feed1' onclick='showFeed(" + feed.no + ")'  style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'><span>" + feed.trader + "</span>"
 				str += "<span>" + feed.price + "</span>";
 				str += "</div>";
-				str += "<div class='main_feed2'><span>" + feed.ts + "</span>";
+				str += "<div class='main_feed2' onclick='showFeed(" + feed.no + ")'><span>" + feed.ts + "</span>";
 				str += "<span>" + feed.content + "</span>"
 				str += "<span>" + feed.start + "  ~  " + feed.end  + "까지 방" + feed.type + "해요. </span>";
 				str += "</div>";
+				
 				return str;
 				}
+					
 				}
 				
 				function showFeed(fno) {

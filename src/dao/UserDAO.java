@@ -72,15 +72,18 @@ import util.ConnectionPool;
 			ResultSet rs = null;
 			try {
 			String sql = "SELECT jsonstr FROM user WHERE id = ?";
+			conn = ConnectionPool.get();
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, uid);
 			
 			rs = stmt.executeQuery();
 			if (!rs.next()) return 1;
+			
 			String jsonstr = rs.getString("jsonstr");
 			JSONObject obj = (JSONObject) (new JSONParser()).parse(jsonstr);
 			String ps = obj.get("ps").toString();
 			if (!ups.equals(ps)) return 2;
+			
 			return 0;
 
 		
@@ -89,6 +92,7 @@ import util.ConnectionPool;
 				if (stmt != null) stmt.close(); 
 				if (conn != null) conn.close();
 		    }
+			
 		}	
 							
 		public String getList() throws NamingException, SQLException{

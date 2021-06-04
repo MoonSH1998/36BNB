@@ -49,15 +49,14 @@ body {
 }
 
 .feed{
-	margin:2px;
+	display:block;
 	height:310px;
 	width:100%;
-
+	margin-top:20px;
+	margin-bottom:800px;
 }
 .main_feed1 {
-	padding:5px;
 	position : relative;
-	margin-top:20px;
  	 width: 95%;
  	 height: 60%;
  	 background-color: #f8f2ee;
@@ -66,7 +65,7 @@ body {
   border-bottom: none;
 	position : relative;
   color:red;
-  background-image: imgurl;
+ 
 				
 }
 .main_feed1 span{
@@ -93,12 +92,14 @@ body {
 
 .main_feed2 {
   display: flex;
+  position : relative;
   flex-direction : column;
   justify-content: flex-end;
   width: 95%;
   height: 40%;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 0px 0px 8px 8px;
+  border-top:none;
   margin-bottom: 20px;
   color:black;
 }
@@ -111,5 +112,4 @@ body {
   color: #7cb9f2;
   font-weight: bold;
 }
-
 
