@@ -1,0 +1,43 @@
+<html>
+<head>
+<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
+<meta charset="utf-8" />
+<link rel="stylesheet" href="css/core.css">
+
+</head>
+
+<body>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+
+
+<div id="content" class="section"></div>
+
+</body>
+</html>
+
+<script src="js/core.js"></script>
+<script>
+$(document).ready(function() {
+ Page.init(start, "feedView.html");
+});
+function start(uid, feed) {
+		$("#content").append(getFeedCode(feed));
+}	
+
+function getFeedCode(feed){
+	var name = (feed.user == null) ? feed.id : feed.user.name;
+	var str = "<div class='feedview'>";
+	str +=  feed.id + "</div>";
+	
+	str += "<div class='text'>" + feed.content + "</div>";
+	if (feed.images != null){
+		var imgurl = "images/" + feed.images[0];
+		str += "<div class='image' style='background-image: url(\"" + imgurl + "\" )'></div>";
+
+	}
+	str += "</div>";
+	return str;
+}
+
+</script>

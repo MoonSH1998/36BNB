@@ -1,0 +1,116 @@
+<html>
+<head>
+<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
+<meta charset="utf-8" />
+<link rel="stylesheet" href="css/core.css">
+<title>MySNS</title>
+</head>
+<body>
+    <header class="need-screen-header"> 
+		<a class="back_icon" href ="//뒤돌아가기"><img src="img/back_arrow.svg"></a>
+        <span class="need_title">방 구해요</span>
+		<a class="search_icon" href ="//검색창"><img src="img/Search.svg"></a>
+	</header>
+	<div class="line"></div>
+
+	<div class="feed_add" onclick="addFeed()">글 작성하기</div>	
+	
+	 
+	<!--<table id="list" ></table>
+		<div class="button" onclick="getNext()">작성글 더보기</div>
+		<div class="page-body">
+		<div class="page-mnu">
+		<div class="menu" onclick="addFeed()">글쓰기</div>
+		<div class="menu" onclick="">친구보기</div>
+		<div class="menu" onclick="">내정보</div>
+		<table id="list" class="section mtop-20 pad-16"></table>
+		<div class="section mtop-10 mbot-30 pad-16">
+		<div class="button" onclick="getNext()">작성글 더보기</div>
+		</div> -->
+		
+		<nav class="nav">
+			<ul class="nav__list">
+				<li class="nav__btn"> 
+					<a class="nav__link" href="home.html">
+						<i class="fas fa-home"></i>
+						<span>홈</span>
+					</a>
+				</li>
+				<li class="nav__btn">
+					<a class="nav__link" href="need.html">
+						<i class="fas fa-search "></i>
+						<span>구해요</span>
+					</a>
+				</li>
+				<li class="nav__btn">
+					<a class="nav__link" href="sell.html">
+						<i class="fas fa-tag"></i>
+						<span>내놔요</span>
+					</a>
+				</li>
+				<li class="nav__btn">
+					<a class="nav__link" href="profile.html">
+						<i class="far fa-user"></i>
+						<span>내 계정</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+
+
+		</body>
+		</html>
+		<script src="js/jquery-3.6.0.min.js"></script>
+		<script src="js/core.js"></script>
+		<script>
+		$(document).ready(function() {
+		Page.init(start);
+		});
+
+
+		var minNo = -1;
+		function start(uid) {
+		AJAX.call("jsp/feedGetGroup.jsp", null, function(data) {
+		var feeds = JSON.parse(data.trim());
+		if (feeds.length > 0) {
+		minNo = feeds[feeds.length - 1].no;
+		}
+		show(feeds);
+		});
+		}
+		function show(feeds) {
+			var str = "";
+			for (var i=0; i<feeds.length; i++) {
+			var img = feeds[i].images, imgstr = "";
+			if (img != null) {
+			imgstr = "<img src='images/" + img + "' width=100%>";
+			}
+			str += "<tr>";
+			str += "<td><small>" + feeds[i].id + "</small></td>";
+			str += "<td><small>&nbsp;(" + feeds[i].ts + ")</small></td>";
+			str += "</tr>";
+			str += "<tr><td colspan=2>" + imgstr + "</td></tr>";
+			str += "<tr><td colspan=2>" + feeds[i].content + "</td></tr>";
+			str += "<tr><td colspan=2 height=40><hr></td></tr>";
+			}
+			$("#list").append(str);
+		}	
+
+		function getNext() {
+			var params = {maxNo: minNo};
+			AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {
+			var feeds = JSON.parse(data.trim());
+			if (feeds.length > 0) {
+			minNo = feeds[feeds.length - 1].no;
+			}
+			show(feeds);
+			});
+			}
+			function addFeed() {
+			window.location.href = "feedAdd.html";
+			}
+			</script>
+			 <script
+			 src="https://kit.fontawesome.com/6478f529f2.js"
+			 crossorigin="anonymous"
+		   ></script>

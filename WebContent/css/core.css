@@ -1,11 +1,24 @@
-@import "screen/signup.css";
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
 
+@import "screen/signup_withdraw.css";
+@import "screen/main.css";
+@import "screen/login.css";
+@import "screen/need.css";
+@import "screen/feedAdd.css";
 /*  ↑ screen  */
 
-@import "component/screenheader.css";
+@import "component/screen_header.css";
+@import "component/nav-bar.css";
+@import "component/feed_add.css";
+@import "component/btn.css";
 
 /*  ↑  component */
 
+/*기본글꼴통일*/
 body {
   background-color: white;
+  font-family: "Noto Sans KR", sans-serif !important;
+  font-size: 14px;  
+  margin:0;
+  padding:0;   
 }

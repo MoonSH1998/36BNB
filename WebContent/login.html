@@ -1,99 +1,61 @@
 <html>
+
 <head>
-<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
-<meta charset="utf-8" />
-<link rel="stylesheet" href="css/core.css">
-<title>MySNS</title>
+	<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="css/core.css">
+	<title>MySNS</title>
 
-	</head>
-	<body>
-		<header class="screen_header">
-			<div><a href ="login.html">
-				<i class="fas fa-angle-left"></i>
-				</a>
-			</div>
-			<div>회원가입</div>
-			<span>아래 정보를 모두 입력해주세요</span>
-		</header>
+</head>
 
-
-	<div class="section pad-24 mtop-30 signup_main">
-		<input id="name" type="text" placeholder="이름">
-		<input id="stu_num" type="text" placeholder="학번">
-		<input id="birth" type="text" placeholder="생년월일">
-		<input id="phone_num" type="text" placeholder="전화번호">
-		<input id="email" type="email" placeholder="이메일">
-		<input id="ps" type="password" class="mtop-10" placeholder="비밀번호">
-		<input type="submit" class="signup_btn" value="회원가입" onclick="signup()">
-			<a href="login.html" class="signup_screen_login"><div">로그인</div></a>
+<body>
+	<div class="page-body">
+		<img class="login-img" src="img/login_img.svg" alt="Login Image">
+		<span class="page-title">로그인</span>
+		<p class="text">학생들을 위한 삼육 비앤비</p>
+		<input class="id" id="id" type="text" placeholder="이메일 주소">
+		<input class="ps" id="ps" type="password" class="mtop-10" placeholder="패스워드">
+		<a href="//링크삽입예정">
+			<p class="text">비밀번호를 잊어버리셨나요?</p>
+		</a>
+		<input class="submit-btn" type="submit" value="로그인" onclick="login()">
+		<a href="signup.html">
+			<p class="text">회원 가입하기</p>
+		</a>
 	</div>
-		
-				
+</body>
 
-	</body>
 </html>
-	<script src="js/jquery-3.6.0.min.js"></script>
-	<script src="js/core.js"></script>
-	<script
-		src="https://kit.fontawesome.com/6478f529f2.js"
-		crossorigin="anonymous">
-	</script>
-	<script>
 
-	function signup() {
-		var id = $("#name").val().trim();
-	if (id == "") {
-	alert("이름을 입력해 주세요.");
-	$("#name").focus();
-	return;
-	}
-		var stu_num = $("#stu_num").val().trim();
-	if (stu_num == "") {
-	alert("학번을 입력해 주세요.");
-	$("#stu_num").focus();
-	return;
-		}
-		var birth = $("#birth").val().trim();
-	if (birth == "") {
-	alert("생년월일을 입력해 주세요.");
-	$("#birth").focus();
-	return;
-		}
-		var phone_num = $("#phone_num").val().trim();
-	if (phone_num == "") {
-	alert("전화번호를 입력해 주세요.");
-	$("#phone_num").focus();
-	return;
-		}
-		var email = $("#email").val().trim();
-	if (email == "") {
-	alert("이메일을 입력해 주세요.");
-	$("#email").focus();
-	return;
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+	function login() {
+		var id = $("#id").val().trim();
+		if (id == "") {
+			alert("아이디를 입력해 주세요.");
+			$("#id").focus();
+			return;
 		}
 		var ps = $("#ps").val().trim();
-	if (ps == "") {
-	alert("패스워드를 입력해 주세요.");
-	$("#ps").focus();
-	return;
+		if (ps == "") {
+			alert("패스워드를 입력해 주세요.");
+			$("#ps").focus();
+			return;
 		}
-	
-	
-	// 	var url ="jsp/signup.jsp?id=" + id + " &ps=" + ps;
-	
-	// 		AJAX.call(url, null, function(data) {
-	// var code = data.trim();
-	// if(code == "NE") {
-	// 		alert("아이디가 존재하지 않습니다.");
-	// }
-	// else if(code == "PE") {
-	// 	alert("패스워드가 일치하지 않습니다.");
-	// 	}
-	// else {
-	// 	window.location.href = "main.html";
-	// 	}
-	// 	});
-	// 	}	
-	
-	
-	// </script>
+
+		var url = "jsp/login.jsp?id=" + id + "&ps=" + ps;
+		AJAX.call(url, null, function (data) {
+			var code = data.trim();
+			if (code == "NE") {
+				alert("아이디가 존재하지 않습니다.");
+			}
+			else if (code == "PE") {
+				alert("패스워드가 일치하지 않습니다.");
+			}
+			else {
+				window.location.href = "main.html";
+			}
+		});
+	}
+</script>

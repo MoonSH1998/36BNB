@@ -1,0 +1,154 @@
+<html>
+<head>
+<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
+<meta charset="utf-8" />
+<link rel="stylesheet" href="css/core.css">
+<title>MySNS</title>
+</head>
+<body>
+		
+	<div class="main_head">
+		<a class="bell_new" href="//알림링크걸기"><img src="img/bell_new.svg"></a>
+		<span class="title">두유가 찾는방<br>여기 다 모아놨어요</span>
+		<div class="title_text">오늘 <span class="new_count">#개</span>의 방이 추가되었어요!</div>
+		<button class="go_sell_btn" type="button" onclick="//내놔요링크걸기">방 찾아보기</button>
+		</div>
+		
+		<div id="list"></div>
+		
+		<!--   이건 나중에 써먹기.
+		<div class="menu" onclick="addFeed()">글쓰기</div>
+		<div class="menu" onclick="">친구보기</div>
+		<div class="menu" onclick="">내정보</div>
+		<div class="button" onclick="getNext()">작성글 더보기</div>
+ -->
+		<div class="empty_box"></div>
+		<nav class="nav">
+			<ul class="nav__list">
+				<li class="nav__btn"> 
+					<a class="nav__link" href="home.html">
+						<i class="fas fa-home"></i>
+						<span>홈</span>
+					</a>
+				</li>
+				<li class="nav__btn">
+					<a class="nav__link" href="need.html">
+						<i class="fas fa-search "></i>
+						<span>구해요</span>
+					</a>
+				</li>
+				<li class="nav__btn">
+					<a class="nav__link" href="sell.html">
+						<i class="fas fa-tag"></i>
+						<span>내놔요</span>
+					</a>
+				</li>
+				<li class="nav__btn">
+					<a class="nav__link" href="profile.html">
+						<i class="far fa-user"></i>
+						<span>내 계정</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+	
+		</body>
+		</html>
+		
+		<script src="js/jquery-3.6.0.min.js"></script>
+		<script src="js/core.js"></script>
+		<script>
+		
+		$(document).ready(function() {
+			Page.init(start);
+			});
+
+
+			var minNo = -1;
+			var feedList = [];
+			function start(uid) {
+			var feeds = DataCache.get("mainCache");
+			if (feeds != null) {
+			console.log("[start] fetch the existing feed list from DataCache ...");
+			feedList = feeds;
+			show(feeds);
+			}
+			else {
+			AJAX.call("jsp/feedGetGroup.jsp", null, function(data) {
+			var feeds = JSON.parse(data.trim());
+			console.log("[start] fetch a new feed list from the server ...");
+			feedList = feeds;
+			DataCache.set("mainCache", feedList);
+			show(feeds);
+			});
+			}
+			}
+			
+			function show(feeds) {
+				// set minNo to detect the end of the list
+				if (feeds.length > 0) {
+				minNo = feeds[feeds.length - 1].no;
+				}
+				var str = "";
+				for (var i=0; i<feeds.length; i++) {
+				str += getFeedCode(feeds[i]);
+				}
+				$("#list").append(str);
+				}
+				function getFeedCode(feed) {
+					if (feed.images == null){
+				var name = (feed.user == null) ? feed.id : feed.user.name;
+				var str = "<div class='feed'>"
+				str += "<div class='main_feed1'  onclick='showFeed(" + feed.no + ")'><span>" + feed.trader + "</span>"
+				str += "<span>" + feed.price + "</span>";
+				str += "</div>";
+				
+				str += "<div class='main_feed2'  onclick='showFeed(" + feed.no + ")'><span>" + feed.ts + "</span>";
+				str += "<span>" + feed.content + "</span>"
+				str += "<span>" + feed.start + "  ~  " + feed.end  + "까지 방" + feed.type + "해요. </span>";
+				str += "</div>";
+				return str;
+					}
+					
+					else {
+				var imgurl = "images/" + feed.images;
+				var name = (feed.user == null) ? feed.id : feed.user.name;
+				var str = "<div class='feed' >"
+				str += "<div class='main_feed1' onclick='showFeed(" + feed.no + ")'  style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'><span>" + feed.trader + "</span>"
+				str += "<span>" + feed.price + "</span>";
+				str += "</div>";
+				str += "<div class='main_feed2' onclick='showFeed(" + feed.no + ")'><span>" + feed.ts + "</span>";
+				str += "<span>" + feed.content + "</span>"
+				str += "<span>" + feed.start + "  ~  " + feed.end  + "까지 방" + feed.type + "해요. </span>";
+				str += "</div>";
+				
+				return str;
+				}
+					
+				}
+				
+				function showFeed(fno) {
+					for (var i=0; i<feedList.length; i++) {
+					if (feedList[i].no == fno) {
+					Page.go("feedView.html", feedList[i]);
+					return;
+					}
+					}
+					}
+				function getNext() {
+					var params = {limit: minNo};
+					AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {
+					var feeds = JSON.parse(data.trim());
+					feedList = feedList.concat(feeds);
+					DataCache.set("mainCache", feedList);
+					show(feeds);
+					});
+					}
+				function addFeed() {
+				window.location.href = "feedAdd.html";
+				}
+				</script>
+				 <script
+				 src="https://kit.fontawesome.com/6478f529f2.js"
+				 crossorigin="anonymous"
+			   ></script>
