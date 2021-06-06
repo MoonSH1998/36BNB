@@ -20,6 +20,6 @@ public class UserObj {
     public String getBirth() { return this.birth; }
     public String getSex() { return this.sex; }
     public String getPhone_num() { return this.phone_num; }
-    public String getps() { return this.ps; }
+    public String getPs() { return this.ps; }
     
 }

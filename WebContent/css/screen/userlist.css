@@ -1,0 +1,43 @@
+.user_list {
+	margin-top:40px;
+	width:100%;
+}
+.user_list span{
+	display:flex;
+	justify-content :center;
+	align-items: center;
+	width:25%;
+	height: 48px;
+}
+.user_list_name{
+	
+	display:flex;
+	flex-direction: row;
+
+}
+
+.user_list_atom{
+	display:flex;
+	background-color: rgb(0, 255, 255)e;
+	
+	}
+.user_list_name :first-child,	
+.user_list_atom :first-child {
+	border : 1px solid rgba(0,0,0,0.4);
+	border-left: none;
+
+}
+.user_list_name :nth-child(2),
+.user_list_atom :nth-child(2) {
+	border : 1px solid rgba(0,0,0,0.4);
+}
+.user_list_name :nth-child(3),
+.user_list_atom :nth-child(3) {
+	border : 1px solid rgba(0,0,0,0.4);
+}
+.user_list_name :last-child,
+.user_list_atom :last-child {
+	border : 1px solid rgba(0,0,0,0.4);
+	
+	border-right: none;
+}

@@ -2,6 +2,7 @@ package dao;
 import java.sql.*;
 import javax.naming.NamingException;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -82,7 +83,7 @@ import util.ConnectionPool;
 			String jsonstr = rs.getString("jsonstr");
 			JSONObject obj = (JSONObject) (new JSONParser()).parse(jsonstr);
 			String ps = obj.get("ps").toString();
-			if (!ups.equals(ps)) return 2;
+			if (!ups.equals(ps)	) return 2;
 			
 			return 0;
 
@@ -100,9 +101,10 @@ import util.ConnectionPool;
 				PreparedStatement stmt = null;
 				ResultSet rs = null;
 				try {
-					String sql = "SELECT jsonstr FROM user";
+					String sql = "SELECT jsonstr FROM user ";
 					stmt = conn.prepareStatement(sql);
 					rs = stmt.executeQuery();
+					
 					
 					String str = "[";
 					int cnt = 0;
@@ -111,7 +113,6 @@ import util.ConnectionPool;
 					str += rs.getString("jsonstr");
 					}
 					return str + "]";
-
 				} finally {
 					if (rs != null) rs.close(); 
 					if (stmt != null) stmt.close(); 

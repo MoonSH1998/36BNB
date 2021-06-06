@@ -3,13 +3,15 @@
 <meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
 <meta charset="utf-8" />
 <link rel="stylesheet" href="css/core.css">
-<title>MySNS</title>
+
 </head>
 <body>
-<div class="page-hdr">MySNS</div>
-<div class="page-body">
-<table id="list" class="section mtop-20 pad-16"></table>
-</div>
+
+<header class="need-screen-header"> 
+		<a class="back_icon" href ="//뒤돌아가기"><img src="img/back_arrow.svg"></a>
+        <span class="need_title">가입자 </span>
+</header>
+<div id="list" class="user_list"> </div>
 </body>
 </html>
 <script src="js/jquery-3.6.0.min.js"></script>
@@ -20,10 +22,37 @@ Page.init(start);
 });
 function start(uid) {
 	AJAX.call("jsp/userList.jsp", null, function(data) {
-		var users = JSON.parse(data.trim());
-		});
-}
+	var users = JSON.parse(data.trim());
+	show(users);
+	});
+	}
 function show(users) {
+	var str ="";
+	str += "<div class='user_list_name'>";
+	str += "<span>아이디</span><span>이름</span><span>성별</span><span>신고횟수</span>";
+	str += "</div>";
+	for (var i=0; i<users.length; i++) {
+	
+	
+	str += "<div class='user_list_atom'><span>"+ users[i].id + "</span>";
+	str += "<span>" + users[i].name + "</span>";
+	str += "<span>" + users[i].sex + "</span>";
+	str += "<span>" + users[i].stu_num + "</span></div>";
+	
+	}
+	$("#list").append(str);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	function show(users) {
 	var str = "";
 	str += "<tr><td colspan=3>가입자 리스트</td></tr>";
 	for (var i=0; i<users.length; i++) {
@@ -31,9 +60,11 @@ function show(users) {
 	str += "<tr>";
 	str += "<td>" + users[i].id + "</td>";
 	str += "<td>" + users[i].name + "</td>";
-	
+	str += "<td><small>&nbsp;(" + users[i].sex + ")</small></td>";
 	str += "</tr>";
-}
-$("#list").html(str);
-}
-</script>
+	}
+	$("#list").html(str);
+	}
+	 */
+	</script>
+	  
