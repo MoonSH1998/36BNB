@@ -27,11 +27,43 @@ function start(uid, feed) {
 
 function getFeedCode(feed){
 	var name = (feed.user == null) ? feed.id : feed.user.name;
-	var str = "<div class='feedview'>";
-	str +=  feed.id + "</div>";
-	
-	str += "<div class='text'>" + feed.content + "</div>";
-	if (feed.images != null){
+	var str = "<div class='feedview_header'>";
+			str += "<a class='back_icon' href ='#'><img src='img/back_arrow.svg'></a>";
+			str += "<div class='feedview_header_user'>";
+			str += "<span>" + feed.user.id + "</span>";
+			str += "<span> 게시물 </span>";
+			str += "</div>"
+			
+			str += "</div>";
+			str += "<div class='line'></div>";
+			str += "<div class='feedview_main'>";
+			str += "<div class='feedview_user'>"
+			//str += "<span>" + feed.user.img + "</span>";
+			str += "<span>  </span>";
+			str += "<span>" + feed.user.name + "</span>";
+			str += 	"</div>";
+			
+			//str += 	"<div class='feedview_img'>" + feed.images + "</div>";
+			
+			str += "<div class='feedview_img'>";
+			str += "<div></div>";
+			str += "</div>";
+			
+			str +="<div class='feedview_action'>";
+			str += "<span>연락하기</span><span>신고하기</span>"
+			str += "</div>";
+			
+			
+			str += "<div class='feedview_data'>";
+			str += "<span>" + feed.start + "   ~   " + feed.end + "</span>";
+			str += "<span> 1박당" + feed.price + "원" + feed.type + "</span>"; 
+			str += "<span>" + feed.trader + "  거래가능 </span>" ;
+			str += "<span>" + feed.content + "</span>" ;
+		str += "</div>"
+		
+		
+		
+		if (feed.images != null){
 		var imgurl = "images/" + feed.images[0];
 		str += "<div class='image' style='background-image: url(\"" + imgurl + "\" )'></div>";
 
@@ -40,4 +72,8 @@ function getFeedCode(feed){
 	return str;
 }
 
+	
+	
+	
+	
 </script>
