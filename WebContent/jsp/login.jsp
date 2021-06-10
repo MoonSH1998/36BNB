@@ -13,10 +13,10 @@ request.setCharacterEncoding("utf-8");
     else if (code == 2) {
        out.print("PE"); // out.print("패스워드가 일치하지 않습니다.");
     }
-    else {
+    else if (code == 0) {
     	session.setAttribute("id", uid);
     	out.print("OK");
     	}
-    	%>asd
-    	
-    	
+
+%>
+

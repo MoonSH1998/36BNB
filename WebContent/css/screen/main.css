@@ -52,7 +52,14 @@ body {
   border-radius: 15px;
   color: white;
 }
+.emp{
+	display:block;
+	height:36%;
+}
 
+.list{
+	display:block;
+}
 .feed{
 	display:block;
 	height:310px;

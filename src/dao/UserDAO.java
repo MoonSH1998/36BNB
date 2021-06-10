@@ -72,7 +72,7 @@ import util.ConnectionPool;
 			PreparedStatement stmt = null;
 			ResultSet rs = null;
 			try {
-			String sql = "SELECT jsonstr FROM user WHERE id = ?";
+			String sql = "SELECT id, jsonstr FROM user WHERE id = ?";
 			conn = ConnectionPool.get();
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, uid);

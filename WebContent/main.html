@@ -14,6 +14,7 @@
 		<button class="go_sell_btn" type="button" onclick="//내놔요링크걸기">방 찾아보기</button>
 		</div>
 		
+		<div class="emp"></div>
 		<div id="list"></div>
 		
 		<!--   이건 나중에 써먹기.
@@ -135,7 +136,8 @@
 					}
 					}
 					}
-				function getNext() {
+			/** 
+			function getNext() {
 					var params = {limit: minNo};
 					AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {
 					var feeds = JSON.parse(data.trim());
@@ -147,8 +149,10 @@
 				function addFeed() {
 				window.location.href = "feedAdd.html";
 				}
+				**/
 				</script>
 				 <script
 				 src="https://kit.fontawesome.com/6478f529f2.js"
 				 crossorigin="anonymous"
+				 
 			   ></script>
