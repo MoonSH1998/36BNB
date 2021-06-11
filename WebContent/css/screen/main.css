@@ -59,6 +59,7 @@ body {
 
 .list{
 	display:block;
+	margin-top:150px;
 }
 .feed{
 	display:block;
@@ -120,8 +121,6 @@ body {
 }
 
 
-.nav__list :first-child a {
-  color: #7cb9f2;
-  font-weight: bold;
+.none{
+	opacity: 0;
 }
-

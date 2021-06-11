@@ -1,0 +1,144 @@
+<html>
+
+<head>
+	<script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+	<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="css/core.css">
+	<title>MySNS</title>
+</head>
+
+<body>
+	<header class="needFeedAdd-screen-header">
+		<a class="back_icon" href="sell.html"><img src="img/back_arrow.svg"></a>
+		<span class="need_title">내놔요 글 작성하기</span>
+	</header>
+	<div class="line"></div>
+
+<div class="form">
+	<div class="f_input">
+	<p class="start_date">거래희망 시작 날</p>
+	<input type="date" id="start" value="xxxx-xx-xx" min="2021-01-01" max="2022-12-31">
+	<p class="end_date">거래희망 종료 날</p>
+	<input type="date" id="end" value="xxxx-xx-xx" min="2021-01-01" max="2022-12-31">
+	<div class="inv_line"></div>
+
+	<p>거래 대상의 성별을 선택해주세요</p>
+	<div>
+		<input type="radio" id="man" name="trader" value="man">
+		<label for="man">남자</label>
+		<input type="radio" id="woman" name="trader" value="woman">
+		<label for="woman">여자</label>
+		<input type="radio" id="no" name="trader" value="no">
+		<label for="no">성별무관</label>
+	</div>
+	<div class="inv_line"></div>
+
+	<p>1박당 희망 가격을 적어주세요 </p>  
+	<div><input id="price" type="text" placeholder="숫자만 입력해주세요"> <span>원</span></div>
+	<div class="inv_line"></div>
+
+	<p>글을 작성해 주세요 </p>  
+	<textarea id="content"></textarea>
+	</div>
+
+	<div class="line"></div>
+	<input id="image" type="file">
+	<div class="submit_feedadd" onclick="upload()">글 작성 완료</div>
+</div>
+</body>
+
+</html>
+
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+
+<script>
+	$(document).ready(function () {
+		Page.init(setup);
+	});
+	var loginId = null;
+	function setup(uid) {
+		loginId = uid;
+	}
+
+	function upload() {
+		id = loginId;
+
+		
+		var start = $("#start").val().trim();
+		if (start == "") {
+			alert("거래 시작 날을 입력해주세요.");
+			$("#start").focus();
+			return;
+		}
+	
+		var end = $("#end").val().trim();
+		if (end == "") {
+			alert("거래 종료 날을 입력해주세요.");
+			$("#end").focus();
+			return;
+		}
+
+		var price = $("#price").val().trim();
+		if (price == "") {
+			alert("1박당 희망 가격을 적어주세요.");
+			$("#price").focus();
+			return;
+		}
+
+		var content = $("#content").val().trim();
+		if (content == "") {
+			alert("작성글을 입력해 주세요.");
+			$("#content").focus();
+			var imgobj = $("#image")[0].files[0];
+			var jsonobj = {id: id, type: "내놔요", start: start, end: end, price: price, trader: trader, content: content, ts: getTime()};
+			if (imgobj != null) {
+				jsonobj.images = [imgobj.name];
+			}
+			return;
+		}
+
+  		var genderNodeList
+  		= document.getElementsByName('trader');
+  
+		var trader;
+  		genderNodeList.forEach((node) => {
+    	if(node.checked)  {
+    	trader = node.value;
+    	}
+  		}) 
+		var imgobj = $("#image")[0].files[0];
+			var jsonobj = {id: id, image: image, type: "내놔요", start:start, end:end,price:price, trader:trader, content: content, ts: getTime()};
+			
+			var params = new FormData();
+			params.append("jsonstr", JSON.stringify(jsonobj));
+			if (imgobj != null) {
+			params.append("image", imgobj);
+			}
+		var url = "jsp/feedAdd.jsp";
+		AJAX.call(url, params, function (data) {
+
+			var code = data.trim();
+			if (code == "ER") {
+				alert("작성 글의 업로드 중 오류가 발생하였습니다.");
+			}
+			else {
+				alert("작성 글의 업로드가 완료되었습니다.");
+				window.location.href = "main.html";
+			}
+		}, true);
+	}
+
+	function getTime() {
+		var date = new Date();
+		var year = date.getFullYear();
+		var month = ("0" + (1 + date.getMonth())).slice(-2);
+		var day = ("0" + date.getDate()).slice(-2);
+		var hour = ("0" + date.getHours()).slice(-2);
+		var min = ("0" + date.getMinutes()).slice(-2);
+		var sec = ("0" + date.getSeconds()).slice(-2);
+		return year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
+	}
+</script>

@@ -56,7 +56,7 @@ sessionStorage.removeItem(name);
 };
 var DataCache = {
 set: function (name, data) {
-var obj = { ts: Date.now(), data: data };
+var obj = {  data: data };
 SessionStore.set(name, obj);
 },
 get: function (name) {
