@@ -60,3 +60,8 @@
 .feedview_data span{
 	margin:5px;
 }
+.image{
+	display:block;
+	height: 150px;
+	margin: 30px;
+}

@@ -124,3 +124,11 @@ body {
 .more{
 	margin-bottom: 150px;
 }
+
+.feedview_img{
+	display:flex;
+	width:90%;
+	height:23%;
+	background-color: red;
+	border : 10px solid black;
+}
