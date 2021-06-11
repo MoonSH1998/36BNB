@@ -106,27 +106,25 @@
 				
 				str += "<div class='main_feed2'  onclick='showFeed(" + feed.no + ")'><span>" + feed.ts + "</span>";
 				str += "<span>" + feed.content + "</span>"
-				str += "<span>" + feed.start + "  ~  " + feed.end  + "까지 방" + feed.type + "해요. </span>";
+				str += "<span>" + feed.start + "  ~  " + feed.end  + "까지 방" + feed.type + "</span>";
 				str += "</div>";
 				return str;
 					}
 					
 					else {
-				var imgurl = "image/" + feed.image;
-				var name = (feed.user == null) ? feed.id : feed.user.name;
-				var str = "<div class='feed' >";
-				str += "<div class='main_feed1' onclick='showFeed(" + feed.no + ")'  style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'><span>" + feed.trader + "</span>";
-				str += "<span>" + feed.price + "</span>";
-				str += "</div>";
-				str += "<div class='main_feed2' onclick='showFeed(" + feed.no + ")'><span>" + feed.ts + "</span>";
-				str += "<span>" + feed.content + "</span>";
-				str += "<span>" + feed.start + "  ~  " + feed.end  + "까지 방" + feed.type + "해요. </span>";
-				str += "</div>";
-				
-				return str;
-				}
-					
-				}
+						var imgurl = "images/" + feed.images;
+						var name = (feed.user == null) ? feed.id : feed.user.name;
+						var str = "<div class='feed' onclick='showFeed(" + feed.no + ")'>"
+						str += "<div class='main_feed1'  style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'><span>" + feed.trader + "</span>"
+						str += "<span>" + feed.price + "</span>";
+						str += "</div>";
+						str += "<div class='main_feed2'><span>" + feed.ts + "</span>";
+						str += "<span>" + feed.content + "</span>"
+						str += "<span>" + feed.start + "  ~  " + feed.end  + "까지 방" + feed.type + "</span>";
+						str += "</div>";
+						return str;
+						}
+						}
 				
 				function showFeed(fno) {
 					for (var i=0; i<feedList.length; i++) {
