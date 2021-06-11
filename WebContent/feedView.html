@@ -70,8 +70,7 @@ function getFeedCode(feed){
 		str += "<div class='feedview_user'>";
 		str += "<span>" + feed.user.name + "</span>";
 		str += 	"</div>";
-		
-		str += 	"<div class='feedview_img'>" + feed.images + "</div>";
+		str += 	"<div class='feedview_img' style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'></div>";
 		
 		str +="<div class='feedview_action'>";
 		str += "<span>연락하기</span><span>신고하기</span>"

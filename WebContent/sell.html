@@ -17,9 +17,8 @@
 	<div id="list"></div>
 	
 	 
-	<!--<table id="list" ></table>
-		<div class="button" onclick="getNext()">작성글 더보기</div>
-		<div class="page-body">
+	<div class="button more" onclick="getNext()"> 작성글 더보기 </div>
+	<!--	<div class="page-body">
 		<div class="page-mnu">
 		<div class="menu" onclick="addFeed()">글쓰기</div>
 		<div class="menu" onclick="">친구보기</div>
@@ -70,48 +69,73 @@
 
 
 		var minNo = -1;
+		var feedList = [];
 		function start(uid) {
+		var feeds = DataCache.get("mainCache");
+		if (feeds != null) {
+		console.log("[start] fetch the existing feed list from DataCache ...");
+		feedList = feeds;
+		show(feeds);
+		}
+		else {
 		AJAX.call("jsp/feedGetGroup.jsp", null, function(data) {
 		var feeds = JSON.parse(data.trim());
-		if (feeds.length > 0) {
-		minNo = feeds[feeds.length - 1].no;
-		}
+		console.log("[start] fetch a new feed list from the server ...");
+		feedList = feeds;
+		DataCache.set("mainCache", feedList);
 		show(feeds);
 		});
 		}
+		}
 		function show(feeds) {
-			var str = "";
-			for (var i=0; i<feeds.length; i++) {
-			var img = feeds[i].images, imgstr = "";
-			if (img != null) {
-			imgstr = "<img src='images/" + img + "' width=100%>";
-			}
-			str += "<tr>";
-			str += "<td><small>" + feeds[i].id + "</small></td>";
-			str += "<td><small>&nbsp;(" + feeds[i].ts + ")</small></td>";
-			str += "</tr>";
-			str += "<tr><td colspan=2>" + imgstr + "</td></tr>";
-			str += "<tr><td colspan=2>" + feeds[i].content + "</td></tr>";
-			str += "<tr><td colspan=2 height=40><hr></td></tr>";
-			}
-			$("#list").append(str);
-		}	
-
-		function getNext() {
-			var params = {maxNo: minNo};
-			AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {
-			var feeds = JSON.parse(data.trim());
+			// set minNo to detect the end of the list
 			if (feeds.length > 0) {
 			minNo = feeds[feeds.length - 1].no;
 			}
-			show(feeds);
-			});
+			
+			var str = "";
+			for (var i=0; i<feeds.length; i++) {
+			str += getFeedCode(feeds[i]);
 			}
-			function addFeed() {
-			window.location.href = "feedAdd_sell.html";
+			$("#list").append(str);
 			}
-			</script>
-			 <script
-			 src="https://kit.fontawesome.com/6478f529f2.js"
-			 crossorigin="anonymous"
-		   ></script>
+			function getFeedCode(feed) {
+		
+					var imgurl = "image/" + feed.image;
+					var name = (feed.user == null) ? feed.id : feed.user.name;
+					var str = "<div class='feed' >"
+					str += "<div class='main_feed1' onclick='showFeed(" + feed.no + ")'  style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'><span>" + feed.trader + "</span>"
+					str += "<span>" + feed.price + "</span>";
+					str += "</div>";
+					str += "<div class='main_feed2' onclick='showFeed(" + feed.no + ")'><span>" + feed.ts + "</span>";
+					str += "<span>" + feed.content + "</span>"
+					str += "<span>" + feed.start + "  ~  " + feed.end  + "까지 방" + feed.type + " </span>";
+					str += "</div>";
+					
+					return str;
+					
+				
+			}
+			
+						
+					
+					
+
+			function getNext() {
+				var params = {maxNo: minNo};
+				AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {
+				var feeds = JSON.parse(data.trim());
+				if (feeds.length > 0) {
+				minNo = feeds[feeds.length - 1].no;
+				}
+				show(feeds);
+				});
+				}
+				function addFeed() {
+				window.location.href = "feedAdd_sell.html";
+				}
+				</script>
+				 <script
+				 src="https://kit.fontawesome.com/6478f529f2.js"
+				 crossorigin="anonymous"
+			   ></script>

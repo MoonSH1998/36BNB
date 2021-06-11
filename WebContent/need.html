@@ -7,7 +7,7 @@
 </head>
 <body>
     <header class="need-screen-header"> 
-		<a class="back_icon" href ="//뒤돌아가기"><img src="img/back_arrow.svg"></a>
+		<a class="back_icon" href ="main.html"><img src="img/back_arrow.svg"></a>
         <span class="need_title">방 구해요</span>
 		<a class="search_icon" href ="//검색창"><img src="img/Search.svg"></a>
 	</header>
@@ -15,7 +15,7 @@
 
 	<div class="feed_add" onclick="addFeed()">글 작성하기</div>	
 	<div id="list"></div>
-	
+		<div class="button more" onclick="getNext()">작성글 더보기</div>
 	 
 	<!--<table id="list" ></table>
 		<div class="button" onclick="getNext()">작성글 더보기</div>
@@ -82,9 +82,9 @@
 		function show(feeds) {
 			var str = "";
 			for (var i=0; i<feeds.length; i++) {
-			var img = feeds[i].images, imgstr = "";
+			var img = feeds[i].image, imgstr = "";
 			if (img != null) {
-			imgstr = "<img src='images/" + img + "' width=100%>";
+			imgstr = "<img src='image/" + img + "' width=100%>";
 			}
 			str += "<tr>";
 			str += "<td><small>" + feeds[i].id + "</small></td>";

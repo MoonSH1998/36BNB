@@ -92,11 +92,7 @@
 		if (content == "") {
 			alert("작성글을 입력해 주세요.");
 			$("#content").focus();
-			var imgobj = $("#image")[0].files[0];
-			var jsonobj = {id: id, type: "내놔요", start: start, end: end, price: price, trader: trader, content: content, ts: getTime()};
-			if (imgobj != null) {
-				jsonobj.images = [imgobj.name];
-			}
+			
 			return;
 		}
 
@@ -109,28 +105,31 @@
     	trader = node.value;
     	}
   		}) 
-		var imgobj = $("#image")[0].files[0];
-			var jsonobj = {id: id, image: image, type: "내놔요", start:start, end:end,price:price, trader:trader, content: content, ts: getTime()};
-			
-			var params = new FormData();
-			params.append("jsonstr", JSON.stringify(jsonobj));
-			if (imgobj != null) {
-			params.append("image", imgobj);
-			}
-		var url = "jsp/feedAdd.jsp";
-		AJAX.call(url, params, function (data) {
-
-			var code = data.trim();
-			if (code == "ER") {
-				alert("작성 글의 업로드 중 오류가 발생하였습니다.");
-			}
-			else {
-				alert("작성 글의 업로드가 완료되었습니다.");
-				window.location.href = "main.html";
-			}
-		}, true);
+		
+	var imgobj = $("#image")[0].files[0];
+	var jsonobj = {id: id, image: image, type: "내놔요", start:start, end:end, price:price, trader:trader, content: content, ts: getTime()};
+	if (imgobj != null) {
+		jsonobj.images = [imgobj.name];
 	}
-
+	
+	var params = new FormData();
+	params.append("jsonstr", JSON.stringify(jsonobj));
+	if (imgobj != null) {
+	params.append("image", imgobj);
+	}
+	var url = "jsp/feedAdd.jsp";
+	AJAX.call(url, params, function(data) {	
+	
+	var code = data.trim();
+	if (code == "ER") {
+	alert("작성 글의 업로드 중 오류가 발생하였습니다.");
+	}
+	else {
+	alert("작성 글의 업로드가 완료되었습니다.");
+	window.location.href = "main.html";
+	}
+	}, true);
+	}
 	function getTime() {
 		var date = new Date();
 		var year = date.getFullYear();

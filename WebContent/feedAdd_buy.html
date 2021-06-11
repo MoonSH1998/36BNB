@@ -102,8 +102,8 @@
     	trader = node.value;
     	}
   		}) 
-
-		var jsonobj = { id: id, type: "구해요",images : null, start: start, end: end, price: price, trader: trader, content: content, ts: getTime() };
+	
+		var jsonobj = { id: id, type: "sell", image: null, start: start, end: end, price: price, trader: trader, content: content, ts: getTime() };
 
 		var params = new FormData();
 		params.append("jsonstr", JSON.stringify(jsonobj));
