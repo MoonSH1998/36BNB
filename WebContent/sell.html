@@ -7,16 +7,16 @@
 </head>
 <body>
     <header class="need-screen-header"> 
-		<a class="back_icon" href ="//뒤돌아가기"><img src="img/back_arrow.svg"></a>
+		<a class="back_icon" href ="main.html"><img src="img/back_arrow.svg"></a>
         <span class="need_title">방 내놔요</span>
 		<a class="search_icon" href ="//검색창"><img src="img/Search.svg"></a>
 	</header>
 	<div class="line"></div>
 
 	<div class="feed_add" onclick="addFeed()">글 작성하기</div>	
-	<div id="list"></div>
 	
-	 
+	<div id="list"></div>
+		 
 	<div class="button more" onclick="getNext()"> 작성글 더보기 </div>
 	<!--	<div class="page-body">
 		<div class="page-mnu">
@@ -64,78 +64,90 @@
 		<script src="js/core.js"></script>
 		<script>
 		$(document).ready(function() {
-		Page.init(start);
-		});
+			Page.init(start);
+			});
 
 
-		var minNo = -1;
-		var feedList = [];
-		function start(uid) {
-		var feeds = DataCache.get("mainCache");
-		if (feeds != null) {
-		console.log("[start] fetch the existing feed list from DataCache ...");
-		feedList = feeds;
-		show(feeds);
-		}
-		else {
-		AJAX.call("jsp/feedGetGroup.jsp", null, function(data) {
-		var feeds = JSON.parse(data.trim());
-		console.log("[start] fetch a new feed list from the server ...");
-		feedList = feeds;
-		DataCache.set("mainCache", feedList);
-		show(feeds);
-		});
-		}
-		}
-		function show(feeds) {
-			// set minNo to detect the end of the list
-			if (feeds.length > 0) {
-			minNo = feeds[feeds.length - 1].no;
+			var minNo = -1;
+			var feedList = [];
+			function start(uid) {
+			var feeds = DataCache.get("mainCache");
+			if (feeds != null) {
+			console.log("[start] fetch the existing feed list from DataCache ...");
+			feedList = feeds;
+			show(feeds);
+			}
+			else {
+			AJAX.call("jsp/feedGetGroup.jsp", null, function(data) {
+			var feeds = JSON.parse(data.trim());
+			console.log("[start] fetch a new feed list from the server ...");
+			feedList = feeds;
+			DataCache.set("mainCache", feedList);
+			show(feeds);
+			});
+			}
 			}
 			
-			var str = "";
-			for (var i=0; i<feeds.length; i++) {
-			str += getFeedCode(feeds[i]);
-			}
-			$("#list").append(str);
-			}
-			function getFeedCode(feed) {
-		
-					var imgurl = "image/" + feed.image;
-					var name = (feed.user == null) ? feed.id : feed.user.name;
-					var str = "<div class='feed' >"
-					str += "<div class='main_feed1' onclick='showFeed(" + feed.no + ")'  style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'><span>" + feed.trader + "</span>"
-					str += "<span>" + feed.price + "</span>";
-					str += "</div>";
-					str += "<div class='main_feed2' onclick='showFeed(" + feed.no + ")'><span>" + feed.ts + "</span>";
-					str += "<span>" + feed.content + "</span>"
-					str += "<span>" + feed.start + "  ~  " + feed.end  + "까지 방" + feed.type + " </span>";
-					str += "</div>";
-					
-					return str;
-					
-				
-			}
-			
-						
-					
-					
-
-			function getNext() {
-				var params = {maxNo: minNo};
-				AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {
-				var feeds = JSON.parse(data.trim());
+			function show(feeds) {
+				// set minNo to detect the end of the list
 				if (feeds.length > 0) {
 				minNo = feeds[feeds.length - 1].no;
 				}
-				show(feeds);
-				});
+				var str = "";
+				for (var i=0; i<feeds.length; i++) {
+				str += getFeedCode(feeds[i]);
 				}
+				$("#list").append(str);
+				}
+				function getFeedCode(feed) {
+					if (feed.images == null){
+				
+				return str;
+					}
+					
+					else {
+						var imgurl = "images/" + feed.images;
+						var name = (feed.user == null) ? feed.id : feed.user.name;
+						var str = "<div class='feed' onclick='showFeed(" + feed.no + ")'>";
+						str += "<div class='main_feed1'  style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'><span>" + feed.trader + "</span>";
+						str += "<span>" + feed.price + "</span>";
+						str += "</div>";
+						str += "<div class='main_feed2'><span>" + feed.ts + "</span>";
+						str += "<span>" + feed.content + "</span>";
+						str += "<span>" + feed.start + "  ~  " + feed.end  + "까지 방" + feed.type + "</span>";
+						str += "</div>";
+						return str;
+						}
+						}
+				
+				function showFeed(fno) {
+					for (var i=0; i<feedList.length; i++) {
+					if (feedList[i].no == fno) {
+					Page.go("feedView.html", feedList[i]);
+					return;
+					}
+					}
+					}
+			
+			function getNext() {
+					var params = {limit: minNo};
+					AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {
+					var feeds = JSON.parse(data.trim());
+					feedList = feedList.concat(feeds);
+					DataCache.set("mainCache", feedList);
+					show(feeds);
+					});
+					}
 				function addFeed() {
-				window.location.href = "feedAdd_sell.html";
+				window.location.href = "feedAdd.html";
+				}
+				
+				function addFeed() {
+					window.location.href = "feedAdd_sell.html";
 				}
 				</script>
 				 <script
 				 src="https://kit.fontawesome.com/6478f529f2.js"
 				 crossorigin="anonymous"
+				 
 			   ></script>

@@ -83,16 +83,17 @@
 			var str = "";
 			for (var i=0; i<feeds.length; i++) {
 			var img = feeds[i].image, imgstr = "";
-			if (img != null) {
-			imgstr = "<img src='image/" + img + "' width=100%>";
-			}
+			if (img == null) {
+			
 			str += "<tr>";
 			str += "<td><small>" + feeds[i].id + "</small></td>";
 			str += "<td><small>&nbsp;(" + feeds[i].ts + ")</small></td>";
 			str += "</tr>";
-			str += "<tr><td colspan=2>" + imgstr + "</td></tr>";
 			str += "<tr><td colspan=2>" + feeds[i].content + "</td></tr>";
 			str += "<tr><td colspan=2 height=40><hr></td></tr>";
+			}
+			else {
+				}
 			}
 			$("#list").append(str);
 		}	

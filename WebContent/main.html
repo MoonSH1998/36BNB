@@ -97,7 +97,7 @@
 				$("#list").append(str);
 				}
 				function getFeedCode(feed) {
-					if (feed.image == null){
+					if (feed.images == null){
 				var name = (feed.user == null) ? feed.id : feed.user.name;
 				var str = "<div class='feed'>";
 				str += "<div class='main_feed1'  onclick='showFeed(" + feed.no + ")'><span>" + feed.trader + "</span>";
@@ -115,7 +115,7 @@
 						var imgurl = "images/" + feed.images;
 						var name = (feed.user == null) ? feed.id : feed.user.name;
 						var str = "<div class='feed' onclick='showFeed(" + feed.no + ")'>"
-						str += "<div class='main_feed1'  style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'><span>" + feed.trader + "</span>"
+						str += "<div class='main_feed1'  style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'><span>" + feed.trader + "</span>";
 						str += "<span>" + feed.price + "</span>";
 						str += "</div>";
 						str += "<div class='main_feed2'><span>" + feed.ts + "</span>";
