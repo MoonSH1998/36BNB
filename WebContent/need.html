@@ -82,8 +82,8 @@
 		function show(feeds) {
 			var str = "";
 			for (var i=0; i<feeds.length; i++) {
-			var img = feeds[i].image, imgstr = "";
-			if (img == null) {
+			var feedtype = feeds[i].type, typestr = "";
+			if (feedtype == "구해요") {
 			
 			str += "<tr>";
 			str += "<td><small>" + feeds[i].id + "</small></td>";

@@ -28,7 +28,7 @@ function start(uid, feed) {
 function getFeedCode(feed){
 	var name = (feed.user == null) ? feed.id : feed.user.name;
 	var str = "<div class='feedview_header'>";
-	if(feed.images == null){
+	if(feed.image == null){
 			str += "<a class='back_icon' href ='main.html'><img src='img/back_arrow.svg'></a>";
 			str += "<div class='feedview_header_user'>";
 			str += "<span>" + feed.user.id + "</span>";
