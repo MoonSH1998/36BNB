@@ -60,6 +60,22 @@ import util.ConnectionPool;
 		if (conn != null) conn.close();
 		}
 		}
+			public boolean delete_feed(String no) throws NamingException, SQLException {
+				Connection conn = ConnectionPool.get();
+				PreparedStatement stmt = null;
+				try {
+					String sql = "DELETE FROM feed WHERE no = ?";
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, no);
+			
+					int count = stmt.executeUpdate();
+					return (count == 1) ? true : false;
+				} finally {
+					if (stmt != null) stmt.close(); 
+					if (conn != null) conn.close();
+				}
+			}
+			
 			
 			public String getList() throws NamingException, SQLException {
 						Connection conn = ConnectionPool.get();
@@ -111,4 +127,6 @@ import util.ConnectionPool;
 		if (conn != null) conn.close();
 	}
 }
+		
+	
 }

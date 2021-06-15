@@ -1,0 +1,69 @@
+<html>
+<head>
+<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
+<meta charset="utf-8" />
+<link rel="stylesheet" href="css/core.css">
+<title>MySNS</title>
+</head>
+<body>
+		
+	<div class="main_head , admin_head">
+		
+		<span class="title"><br><br>삼육비앤비<br>관리자 페이지입니다.</span>
+		</div>
+		
+		<div class="emp"></div>
+		
+		<div class="admin_1" onclick="go_userlist()">
+		<span>가입자</span>
+		<span>#</span>
+		</div>
+		
+		<div class="admin_2" onclick="go_feedlist()">
+		<span>게시글</span>
+		<span id="feed_no"></span>
+		</div>
+		
+		<div class="admin_3" onclick="go_report()">
+		<span>신고글</span>
+		<span>#</span>
+		</div>
+		
+		<div class="admin_4" onclick="go_baduser()">
+		<span>불량회원</span>
+		<span>#</span>
+		</div>
+		<!--   이건 나중에 써먹기.
+		<div class="menu" onclick="addFeed()">글쓰기</div>
+		<div class="menu" onclick="">친구보기</div>
+		<div class="menu" onclick="">내정보</div>
+		<div class="button" onclick="getNext()">작성글 더보기</div>
+ -->
+		
+	
+		</body>
+		</html>
+		<script>
+		
+			function go_userlist() {
+			window.location.href = "userlist.html";
+			}
+			
+			function go_feedlist() {
+			window.location.href = "feedlist.html";
+			}
+			
+			function go_report() {
+			window.location.href = "report.html";
+			}
+			
+			function go_bad_user() {
+			window.location.href = "bad_user.html";
+			}
+			
+			   </script>
+			 <script>
+				 src="https://kit.fontawesome.com/6478f529f2.js"
+				 crossorigin="anonymous"
+				 
+			   </script>
