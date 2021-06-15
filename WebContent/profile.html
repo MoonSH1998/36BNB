@@ -1,23 +1,22 @@
 <html>
 <head>
 <meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
-<meta charset="utf-8" />	
+<meta charset="utf-8" />
 <link rel="stylesheet" href="css/core.css">
 <title>MySNS</title>
 </head>
 <body>
     <header class="need-screen-header"> 
 		<a class="back_icon" href ="main.html"><img src="img/back_arrow.svg"></a>
-        <span class="need_title">방 내놔요</span>
-		<a class="search_icon" href ="//검색창"><img src="img/Search.svg"></a>
+        <span class="need_title"> 내 계정</span>
+		<a class="search_icon menu_icon" href ="#"><i class="fas fa-ellipsis-h"></i></a>
 	</header>
 	<div class="line"></div>
 
-	<div class="feed_add" onclick="addFeed()">글 작성하기</div>	
 	
 	<div id="list"></div>
 		 
-	<div class="button_more" onclick="getNext()"> 작성글 더보기 </div>
+	<div class="button more" onclick="getNext()"> 작성글 더보기 </div>
 	<!--	<div class="page-body">
 		<div class="page-mnu">
 		<div class="menu" onclick="addFeed()">글쓰기</div>
@@ -97,14 +96,13 @@
 				for (var i=0; i<feeds.length; i++) {
 				
 					var feedtype = feeds[i].type, typestr = "";
-					if (feedtype == "내놔요") {
-					str += getFeedCode(feeds[i]);
-					}
-					else{}
+				
 				}
 				$("#list").append(str);
 				}
-				function getFeedCode(feed) {
+				
+			
+			function getFeedCode(feed) {
 						var imgurl = "images/" + feed.images;
 						var name = (feed.user == null) ? feed.id : feed.user.name;
 						var str = "<div class='sell' onclick='showFeed(" + feed.no + ")'>";
@@ -139,7 +137,10 @@
 					show(feeds);
 					});
 					}
-			
+				function addFeed() {
+				window.location.href = "feedAdd.html";
+				}
+				
 				function addFeed() {
 					window.location.href = "feedAdd_sell.html";
 				}

@@ -14,8 +14,14 @@
 	<div class="line"></div>
 
 	<div class="feed_add" onclick="addFeed()">글 작성하기</div>	
-	<div id="list"></div>
-		<div class="button more" onclick="getNext()">작성글 더보기</div>
+	
+	
+	
+	<div id="list">
+	</div>
+	
+	
+		<div class="button_more" onclick="getNext()">작성글 더보기</div>
 	 
 	<!--<table id="list" ></table>
 		<div class="button" onclick="getNext()">작성글 더보기</div>
@@ -65,20 +71,78 @@
 		<script src="js/core.js"></script>
 		<script>
 		$(document).ready(function() {
-		Page.init(start);
-		});
+			Page.init(start);
+			});
 
 
-		var minNo = -1;
-		function start(uid) {
-		AJAX.call("jsp/feedGetGroup.jsp", null, function(data) {
-		var feeds = JSON.parse(data.trim());
-		if (feeds.length > 0) {
-		minNo = feeds[feeds.length - 1].no;
-		}
-		show(feeds);
-		});
-		}
+			var minNo = -1;
+			var feedList = [];
+			function start(uid) {
+			var feeds = DataCache.get("mainCache");
+			if (feeds != null) {
+			console.log("[start] fetch the existing feed list from DataCache ...");
+			feedList = feeds;
+			show(feeds);
+			}
+			else {
+			AJAX.call("jsp/feedGetGroup.jsp", null, function(data) {
+			var feeds = JSON.parse(data.trim());
+			console.log("[start] fetch a new feed list from the server ...");
+			feedList = feeds;
+			DataCache.set("mainCache", feedList);
+			show(feeds);
+			});
+			}
+			}
+			
+			function show(feeds) {
+				// set minNo to detect the end of the list
+				if (feeds.length > 0) {
+				minNo = feeds[feeds.length - 1].no;
+				}
+				var str = "";
+				for (var i=0; i<feeds.length; i++) {
+				
+					var feedtype = feeds[i].type, typestr = "";
+					if (feedtype == "구해요") {
+					str += getFeedCode(feeds[i]);
+					}
+					else{}
+				}
+				$("#list").append(str);
+				}
+			function getFeedCode(feed) {
+				
+					var name = (feed.user == null) ? feed.id : feed.user.name;
+					var str = "<div class='need' onclick='showFeed(" + feed.no + ")'>";
+					str += "<div class='need_date'>";
+					str += "<span>" + feed.start + "</span>";
+					str += "<span> ~ </span>";
+					str += "<span>" + feed.end + "</span>";
+					str += "</div>";
+					str += "<div class='need_content'>" + feed.content + "</div>";
+					str += "<div class='need_info'><span>" + feed.trader + "</span>";
+					str += "<span>" + feed.price + "</span>";
+					str += "<span>" + feed.ts + "</span></div>"
+					
+					str += "<div class='need_user_info'>" + feed.user.name + "</div></div>";
+
+					
+					
+				
+					return str;
+					}
+		
+			function showFeed(fno) {
+				for (var i=0; i<feedList.length; i++) {
+				if (feedList[i].no == fno) {
+				Page.go("feedView.html", feedList[i]);
+				return;
+				}
+				}
+				}
+		
+		/*
 		function show(feeds) {
 			var str = "";
 			for (var i=0; i<feeds.length; i++) {
@@ -97,7 +161,7 @@
 			}
 			$("#list").append(str);
 		}	
-
+*/
 		function getNext() {
 			var params = {maxNo: minNo};
 			AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {
@@ -111,6 +175,14 @@
 			function addFeed() {
 			window.location.href = "feedAdd_buy.html";
 			}
+			function showFeed(fno) {
+				for (var i=0; i<feedList.length; i++) {
+				if (feedList[i].no == fno) {
+				Page.go("feedView.html", feedList[i]);
+				return;
+				}
+				}
+				}
 			</script>
 			 <script
 			 src="https://kit.fontawesome.com/6478f529f2.js"

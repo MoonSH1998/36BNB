@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+.sell{
+	display:block;
+	height:310px;
+	width:100%;
+	margin-top:20px;
+	margin-bottom:800px;
+}
+.sell_feed1 {
+	position : relative;
+ 	 width: 95%;
+ 	 height: 60%;
+ 	 background-color: #f8f2ee;
+ 	 border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 8px 8px 0px 0px;
+  border-bottom: none;
+	position : relative;
+  color:red;
+ 
+				
+}
+.sell_feed1 span{
+	display:flex;
+	justify-content : center;
+	position:absolute;
+	bottom:10%;
+	align-items : center;
+	flex-direction : row;
+	width: 22%;
+	height:25px;
+	color:white;
+	background-color:#7cb9f2;
+	border-radius: 20px;
+	margin : 5px;
+	font-size:10px;
+}
+.sell_feed1 :first-child{
+	right: 27%;
+}
+.sell_feed1 :last-child{
+	right: 0;
+}
+
+.sell_feed2 {
+  display: flex;
+  position : relative;
+  flex-direction : column;
+  justify-content: flex-end;
+  width: 95%;
+  height: 40%;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0px 0px 8px 8px;
+  border-top:none;
+  margin-bottom: 20px;
+  color:black;
+}
+.sell_feed2 span{
+	margin : 10px;
+}
+
+.button_more{
+	
+	margin-bottom: 800px;
+}
+
+.feedview_img{
+	display:flex;
+	width:90%;
+	height:23%;
+	background-color: red;
+	border : 10px solid black;
+}

@@ -19,6 +19,3 @@ request.setCharacterEncoding("utf-8");
 		out.print("ER");
 	}
 	%>
-	
-
-	

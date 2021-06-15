@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+.menu_icon{
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	font-weight: bold;
+}
+
+.profile{
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top:40px;
+	
+}
+
+
+.profile :first-child {
+	font-size:34px;
+	font-weight: bold;
+	color:black;
+}
+
+.profile :last-child {
+	font-size: 14px;
+	margin: 15px 0px;
+}
