@@ -8,7 +8,7 @@
 <body>
 
 <header class="need-screen-header"> 
-		<a class="back_icon" href ="//뒤돌아가기"><img src="img/back_arrow.svg"></a>
+		<a class="back_icon" href ="admin.html"><img src="img/back_arrow.svg"></a>
         <span class="need_title">게시글 </span>
 </header>
 <div id="list" class="user_list"> </div>
@@ -35,31 +35,52 @@ function show(feeds) {
 	
 	
 	str += "<div class='user_list_atom'><span>"+ feeds[i].user.name + "</span>";
-	str += "<span>" + feeds[i].type + "</span>";
+	str += "<span id='feeds[i].type'>" + feeds[i].type + "</span>";
 	str += "<span>" + feeds[i].ts + "</span>";
 	str += "<span oncilck='delete_feed(\"" + feeds[i].no +"\")'> 삭제하기 </span></div>";
 	
 	}
 	$("#list").append(str);
 	}
-	
-	
 function delete_feed(no) {
-		var params = {no:no};
-		
-		AJAX.call("jsp/delete_feed.jsp", params, function(data) {
+	for (var i=0; i<feedList.length; i++) {
+		if (feedList[i].no == no) {
+	
+			var url ="jsp/delete_feed.jsp?no=" + no ;
+
+	AJAX.call(url, null, function(data) {
 	var code = data.trim();
-	 if(code == "OK") {
-	 	alert("글 삭제가 완료되었습니다.");
-	 	}
-	 else {
-	 		alert("글 삭제 중 오류가 발생하였습니다.");
-	 		window.location.reload();
-	 	}
-	 	});
-	}
+  if(code == "OK") {
+ 	alert("글 삭제가 완료되었습니다.");
+ 	window.location.href = "feedlist.html";
+ 	}
+ else if (code =="ER"){
+ 		alert("글 삭제 중 오류가 발생하였습니다.");
+ 	}
+ 	});
+		}
+		else {}
+}
+}
+/*
+function delete_feed(no) {
 	
+	var url ="jsp/delete_feed.jsp?no=" + no ;
+
+	AJAX.call(url, null, function(data) {
+	var code = data.trim();
+  if(code == "OK") {
+ 	alert("글 삭제가 완료되었습니다.");
+ 	window.location.href = "feedlist.html";
+ 	}
+ else if (code =="ER"){
+ 		alert("글 삭제 중 오류가 발생하였습니다.");
+ 	}
+ 	});
 	
+}
+	
+	*/
 
 
 	</script>

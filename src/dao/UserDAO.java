@@ -83,9 +83,10 @@ import util.ConnectionPool;
 			String jsonstr = rs.getString("jsonstr");
 			JSONObject obj = (JSONObject) (new JSONParser()).parse(jsonstr);
 			String ps = obj.get("ps").toString();
+			if (uid.equals("admin")&ups.equals(ps)) return 3;
 			if (!ups.equals(ps)	) return 2;
+			if (!uid.equals("admin")&ups.equals(ps)) return 0;
 			
-			return 0;
 
 		
 		    } finally {
@@ -93,6 +94,7 @@ import util.ConnectionPool;
 				if (stmt != null) stmt.close(); 
 				if (conn != null) conn.close();
 		    }
+			return 0;
 			
 		}	
 							

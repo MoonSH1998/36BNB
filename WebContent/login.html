@@ -47,8 +47,9 @@
 		var url = "jsp/login.jsp?id=" + id + "&ps=" + ps;
 		AJAX.call(url, null, function (data) {
 			var code = data.trim();
-			if (code == "ADMIN"){
+			if (code == "AD"){
 				alert("관리자 페이지로 접속합니다.");
+				window.location.href = "admin.html";
 			}
 			else if (code == "NE") {
 				alert("아이디가 존재하지 않습니다.");

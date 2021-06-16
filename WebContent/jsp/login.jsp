@@ -10,6 +10,9 @@ request.setCharacterEncoding("utf-8");
     if (code == 1) {
        out.print("NE"); // out.print("아이디가 존재하지 않습니다.");
     }
+    else if (code == 3){
+    	out.print("AD");
+    }
     else if (code == 2) {
        out.print("PE"); // out.print("패스워드가 일치하지 않습니다.");
     }
