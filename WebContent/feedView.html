@@ -41,12 +41,11 @@ function getFeedCode(feed){
 			str += "<div class='feedview_user'>";
 			str += "<span>" + feed.user.name + "</span>";
 			str += 	"</div>";
-			
-			//str += 	"<div class='feedview_img'>" + feed.images + "</div>";
+	
 			
 
 			str +="<div class='feedview_action'>";
-			str += "<span>연락하기</span><span>신고하기</span>"
+			str += "<span>연락하기</span><span onclick='report(" + feed.no + ',' + feed.user.id + ")'>신고하기</span>";
 			str += "</div>";
 			
 			
@@ -74,7 +73,7 @@ function getFeedCode(feed){
 		str += "<div class='image' style='background-image: url(\"" + imgurl + "\" )'></div>";
 		str += "</div>";
 		str +="<div class='feedview_action'>";
-		str += "<span>연락하기</span><span>신고하기</span>"
+		str += "<span>연락하기</span><span onclick='report(" + feed.no + ',' + feed.user.id + ")'>신고하기</span>";
 		str += "</div>";
 		
 		
@@ -87,16 +86,42 @@ function getFeedCode(feed){
 	}
 		
 		
-	//	if (feed.images != null){
-	//	var imgurl = "images/" + feed.images[0];
-	//	str += "<div class='image' style='background-image: url(\"" + imgurl + "\" )'></div>";
+	
 
 	
 	
 	return str;
 }
 
-	
+$(document).ready(function () {
+	Page.init(setup);
+});
+var loginId = null;
+function setup(uid) {
+	loginId = uid;
+}
+
+
+
+function report(no,fid) {
+		var id = loginId;
+		var no = no;
+		var fid = fid;
+		var feedoptionobj = {id : id,no: no, fid:fid, type:"report"};
+		var params = {id: id, jsonstr: JSON.stringify(feedoptionobj)};
+		var url ="jsp/report.jsp";
+			AJAX.call(url, params, function(data) {
+		var code = data.trim();
+
+		  if(code == "OK") {
+		 	alert("신고가 완료되었습니다.");
+		 	window.location.href = "main.html";
+		 	}
+		 else if (code =="ER"){
+		 		alert("신고 중 오류가 발생하였습니다.");
+		 	}
+		 	});
+		}	
 	
 	
 	

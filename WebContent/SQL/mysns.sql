@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS feed (
 	jsonstr VARCHAR(8192)
 	);
 	
-create table if not exists report(
- id varchar(128),
- report_no varchar(128),
- index idx1(id)
+create table if not exists feedoption(
+ 	list INT UNSIGNED PRIMARY KEY,
+	id varchar(128),
+ jsonstr VARCHAR(1024)
  );

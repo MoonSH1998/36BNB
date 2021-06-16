@@ -33,18 +33,18 @@
 		<span>불량회원</span>
 		<span>#</span>
 		</div>
-		<!--   이건 나중에 써먹기.
-		<div class="menu" onclick="addFeed()">글쓰기</div>
-		<div class="menu" onclick="">친구보기</div>
-		<div class="menu" onclick="">내정보</div>
-		<div class="button" onclick="getNext()">작성글 더보기</div>
- -->
+		
+		
+		<div class="logout_menu" onclick="logout()">로그아웃</div>
+		
 		
 	
 		</body>
 		</html>
 		<script>
-		
+			function logout(){
+				window.location.href = "jsp/logout.jsp";
+			}
 			function go_userlist() {
 			window.location.href = "userlist.html";
 			}

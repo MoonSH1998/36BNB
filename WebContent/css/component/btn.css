@@ -4,3 +4,11 @@
   	justify-content: center;
   	align-items: center;
 }
+.logout_menu{
+	display:flex;
+	margin-top:170px;
+	justify-content: center;
+	font-size: 18px;
+	font-weight: bold;
+	color:#FA716F;
+}

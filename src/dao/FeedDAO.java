@@ -61,7 +61,7 @@ import util.ConnectionPool;
 		}
 		}
 			
-			public boolean delete_feed(String no) throws NamingException, SQLException {
+			public boolean deletefeed(String no) throws NamingException, SQLException {
 				Connection conn = ConnectionPool.get();
 				PreparedStatement stmt = null;
 				try {
@@ -78,57 +78,26 @@ import util.ConnectionPool;
 			}
 			
 		
-			
-			
 			/*
-			public  String delete_feed(String no) throws NamingException, SQLException, ParseException {
+			public boolean report(String id, String no, String fid) throws NamingException, SQLException {
 				Connection conn = ConnectionPool.get();
 				PreparedStatement stmt = null;
-				ResultSet rs = null;
-				try {
-				String sql = "delete FROM feed WHERE no = ?";
-				stmt = conn.prepareStatement(sql);
-				stmt.setString(1, no);
-				rs = stmt.executeQuery();
-				rs.close(); stmt.close();
-				}
-				finally {
-					if (rs != null) rs.close();
-					if (stmt != null) stmt.close();
-					if (conn != null) conn.close();
-				}
-				return no;
-				
+					try {
+							String sql = "INSERT INTO report(id,no,fid) VALUES(?, ?, ?)";
+							stmt = conn.prepareStatement(sql);
+							stmt.setString(1, id);
+							stmt.setString(2, no);
+							stmt.setString(3, fid);
+							
+							int count = stmt.executeUpdate();
+							return (count == 1) ? true : false;
+						} finally {
+							if (stmt != null) stmt.close();
+							if (conn != null) conn.close();
+					}
 				}
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			/*
-			public boolean delete_feed(String no) throws NamingException, SQLException {
-				Connection conn = ConnectionPool.get();
-				PreparedStatement stmt = null;
-				try {
-					String sql = "DELETE FROM feed WHERE no = ?";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, no);
-			
-					int count = stmt.executeUpdate();
-					return (count == 1) ? true : false;
-				} finally {
-					if (stmt != null) stmt.close(); 
-					if (conn != null) conn.close();
-				}
-			}
-			
-			*/
-				
+				*/
 				
 			public String getList() throws NamingException, SQLException {
 						Connection conn = ConnectionPool.get();
@@ -153,6 +122,7 @@ import util.ConnectionPool;
 						if (conn != null) conn.close();
 					}
 				}
+			
 			
 	public String getGroup(String maxNo) throws NamingException, SQLException {
 		Connection conn = ConnectionPool.get();

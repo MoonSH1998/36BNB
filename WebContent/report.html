@@ -9,7 +9,7 @@
 
 <header class="need-screen-header"> 
 		<a class="back_icon" href ="admin.html"><img src="img/back_arrow.svg"></a>
-        <span class="need_title">게시글 </span>
+        <span class="need_title">신고내역 </span>
 </header>
 <div id="list" class="user_list"> </div>
 </body>
@@ -22,42 +22,42 @@ Page.init(start);
 });
 
 function start(uid) {
-	AJAX.call("jsp/feedlist.jsp", null, function(data) {
+	AJAX.call("jsp/feedoptionlist.jsp", null, function(data) {
 	var users = JSON.parse(data.trim());
 	show(users);
 	});
 	}
-function show(feeds) {
+function show(feedoptions) {
 	var str ="";
 	str += "<div class='user_list_name'>";
-	str += "<span>작성자</span><span>유형</span><span>시간</span><span>-</span>";
+	str += "<span>신고자</span><span>신고글</span><span>피신고자</span><span>확인 후 삭제</span>";
 	str += "</div>";
-	for (var i=0; i<feeds.length; i++) {
+	for (var i=0; i<feedoptions.length; i++) {
 	
 	
-	str += "<div class='user_list_atom'><span>"+ feeds[i].user.name + "</span>";
-	str += "<span>" + feeds[i].type + "</span>";
-	str += "<span>" + feeds[i].ts + "</span>";
-	str += "<span onclick='deletefeed(" + feeds[i].no + ")'> 삭제하기 </span></div>";
+	str += "<div class='user_list_atom'><span>"+ feedoptions[i].id + "</span>";
+	str += "<span>" + feedoptions[i].no + "</span>";
+	str += "<span>" + feedoptions[i].fid + "</span>";
+	str += "<span onclick='deletereport(" + feedoptions[i].list + ")'>확인완료</span></div>";
 	
 	}
 	$("#list").append(str);
 	}
 	
 	
-function deletefeed(no) {
-
-	var url ="jsp/deletefeed.jsp?no=" + no ;
-
+function deletereport(list) {
+	
+	var url ="jsp/deletereport.jsp?list=" + list;
+	
 		AJAX.call(url, null, function(data) {
 	var code = data.trim();
 
 	  if(code == "OK") {
-	 	alert("글 삭제가 완료되었습니다.");
-	 	window.location.href = "feedlist.html";
+	 	alert("신고 접수 완료.");
+	 	window.location.href = "report.html";
 	 	}
 	 else if (code =="ER"){
-	 		alert("글 삭제 중 오류가 발생하였습니다.");
+	 		alert("신고 처리 중 오류가 발생하였습니다.");
 	 	}
 	 	});
 	}	
