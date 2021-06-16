@@ -22,3 +22,9 @@ CREATE TABLE IF NOT EXISTS feed (
 	-- ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	jsonstr VARCHAR(8192)
 	);
+	
+create table if not exists report(
+ id varchar(128),
+ report_no varchar(128),
+ index idx1(id)
+ );

@@ -37,7 +37,7 @@ function show(feeds) {
 	str += "<div class='user_list_atom'><span>"+ feeds[i].user.name + "</span>";
 	str += "<span>" + feeds[i].type + "</span>";
 	str += "<span>" + feeds[i].ts + "</span>";
-	str += "<span oncilck='delete_feed()'> 삭제하기 </span></div>";
+	str += "<span oncilck='delete_feed(\"" + feeds[i].no +"\")'> 삭제하기 </span></div>";
 	
 	}
 	$("#list").append(str);
@@ -45,23 +45,21 @@ function show(feeds) {
 	
 	
 function delete_feed(no) {
-	for (var i=0; i<feedList.length; i++) {
-	if (feedlist[i].no == no) {
-
-		var url ="jsp/delete_feed.jsp?no=" + no ;
-
-		AJAX.call(url, null, function(data) {
+		var params = {no:no};
+		
+		AJAX.call("jsp/delete_feed.jsp", params, function(data) {
 	var code = data.trim();
 	 if(code == "OK") {
 	 	alert("글 삭제가 완료되었습니다.");
 	 	}
 	 else {
 	 		alert("글 삭제 중 오류가 발생하였습니다.");
+	 		window.location.reload();
 	 	}
 	 	});
 	}
-	else{}
-	}
-}
+	
+	
+
 
 	</script>

@@ -3,15 +3,9 @@
 <%
 request.setCharacterEncoding("utf-8");
 	
-	String no = request.getParameter("no");
+		String no = request.getParameter("no");
+		out.print((new FeedDAO()).delete_feed(no));
 
-		FeedDAO dao = new FeedDAO();
-		
-		if (dao.delete_feed(no) == true) {
-		out.print("OK");
-		return;
-	}
-		else {
-		out.print("ER");
-	}
 	%>
+	
+	
