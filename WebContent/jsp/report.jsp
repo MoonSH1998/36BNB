@@ -9,8 +9,7 @@ request.setCharacterEncoding("utf-8");
 	String jsonstr = request.getParameter("jsonstr");
 
 		FeedoptionDAO dao = new FeedoptionDAO();
-		
-		
+
 		if (dao.report(jsonstr) == true ) {
 			out.print("OK");
 	}

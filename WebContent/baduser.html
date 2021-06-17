@@ -9,7 +9,7 @@
 
 <header class="need-screen-header"> 
 		<a class="back_icon" href ="admin.html"><img src="img/back_arrow.svg"></a>
-        <span class="need_title">신고내역 </span>
+        <span class="need_title">불량회원 </span>
 </header>
 <div id="list" class="user_list"> </div>
 </body>
@@ -53,7 +53,6 @@ function deletereport(list) {
 	var code = data.trim();
 
 	  if(code == "OK") {
-		  
 	 	alert("신고 접수 완료.");
 	 	window.location.href = "report.html";
 	 	}

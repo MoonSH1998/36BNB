@@ -8,11 +8,13 @@ public class FeedoptionObj {
     	this.no = no;
     	this.fid = fid;
     	this.type = type;
+    
         }
     
     public String getId() { return this.id; }
     public String getNo() { return this.no; }
     public String getFid() { return this.fid; }
     public String getType() { return this.type; }
+ 
 }
 	

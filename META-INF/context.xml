@@ -4,9 +4,9 @@
 		auth="Container"
 		type="javax.sql.DataSource"
 		driverClassName="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://localhost:3306/mysns?serverTimezone=UTC"
-		username="root"
-		password="1111"
+		url="jdbc:mysql://localhost:3306/tjdgk8880"
+		username="tjdgk8880"
+		password="m7tvrwl31@!"
 		maxTotal="32"
 		maxIdle="4"
 		maxWaitMillis="-1" />
