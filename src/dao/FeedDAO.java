@@ -133,7 +133,7 @@ import util.ConnectionPool;
 		if (maxNo != null) {
 		sql += " WHERE no < " + maxNo;
 		}
-		sql += " ORDER BY no DESC LIMIT 10";
+		sql += " ORDER BY no DESC LIMIT 10	";
 		stmt = conn.prepareStatement(sql);
 		rs = stmt.executeQuery();
 		String str = "[";
