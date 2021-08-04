@@ -16,6 +16,16 @@
 	
 }
 
+.myProfile{
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.profileImg{
+	
+}
 
 .profile :first-child {
 	font-size:34px;

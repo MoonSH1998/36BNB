@@ -28,33 +28,34 @@ function start(uid, feed) {
 function getFeedCode(feed){
 	var name = (feed.user == null) ? feed.id : feed.user.name;
 	var str = "<div class='feedview_header'>";
-	if(feed.image == null){
-			str += "<a class='back_icon' href ='main.html'><img src='img/back_arrow.svg'></a>";
-			str += "<div class='feedview_header_user'>";
-			str += "<span>" + feed.user.id + "</span>";
-			str += "<span> 게시물 </span>";
-			str += "</div>"
-			
-			str += "</div>";
-			str += "<div class='line'></div>";
-			str += "<div class='feedview_main'>";
-			str += "<div class='feedview_user'>";
-			str += "<span>" + feed.user.name + "</span>";
-			str += 	"</div>";
-	
-			
-
-			str +="<div class='feedview_action'>";
-			str += "<span>연락하기</span><span onclick='report(" + feed.no + ',' + feed.user.id + ")'>신고하기</span>";
-			str += "</div>";
-			
-			
-			str += "<div class='feedview_data'>";
-			str += "<span>" + feed.start + "   ~   " + feed.end + "</span>";
-			str += "<span> 1박당" + feed.price + "원" + feed.type + "</span>"; 
-			str += "<span>" + feed.trader + "  거래가능 </span>" ;
-			str += "<span>" + feed.content + "</span>" ;
+	if(feed.images !== null){
+		str += "<a class='back_icon' href ='main.html'><img src='img/back_arrow.svg'></a>";
+		str += "<div class='feedview_header_user'>";
+		str += "<span>" + feed.user.id + "</span>";
+		str += "<span> 게시물 </span>";
 		str += "</div>"
+		
+		str += "</div>";
+		str += "<div class='line'></div>";
+		str += "<div class='feedview_main'>";
+		str += "<div class='feedview_user'>";
+		str += "<span>" + feed.user.name + "</span>";
+		str += 	"</div>";
+		var imgurl = "images/" + feed.images[0];
+		str += "<div class='image'  style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'>";
+		
+		str += "</div>";
+		str +="<div class='feedview_action'>";
+		str += "<span onclick='view_num(" +feed.user.phone_num + ")'>연락하기</span><span onclick='report(" + feed.no + "," + feed.user.id + ")'>신고하기</span>";
+		str += "</div>";
+		
+		
+		str += "<div class='feedview_data'>";
+		str += "<span>" + feed.start + "   ~   " + feed.end + "</span>";
+		str += "<span> 1박당" + feed.price + "원" + feed.type + "</span>"; 
+		str += "<span>" + feed.trader + "  거래가능 </span>" ;
+		str += "<span>" + feed.content + "</span>" ;
+	str += "</div>"
 	}
 	else{
 		str += "<a class='back_icon' href ='main.html'><img src='img/back_arrow.svg'></a>";
@@ -69,11 +70,11 @@ function getFeedCode(feed){
 		str += "<div class='feedview_user'>";
 		str += "<span>" + feed.user.name + "</span>";
 		str += 	"</div>";
-		var imgurl = "images/" + feed.images[0];
-		str += "<div class='image' style='background-image: url(\"" + imgurl + "\" )'></div>";
-		str += "</div>";
+
+		
+
 		str +="<div class='feedview_action'>";
-		str += "<span>연락하기</span><span onclick='report(" + feed.no + ',' + feed.user.id + ")'>신고하기</span>";
+		str += "<span onclick='view_num(" +feed.user.phone_num +")'>연락하기</span><span onclick='report(" + feed.no + ',' + feed.user.id + ")'>신고하기</span>";
 		str += "</div>";
 		
 		
@@ -83,6 +84,7 @@ function getFeedCode(feed){
 		str += "<span>" + feed.trader + "  거래가능 </span>" ;
 		str += "<span>" + feed.content + "</span>" ;
 	str += "</div>"
+		
 	}
 		
 		
@@ -100,7 +102,9 @@ var loginId = null;
 function setup(uid) {
 	loginId = uid;
 }
-
+function view_num(ph){
+	alert("연락처 = 0" +ph);
+}
 
 
 function report(no,fid) {
