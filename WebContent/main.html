@@ -1,10 +1,10 @@
 <html>
 <head>
 
-				 <script
-				 src="https://kit.fontawesome.com/6478f529f2.js"
-				 crossorigin="anonymous"></script>
-
+ <script
+	 src="https://kit.fontawesome.com/6478f529f2.js"
+	 crossorigin="anonymous">
+ </script>
 <meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
 <meta charset="utf-8" />
 <link rel="stylesheet" href="css/core.css">
@@ -68,28 +68,23 @@
 		$(document).ready(function() {
 			Page.init(start);
 			});
-
-
 			var minNo = -1;
 			var feedList = [];
 			function start(uid) {
-			var feeds = DataCache.get("mainCache");
-			if (feeds != null) {
-			console.log("[start] fetch the existing feed list from DataCache ...");
-			feedList = feeds;
-			show(feeds);
+				var feeds = DataCache.get("mainCache");
+				if(feeds != null){
+					feedList = feeds;
+					show(feedList);
+				}
+				else{
+					AJAX.call("jsp/feedGetGroup.jsp", null, function(data) {
+						feedList = JSON.parse(data.trim());
+						DataCache.set("mainCache", feedList);
+						console.log(feeds);
+						show(feedList);
+					});
+				}
 			}
-			else {
-			AJAX.call("jsp/feedGetGroup.jsp", null, function(data) {
-			var feeds = JSON.parse(data.trim());
-			console.log("[start] fetch a new feed list from the server ...");
-			feedList = feeds;
-			DataCache.set("mainCache", feedList);
-			show(feeds);
-			});
-			}
-			}
-			
 			function show(feeds) {
 				// set minNo to detect the end of the list
 				if (feeds.length > 0) {
@@ -101,9 +96,26 @@
 				}
 				$("#list").append(str);
 				}
+			function getNext(){
+				var params = {maxNo:minNo};
+				AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {
+					var feeds = JSON.parse(data.trim());
+					if(feeds.length > 0){
+						minNo = feeds[feeds.length -1].no;
+					}
+					else{
+						alert("더이상 작성글이 없습니다.");
+					}
+					feedList = feedList.concat(feeds);
+					DataCache.set("mainCache", feedList);
+					show(feeds);
+				});
+			}
+			
 				function getFeedCode(feed) {
 					if (feed.images == null){
 				var name = (feed.user == null) ? feed.id : feed.user.name;
+				var stuNum = Math.floor(((feed.user.stu_num)/1000000)%100);			//추가된 xx학번에 대한 변수 추가. by_성하_0805
 				var str = "<div class='feed'>";
 				str += "<div class='main_feed1'  onclick='showFeed(" + feed.no + ")'><span>" + feed.trader + "</span>";
 				str += "<span>" + feed.price + "</span>";
@@ -112,6 +124,7 @@
 				str += "<div class='main_feed2'  onclick='showFeed(" + feed.no + ")'><span>" + feed.ts + "</span>";
 				str += "<span>" + feed.content + "</span>"
 				str += "<span>" + feed.start + "  ~  " + feed.end  + "까지 방" + feed.type + "</span>";
+				str += "<span>" + stuNum + "학번" + "</span>";
 				str += "</div>";
 				return str;
 					}
@@ -131,13 +144,13 @@
 						}
 						}
 				
-					function showFeed(fno) {
-						for (var i=0; i<feedList.length; i++) {
-						if (feedList[i].no == fno) {
-						Page.go("feedView.html", feedList[i]);
-						return;
-						}
-						}
-						}
-						</script>
+		function showFeed(fno) {
+				for (var i=0; i<feedList.length; i++) {
+				if (feedList[i].no == fno) {
+				Page.go("feedView.html", feedList[i]);
+				return;
+				}
+			}
+		}
+				</script>
 				

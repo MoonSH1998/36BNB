@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS user(
     -- phone_num varchar(32),
     -- ps VARCHAR(32)
     jsonstr VARCHAR(1024)
-
+    
 );
 
 CREATE TABLE IF NOT EXISTS feed (

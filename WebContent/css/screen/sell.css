@@ -1,4 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+
+body{
+	background-color:black;
+}
+
 .sell{
 	display:block;
 	height:310px;
@@ -53,9 +58,12 @@
   border-top:none;
   margin-bottom: 20px;
   color:black;
+  overflow:hidden;
 }
 .sell_feed2 span{
 	margin : 10px;
+	overflow:hidden;
+	background-color: aqua;
 }
 
 .button_more{

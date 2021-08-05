@@ -18,4 +18,4 @@ request.setCharacterEncoding("utf-8");
 		else {
 		out.print("ER");
 	}
-	%>
+%>

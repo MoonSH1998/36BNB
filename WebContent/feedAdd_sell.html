@@ -13,15 +13,17 @@
 		<a class="back_icon" href="sell.html"><img src="img/back_arrow.svg"></a>
 		<span class="need_title">내놔요 글 작성하기</span>
 	</header>
-	<div class="line"></div>
+	
+<div class="line"></div>
 
 <div class="form">
 	<div class="f_input">
 	<p class="start_date">거래희망 시작 날</p>
-	<input type="date" id="start" value="xxxx-xx-xx" min="2021-01-01" max="2022-12-31">
+	<input type="date" id="start"  min="2021-01-01" max="2022-12-31">
 	<p class="end_date">거래희망 종료 날</p>
-	<input type="date" id="end" value="xxxx-xx-xx" min="2021-01-01" max="2022-12-31">
-	<div class="inv_line"></div>
+	<input type="date" id="end"  min="2021-01-01" max="2022-12-31">
+
+<div class="inv_line"></div>
 
 	<p>거래 대상의 성별을 선택해주세요</p>
 	<div>
@@ -66,7 +68,6 @@
 	function upload() {
 		id = loginId;
 
-		
 		var start = $("#start").val().trim();
 		if (start == "") {
 			alert("거래 시작 날을 입력해주세요.");
@@ -126,6 +127,7 @@
 	}
 	else {
 	alert("작성 글의 업로드가 완료되었습니다.");
+	DataCache.remove("mainCache");
 	window.location.href = "main.html";
 	
 	}

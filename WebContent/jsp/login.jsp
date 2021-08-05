@@ -21,5 +21,4 @@ request.setCharacterEncoding("utf-8");
     	session.setAttribute("id", uid);
     	out.print("OK");
     	}
-
 %>

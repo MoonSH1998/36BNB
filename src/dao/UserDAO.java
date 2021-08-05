@@ -8,14 +8,13 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import util.ConnectionPool;
-//test~~~1111111
-	public class UserDAO {
-		
-	
-		public boolean insert(String uid, String jsonstr) throws NamingException, SQLException {
+
+public class UserDAO {
+	public boolean insert(String uid, String jsonstr) throws NamingException, SQLException {
 				Connection conn = ConnectionPool.get();
 				PreparedStatement stmt = null;
-					try {
+					
+				try {
 							String sql = "INSERT INTO user(id, jsonstr) VALUES(?, ?)";
 							stmt = conn.prepareStatement(sql);
 							stmt.setString(1, uid);
@@ -23,13 +22,14 @@ import util.ConnectionPool;
 							
 							int count = stmt.executeUpdate();
 							return (count == 1) ? true : false;
-						} finally {
+					
+				} finally {
 							if (stmt != null) stmt.close();
 							if (conn != null) conn.close();
 					}
 				}
-
-		public boolean delete(String uid) throws NamingException, SQLException {
+	
+	public boolean delete(String uid) throws NamingException, SQLException {
 			Connection conn = ConnectionPool.get();
 			PreparedStatement stmt = null;
 			try {
@@ -44,7 +44,7 @@ import util.ConnectionPool;
 				if (conn != null) conn.close();
 			}
 		}
-		
+	
 		public boolean exists(String uid) throws NamingException, SQLException {
 			Connection conn = ConnectionPool.get();
 			PreparedStatement stmt = null;
@@ -53,18 +53,14 @@ import util.ConnectionPool;
 				String sql = "SELECT id FROM user WHERE id = ?";
 				stmt = conn.prepareStatement(sql);
 				stmt.setString(1, uid);
-		
 				rs = stmt.executeQuery();
 				return rs.next();
-				
 			} finally {
 				if (rs != null) rs.close();
 				if (stmt != null) stmt.close(); 
 				if (conn != null) conn.close();
 			}
 		}
-			
-	
 		
 		public int login(String uid, String ups) throws NamingException, SQLException, ParseException {
 			Connection conn = ConnectionPool.get();
@@ -85,18 +81,14 @@ import util.ConnectionPool;
 			if (uid.equals("admin")&ups.equals(ps)) return 3;
 			if (!ups.equals(ps)	) return 2;
 			if (!uid.equals("admin")&ups.equals(ps)) return 0;
-			
-
-		
-		    } finally {
+	    } finally {
 				if (rs != null) rs.close();
 				if (stmt != null) stmt.close(); 
 				if (conn != null) conn.close();
 		    }
 			return 0;
-			
 		}	
-							
+
 		public String getList() throws NamingException, SQLException{
 				Connection conn = ConnectionPool.get();
 				PreparedStatement stmt = null;
@@ -105,7 +97,6 @@ import util.ConnectionPool;
 					String sql = "SELECT jsonstr FROM user ";
 					stmt = conn.prepareStatement(sql);
 					rs = stmt.executeQuery();
-					
 					
 					String str = "[";
 					int cnt = 0;
@@ -120,7 +111,6 @@ import util.ConnectionPool;
 					if (conn != null) conn.close();
 				}
 			}
-		
 		public String get(String uid) throws NamingException, SQLException {
 			Connection conn = ConnectionPool.get();
 			PreparedStatement stmt = null;

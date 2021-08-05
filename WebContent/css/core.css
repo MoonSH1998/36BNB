@@ -13,16 +13,16 @@
 @import "screen/profile.css";
 
 
-/*  ↑ screen  */
+/*  �넁 screen  */
 
 @import "component/screen_header.css";
 @import "component/nav-bar.css";
 @import "component/feed_add.css";
 @import "component/btn.css";
 
-/*  ↑  component */
+/*  �넁  component */
 
-/*기본글꼴통일*/
+/*湲곕낯湲�瑗댄넻�씪*/
 body {
   background-color: white;
   font-family: "Noto Sans KR", sans-serif !important;
@@ -30,3 +30,5 @@ body {
   margin:0;
   padding:0;   
 }
+
+

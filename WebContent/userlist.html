@@ -28,58 +28,30 @@ function start(uid) {
 	}
 function show(users) {
 	var str ="";
-	str += "<div class='user_list_name'>";
-	str += "<span>아이디</span><span>이름</span><span>성별</span><span>-</span>";
-	str += "</div>";
+		str += "<div class='user_list_name'>";
+		str += "<span>아이디</span><span>이름</span><span>성별</span><span>-</span>";
+		str += "</div>";
 	for (var i=0; i<users.length; i++) {
-	
-	
-	str += "<div class='user_list_atom'><span>"+ users[i].id + "</span>";
-	str += "<span>" + users[i].name + "</span>";
-	str += "<span>" + users[i].sex + "</span>";
-	str += "<span onclick='withdraw(" + users[i].id + ")'>   삭제하기  </span></div>";
-	
+		str += "<div class='user_list_atom'><span>"+ users[i].id + "</span>";
+		str += "<span>" + users[i].name + "</span>";
+		str += "<span>" + users[i].sex + "</span>";
+		str += "<span onclick='withdraw(" + users[i].id + ")'>   삭제하기  </span></div>";
 	}
 	$("#list").append(str);
 	}
-	
+
 function withdraw(id) {
-
-var url ="jsp/withdraw.jsp?id=" + id ;
-
-	AJAX.call(url, null, function(data) {
-var code = data.trim();
-
-  if(code == "OK") {
- 	alert("회원 탈퇴가 완료되었습니다.");
- 	window.location.href = "admin.html";
- 	}
- else if (code =="ER"){
- 		alert("회원 탈퇴 처리 중 오류가 발생하였습니다.");
- 	}
+	var url ="jsp/withdraw.jsp?id=" + id ;
+		AJAX.call(url, null, function(data) {
+	var code = data.trim();
+		if(code == "OK") {
+		 	alert("회원 탈퇴가 완료되었습니다.");
+		 	window.location.href = "admin.html";
+	 	}
+		 else if (code =="ER"){
+ 			alert("회원 탈퇴 처리 중 오류가 발생하였습니다.");
+ 		}	
  	});
-}	
-	
-	
-	
-	
-	
-	
-	
-	/*
-	function show(users) {
-	var str = "";
-	str += "<tr><td colspan=3>가입자 리스트</td></tr>";
-	for (var i=0; i<users.length; i++) {
-	str += "<tr><td colspan=3><hr></td></tr>";
-	str += "<tr>";
-	str += "<td>" + users[i].id + "</td>";
-	str += "<td>" + users[i].name + "</td>";
-	str += "<td><small>&nbsp;(" + users[i].sex + ")</small></td>";
-	str += "</tr>";
-	}
-	$("#list").html(str);
-	}
-	 */
-	</script>
+}
+</script>
 	  
