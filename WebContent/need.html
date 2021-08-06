@@ -6,6 +6,7 @@
 <title>MySNS</title>
 </head>
 <body>
+
     <header class="need-screen-header"> 
 		<a class="back_icon" href ="main.html"><img src="img/back_arrow.svg"></a>
         <span class="need_title">방 구해요</span>
@@ -15,13 +16,13 @@
 
 	<div class="feed_add" onclick="addFeed()">글 작성하기</div>	
 	
-	
+	<div class="button" onclick="getNext()">작성글 더보기</div>
 	
 	<div id="list">
 	</div>
 	
 	
-		<div class="button_more" onclick="getNext()">작성글 더보기</div>
+		
 	 
 	<!--<table id="list" ></table>
 		<div class="button" onclick="getNext()">작성글 더보기</div>
@@ -87,7 +88,7 @@
 			else {
 			AJAX.call("jsp/feedGetGroup.jsp", null, function(data) {
 			var feeds = JSON.parse(data.trim());
-			console.log("[start] fetch a new feed list from the server ...");
+			//console.log("[start] fetch a new feed list from the server ...");
 			feedList = feeds;
 			DataCache.set("mainCache", feedList);
 			show(feeds);

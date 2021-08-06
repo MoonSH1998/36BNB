@@ -42,7 +42,7 @@ var Page = {
 		SessionStore.set(url, param);
 		window.location.href = url;
 	},
-}
+};
 
 var SessionStore = {
 	set: function (name, val) {
@@ -57,7 +57,12 @@ var SessionStore = {
 },
 };
 
+
+
 var DataCache = {
+	remove: function (name) {
+		SessionStore.remove(name)
+	},
 	set: function (name, data) {
 		var obj = { ts:Date.now(), data: data };
 		SessionStore.set(name, obj);
@@ -74,20 +79,5 @@ var DataCache = {
 	}
 	return obj.data;
 	},
-	remove: function (name) {
-		SessionStore.remove(name);
-	}
+	
 };
-
-var SessionStore = {
-	set: function (name, val) {
-	sessionStorage.setItem(name, JSON.stringify(val));
-	},
-	get: function (name) {
-	var str = sessionStorage.getItem(name);
-	return (str == null || str == "null") ? null : JSON.parse(str);
-	},
-	remove: function (name) {
-	sessionStorage.removeItem(name);
-	},
-	};

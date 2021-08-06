@@ -1,7 +1,6 @@
 <html>
 <head>
-
- <script
+<script
 	 src="https://kit.fontawesome.com/6478f529f2.js"
 	 crossorigin="anonymous">
  </script>
@@ -11,7 +10,7 @@
 <title>MySNS</title>
 </head>
 <body>
-		
+
 	<div class="main_head">
 		<a class="bell_new" href="//알림링크걸기"><img src="img/bell_new.svg"></a>
 		<span class="title">두유가 찾는방<br>여기 다 모아놨어요</span>
@@ -21,7 +20,7 @@
 		
 		<div class="emp"></div>
 		<div id="list"></div>
-		
+
 		<!--   이건 나중에 써먹기.
 		<div class="menu" onclick="addFeed()">글쓰기</div>
 		<div class="menu" onclick="">친구보기</div>
@@ -72,6 +71,7 @@
 			var feedList = [];
 			function start(uid) {
 				var feeds = DataCache.get("mainCache");
+	 			console.log(feeds);
 				if(feeds != null){
 					feedList = feeds;
 					show(feedList);
@@ -96,6 +96,7 @@
 				}
 				$("#list").append(str);
 				}
+			
 			function getNext(){
 				var params = {maxNo:minNo};
 				AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {

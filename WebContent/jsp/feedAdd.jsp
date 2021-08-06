@@ -33,6 +33,7 @@
 					}
 				}
 			}
+			
 			FeedDAO dao = new FeedDAO();
 		 	if (dao.insert(jsonstr) == true) {
 			out.print("OK"); // response.sendRedirect("main.jsp");
