@@ -7,28 +7,30 @@
 </head>
 <body>
     <header class="need-screen-header"> 
-		<a class="back_icon" href ="main.html"><img src="img/back_arrow.svg"></a>
-        <span class="need_title"> 내 계정</span>
-		<a class="search_icon menu_icon" href ="#"><i class="fas fa-ellipsis-h"></i></a>
-	</header>
-	<div class="line"></div>
+		<a class="back_icon" href ="main.html">
+			<img src="img/back_arrow.svg">
+		</a>
+        
+        <span class="need_title"> 내 계정	</span>
 		
-		<div class="myProfile">
-  			<img class="profileImg"src="img/profile_def.svg" alt="프로필 이미지">
-  			<div id="profileContent">
+		<a class="search_icon menu_icon" href ="#">
+			<i class="fas fa-ellipsis-h"></i>
+		</a>
+	</header>
+	
+	<div class="line"></div>
+	
+	<div id="myPhoto" onclick()=profilePhoto()>aa</div>
+		
+		
+  			<img class="profileImg"src="images/profile_def.svg" alt="프로필 이미지">
   			
   			<div><a a href ="jsp/logout.jsp">로그아웃</a></div>
-  		
-  		
-  		</div>
-  		</div>
-			
-			
-				
-	<div id="list"></div>
 
-		
-		<nav class="nav">
+  					
+			
+	<div id="list"></div>
+ <nav class="nav">
 			<ul class="nav__list">
 				<li class="nav__btn"> 
 					<a class="nav__link" href="main.html">
@@ -63,26 +65,45 @@
 		<script src="js/jquery-3.6.0.min.js"></script>
 		<script src="js/core.js"></script>
 		<script>
+		
 		$(document).ready(function() {
 			Page.init(start);
 			});
-			var userObj = null;
-			function start(uid) {
-			var params = {id: uid};
-			AJAX.call("jsp/userGet.jsp", params, function(data) {
+		
+		var loginId = null;
+		function start(uid) {
+			loginId = uid;
+			alert(loginId);
+		}
+		
+		function profilePhoto() {
+			
+			str = "";
+			str += "gd";
+			str += loginId;
+			$("myPhoto").append(str);
+		}
+		
+		
+		
+		
+		
+		
+		var userObj = null;
+		
+		function start(uid) {
+			var params = {id : uid};
+			AJAX.call("/jsp/userGet.jsp", params, function(data) {
 			userObj = JSON.parse(data.trim());
 			setPage(userObj);
-			});
-			}
-			function setPage(uobj) {
+		});
+	}
+		function setPage(uobj) {
 			if (uobj == null) return;
 			$("#id").html(uobj.id);
 			$("#name").val(uobj.name);
-			$("#desc").val(uobj.desc);
-			}
-
-
-			var minNo = -1;
+		}
+	var minNo = -1;
 			var feedList = [];
 			function start(uid) {
 			var feeds = DataCache.get("mainCache");
@@ -115,7 +136,15 @@
 				}
 				$("#list").append(str);
 				}
-				
+			/*
+			function show(photo) {
+				var str = "";
+					str += user.userPhoto;
+					var userPhotoURL = "images/" + user.images[0];
+					str += "<div style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 100%; background-image: url(\"" + userPhotoURL + "\")'>"
+				$("#myPhoto").append(str);
+				}
+				*/
 			function update() {
 				var name = $("#name").val().trim();
 				if (name == "") {
@@ -142,31 +171,25 @@
 				AJAX.call(url, params, function(data) {
 				var code = data.trim();
 				if (code == "ER") {
-				alert("업데이트 중 오류가 발생하였습니다.");
-				}
+					alert("업데이트 중 오류가 발생하였습니다.");
+					}
 				else {
-				alert("사용자 정보 업데이트가 완료되었습니다.");
-				history.back();
+					alert("사용자 정보 업데이트가 완료되었습니다.");
+					history.back();
 				}
-				}, true);
-				}
-				function getTime() {
-				var date = new Date();
-				var year = date.getFullYear();
-				var month = ("0" + (1 + date.getMonth())).slice(-2);
-				var day = ("0" + date.getDate()).slice(-2);
-				var hour = ("0" + date.getHours()).slice(-2);
-				var min = ("0" + date.getMinutes()).slice(-2);
-				var sec = ("0" + date.getSeconds()).slice(-2);
-				return year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
-				}
-
-			
-			
-				</script>
-				
-				 <script
-				 src="https://kit.fontawesome.com/6478f529f2.js"
-				 crossorigin="anonymous"
-				 
-			   ></script>
+			}, true);
+		}
+		function getTime() {
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = ("0" + (1 + date.getMonth())).slice(-2);
+			var day = ("0" + date.getDate()).slice(-2);
+			var hour = ("0" + date.getHours()).slice(-2);
+			var min = ("0" + date.getMinutes()).slice(-2);
+			var sec = ("0" + date.getSeconds()).slice(-2);
+			return year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
+		}
+</script>	
+ <script
+ 	src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous">
+ </script>

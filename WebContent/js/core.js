@@ -21,16 +21,16 @@ var AJAX = {
 		callobj.contentType = false;
 	}
 		jQuery.ajax(callobj);
-	}
+	},
 };
 
 var Page = {
 		init: function (cbfunc, url) {
 		AJAX.call("jsp/session.jsp", null, function(data) {
-		var uid = data.trim();
-		if (uid == "null") {
-			alert("로그인이 필요한 서비스 입니다.");
-			window.location.href = "login.html";
+			var uid = data.trim();
+			if (uid == "null") {
+				alert("로그인이 필요한 서비스 입니다.");
+				window.location.href = "login.html";
 		}	
 		else {
 			var param = (url == null) ? null : SessionStore.get(url);
@@ -39,8 +39,8 @@ var Page = {
 		});
 	},
 		go: function(url, param) {
-		SessionStore.set(url, param);
-		window.location.href = url;
+			SessionStore.set(url, param);
+			window.location.href = url;
 	},
 };
 
@@ -60,8 +60,8 @@ var SessionStore = {
 
 
 var DataCache = {
-	remove: function (name) {
-		SessionStore.remove(name)
+	remove: function (name){
+		SessionStore.remove(name);
 	},
 	set: function (name, data) {
 		var obj = { ts:Date.now(), data: data };
