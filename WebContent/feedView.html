@@ -9,8 +9,6 @@
 <body>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 
-
-
 <div id="content" class="section"></div>
 
 </body>
@@ -18,9 +16,11 @@
 
 <script src="js/core.js"></script>
 <script>
+
 $(document).ready(function() {
  Page.init(start, "feedView.html");
 });
+
 function start(uid, feed) {
 		$("#content").append(getFeedCode(feed));
 }	

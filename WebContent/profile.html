@@ -20,7 +20,9 @@
 	
 	<div class="line"></div>
 	
-	<div id="myPhoto" onclick()=profilePhoto()>aa</div>
+	<div id="myPhoto"></div>
+	
+	<div>나의 아이디 : <span id="id"></span></div>
 		
 		
   			<img class="profileImg"src="images/profile_def.svg" alt="프로필 이미지">
@@ -70,125 +72,44 @@
 			Page.init(start);
 			});
 		
-		var loginId = null;
-		function start(uid) {
-			loginId = uid;
-			alert(loginId);
-		}
-		
-		function profilePhoto() {
-			
-			str = "";
-			str += "gd";
-			str += loginId;
-			$("myPhoto").append(str);
-		}
-		
-		
-		
-		
-		
-		
 		var userObj = null;
 		
 		function start(uid) {
 			var params = {id : uid};
-			AJAX.call("/jsp/userGet.jsp", params, function(data) {
+			AJAX.call("jsp/userGet.jsp", params, function(data) {
 			userObj = JSON.parse(data.trim());
 			setPage(userObj);
+			console.log(userObj.id);
+			showPhoto(userObj);
+			
 		});
 	}
+		
+		function showPhoto(uobj){
+			if (uobj.images == null){
+				var str = "<img class='userPhoto' onclick='fixPhoto()'";
+				   str += "style='background-size : contain; background-repeat: no-repeat; background-position:center; width : 100px; height : 100px;' src=\"img/uimg.png\">";
+				//no_img css작업..+ onclick=> 이미지 추가 작업.
+			}
+			else{
+			var userimgurl = "img/" + uobj.images;
+			var str = "<div class = 'userPhoto' onclick='fixPhoto' ";
+			   str += "style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 100%; background-image: url(\"" + userimgurl + "\")'>";
+			   str += "</div>"
+			}
+			$("#myPhoto").append(str);
+			console.log(str);
+		}
+		function fixPhoto(){
+			alert("사진 수정 기능 추가중");
+		}
 		function setPage(uobj) {
 			if (uobj == null) return;
 			$("#id").html(uobj.id);
 			$("#name").val(uobj.name);
 		}
-	var minNo = -1;
-			var feedList = [];
-			function start(uid) {
-			var feeds = DataCache.get("mainCache");
-			if (feeds != null) {
-			console.log("[start] fetch the existing feed list from DataCache ...");
-			feedList = feeds;
-			show(feeds);
-			}
-			else {
-			AJAX.call("jsp/feedGetGroup.jsp", null, function(data) {
-			var feeds = JSON.parse(data.trim());
-			console.log("[start] fetch a new feed list from the server ...");
-			feedList = feeds;
-			DataCache.set("mainCache", feedList);
-			show(feeds);
-			});
-			}
-			}
-			
-			function show(feeds) {
-				// set minNo to detect the end of the list
-				if (feeds.length > 0) {
-				minNo = feeds[feeds.length - 1].no;
-				}
-				var str = "";
-				for (var i=0; i<feeds.length; i++) {
-				
-					var feedtype = feeds[i].type, typestr = "";
-				
-				}
-				$("#list").append(str);
-				}
-			/*
-			function show(photo) {
-				var str = "";
-					str += user.userPhoto;
-					var userPhotoURL = "images/" + user.images[0];
-					str += "<div style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 100%; background-image: url(\"" + userPhotoURL + "\")'>"
-				$("#myPhoto").append(str);
-				}
-				*/
-			function update() {
-				var name = $("#name").val().trim();
-				if (name == "") {
-				alert("이름을 입력해 주세요.");
-				$("#name").focus();
-				return;
-				}
-				var desc = $("#desc").val().trim();
-				var imgobj = $("#image")[0].files[0];
-				var jsonobj = userObj;
-				if (name != "") jsonobj.name = name;
-				if (desc != "") jsonobj.desc = desc;
-				if (imgobj != null) {
-				jsonobj.images = [imgobj.name];
-				}
-				jsonobj.ts = getTime();
-				var params = new FormData();
-				params.append("id", jsonobj.id);
-				params.append("jsonstr", JSON.stringify(jsonobj));
-				if (imgobj != null) {
-				params.append("image", imgobj);
-				}
-				var url = "jsp/userUpdate.jsp";
-				AJAX.call(url, params, function(data) {
-				var code = data.trim();
-				if (code == "ER") {
-					alert("업데이트 중 오류가 발생하였습니다.");
-					}
-				else {
-					alert("사용자 정보 업데이트가 완료되었습니다.");
-					history.back();
-				}
-			}, true);
-		}
-		function getTime() {
-			var date = new Date();
-			var year = date.getFullYear();
-			var month = ("0" + (1 + date.getMonth())).slice(-2);
-			var day = ("0" + date.getDate()).slice(-2);
-			var hour = ("0" + date.getHours()).slice(-2);
-			var min = ("0" + date.getMinutes()).slice(-2);
-			var sec = ("0" + date.getSeconds()).slice(-2);
-			return year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
-		}
+	
+	
 </script>	
  <script
  	src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous">

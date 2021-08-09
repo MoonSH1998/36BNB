@@ -111,14 +111,15 @@ public class UserDAO {
 					if (conn != null) conn.close();
 				}
 			}
-		public String get(String uid) throws NamingException, SQLException {
+		public String get(String userId) throws NamingException, SQLException {
 			Connection conn = ConnectionPool.get();
 			PreparedStatement stmt = null;
 			ResultSet rs = null;
 			try {
 			String sql = "SELECT jsonstr FROM user WHERE id = ?";
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, uid);
+			stmt.setString(1, userId);
+			
 			rs = stmt.executeQuery();
 			return rs.next() ? rs.getString("jsonstr") : "{}";
 			} finally {
@@ -126,5 +127,5 @@ public class UserDAO {
 			if (stmt != null) stmt.close();
 			if (conn != null) conn.close();
 			}
-			}
 		}
+	}
