@@ -24,7 +24,7 @@ public class FeedoptionDAO {
 		int max = (!rs.next()) ? 0 : rs.getInt("list");
 		stmt.close(); rs.close();
 		JSONParser parser = new JSONParser();
-		JSONObject jsonobj = (JSONObject) parser.parse(jsonstr);
+		JSONObject jsonobj = (JSONObject)parser.parse(jsonstr);
 		jsonobj.put("list", max + 1);
 	
 	
@@ -39,11 +39,11 @@ public class FeedoptionDAO {
 		JSONObject usrobj = (JSONObject) parser.parse(usrstr);
 		}
 		stmt.close(); rs.close();
-		sql = "INSERT INTO feedoption(list, id, jsonstr) VALUES(?, ?, ?)";
+		
+		sql = "INSERT INTO feedoption(list, jsonstr) VALUES(?, ?)";
 stmt = conn.prepareStatement(sql); 
 stmt.setInt(1, max + 1);
-stmt.setString(2, uid);
-stmt.setString(3, jsonobj.toJSONString());
+stmt.setString(2, jsonobj.toJSONString());
 
 int count = stmt.executeUpdate();
 return (count == 1) ? true : false;
@@ -52,15 +52,8 @@ return (count == 1) ? true : false;
 if (rs != null) rs.close();
 if (stmt != null) stmt.close();
 if (conn != null) conn.close();
+	}
 }
-		}
-	
-	
-	
-	
-	
-	
-	
 	
 	public String getListfeedoption() throws NamingException, SQLException {
 		Connection conn = ConnectionPool.get();

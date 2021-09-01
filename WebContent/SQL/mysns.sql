@@ -25,7 +25,6 @@ CREATE TABLE IF NOT EXISTS feed (
 
 create table if not exists feedoption(
  	list INT UNSIGNED PRIMARY KEY,
-	id varchar(128),
  jsonstr VARCHAR(1024)
  );
  

@@ -4,9 +4,7 @@
 request.setCharacterEncoding("utf-8");
 	
 
-  
-    String id = request.getParameter("id");
-	String jsonstr = request.getParameter("jsonstr");
+  String jsonstr = request.getParameter("jsonstr");
 
 		FeedoptionDAO dao = new FeedoptionDAO();
 

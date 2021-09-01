@@ -22,8 +22,14 @@
 	
 	<div id="myPhoto"></div>
 	
-	<div>나의 아이디 : <span id="id"></span></div>
-		
+	<div id="name"></div>
+	<div id="stu_num"></div>
+	
+	<div>
+		<div id="myFeed">내가 쓴 글</div>
+		<div id="myReview">받은 후기</div>
+		<div id="heart">찜한 글</div>
+	</div>
 		
   			<img class="profileImg"src="images/profile_def.svg" alt="프로필 이미지">
   			
@@ -81,9 +87,24 @@
 			setPage(userObj);
 			console.log(userObj.id);
 			showPhoto(userObj);
-			
+			AJAX.call("jsp/feedlist.jsp", null, function(data) {
+				var feeds = JSON.parse(data.trim());
+	
+			countMyFeed(feeds, userObj);
+			});	
 		});
 	}
+		
+		function countMyFeed(feed, user) {
+			var count = 0;
+			console.log(user.id);
+			for (var i=0; i<feed.length; i++) {
+				if(feed[i].id == user.id){
+					count++;	
+				}
+			}
+			$("#myFeed").append(count);
+		}
 		
 		function showPhoto(uobj){
 			if (uobj.images == null){
@@ -97,20 +118,27 @@
 			   str += "style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 100%; background-image: url(\"" + userimgurl + "\")'>";
 			   str += "</div>"
 			}
+			
 			$("#myPhoto").append(str);
 			console.log(str);
 		}
+		
 		function fixPhoto(){
 			alert("사진 수정 기능 추가중");
 		}
+		
 		function setPage(uobj) {
 			if (uobj == null) return;
 			$("#id").html(uobj.id);
-			$("#name").val(uobj.name);
+			$("#name").html(uobj.name);
+			$("#stu_num").html(uobj.stu_num);
+			
 		}
 	
 	
-</script>	
- <script
- 	src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous">
+</script>
+	
+ <script>
+ 	src="https://kit.fontawesome.com/6478f529f2.js";
+ 	crossorigin="anonymous"
  </script>

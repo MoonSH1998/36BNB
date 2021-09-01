@@ -119,7 +119,10 @@
 				var name = (feed.user == null) ? feed.id : feed.user.name;
 				var stuNum = Math.floor(((feed.user.stu_num)/1000000)%100);			//추가된 xx학번에 대한 변수 추가. by_성하_0805
 				var str = "<div class='feed'>";
+				
+				
 				str += "<div class='main_feed1'  onclick='showFeed(" + feed.no + ")'><span>" + feed.trader + "</span>";
+				str += "<div class = 'heart' onclick ='heart(" + feed.no + "," + feed.user.id + ")'> heart </div>";
 				str += "<span>" + feed.price + "</span>";
 				str += "</div>";
 				
@@ -127,6 +130,7 @@
 				str += "<span>" + feed.content + "</span>"
 				str += "<span>" + feed.start + "  ~  " + feed.end  + "까지 방" + feed.type + "</span>";
 				str += "<span>" + stuNum + "학번" + "</span>";
+				
 				str += "</div>";
 				return str;
 					}
@@ -135,6 +139,7 @@
 						var imgurl = "images/" + feed.images;
 						var name = (feed.user == null) ? feed.id : feed.user.name;
 						var str = "<div class='feed' onclick='showFeed(" + feed.no + ")'>"
+						str += "<div class = 'heart' onclick ='heart(" + feed.no + "," + feed.user.id + ")'> heart </div>";
 						str += "<div class='main_feed1'  style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'><span>" + feed.trader + "</span>";
 						str += "<span>" + feed.price + "</span>";
 						str += "</div>";
@@ -146,6 +151,26 @@
 						}
 						}
 				
+				function heart(no,fid) {
+					var id = loginId;
+					var no = no;
+					var fid = fid;
+					var feedoptionobj = {id : id,no: no, fid:fid, type:"heart"};
+					var params = {id: id, jsonstr: JSON.stringify(feedoptionobj)};
+					var url ="jsp/report.jsp";
+						AJAX.call(url, params, function(data) {
+					var code = data.trim();
+
+					  if(code == "OK") {
+					 	alert("하트가 완료되었습니다.");
+					 	window.location.href = "main.html";
+					 	}
+					 else if (code =="ER"){
+					 		alert("하트 중 오류가 발생하였습니다.");
+					 	}
+					 	});
+					}	
+		
 		function showFeed(fno) {
 				for (var i=0; i<feedList.length; i++) {
 				if (feedList[i].no == fno) {

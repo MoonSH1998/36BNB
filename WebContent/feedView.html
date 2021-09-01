@@ -1,7 +1,7 @@
 <html>
 <head>
-<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
-<meta charset="utf-8" />
+<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0"/>
+<meta charset="utf-8"/>
 <link rel="stylesheet" href="css/core.css">
 
 </head>
@@ -27,10 +27,16 @@ function start(uid, feed) {
 
 function getFeedCode(feed){
 	var name = (feed.user == null) ? feed.id : feed.user.name;
+	var a = feed.id; 
+	
 	var str = "<div class='feedview_header'>";
 	if(feed.images !== null){
 		str += "<a class='back_icon' href ='main.html'><img src='img/back_arrow.svg'></a>";
 		str += "<div class='feedview_header_user'>";
+
+		//하트
+		//str += "<div class = 'heart' onclick ='heart(" + feed.no + ',' + feed.user.id + ")'> heart </div>";
+		
 		str += "<span>" + feed.user.id + "</span>";
 		str += "<span> 게시물 </span>";
 		str += "</div>"
@@ -46,7 +52,8 @@ function getFeedCode(feed){
 		
 		str += "</div>";
 		str +="<div class='feedview_action'>";
-		str += "<span onclick='view_num(" +feed.user.phone_num + ")'>연락하기</span><span onclick='report(" + feed.no + "," + feed.user.id + ")'>신고하기</span>";
+		str += "<span onclick='view_num(" +feed.user.phone_num + ")'>연락하기</span>";
+		str += "<span onclick='report(" + feed.no + ',' + feed.user.id + ")'>신고하기</span>";
 		str += "</div>";
 		
 		
@@ -58,7 +65,11 @@ function getFeedCode(feed){
 	str += "</div>"
 	}
 	else{
+		
 		str += "<a class='back_icon' href ='main.html'><img src='img/back_arrow.svg'></a>";
+		//하트
+		str += "<div class = 'heart' onclick ='heart(" + feed.no + ',' + feed.user.id + ")'> heart </div>";
+		
 		str += "<div class='feedview_header_user'>";
 		str += "<span>" + feed.user.id + "</span>";
 		str += "<span> 게시물 </span>";
@@ -74,7 +85,9 @@ function getFeedCode(feed){
 		
 
 		str +="<div class='feedview_action'>";
-		str += "<span onclick='view_num(" +feed.user.phone_num +")'>연락하기</span><span onclick='report(" + feed.no + ',' + feed.user.id + ")'>신고하기</span>";
+		str += "<span onclick='view_num(" + feed.user.phone_num + ")'>연락하기</span>";
+		
+		str += "<span onclick='report(" + feed.no + ',' + feed.user.id + ")'>신고하기</span>";
 		str += "</div>";
 		
 		
@@ -102,17 +115,39 @@ var loginId = null;
 function setup(uid) {
 	loginId = uid;
 }
+
+
 function view_num(ph){
 	alert("연락처 = 0" +ph);
+	
 }
 
+function heart(no, fid) {
+	var id = loginId;
+	var no = no;
+	var fid =  fid ;
+	var feedoptionobj = {id : id, no: no, fid:fid, type:"heart"};
+	var params = { jsonstr: JSON.stringify(feedoptionobj)};
+	var url ="jsp/report.jsp";
+		AJAX.call(url, params, function(data) {
+	var code = data.trim();
 
+	  if(code == "OK") {
+	 	alert("찜 완료 ♡.");
+	 	window.location.href = "main.html";
+	 	}
+	 else if (code =="ER"){
+	 		alert("신고 중 오류가 발생하였습니다.");
+	 	}
+	 	});
+	}	
+	
 function report(no,fid) {
 		var id = loginId;
 		var no = no;
 		var fid = fid;
-		var feedoptionobj = {id : id,no: no, fid:fid, type:"report"};
-		var params = {id: id, jsonstr: JSON.stringify(feedoptionobj)};
+		var feedoptionobj = {id : id, no: no, fid:fid, type:"report"};
+		var params = {jsonstr: JSON.stringify(feedoptionobj)};
 		var url ="jsp/report.jsp";
 			AJAX.call(url, params, function(data) {
 		var code = data.trim();

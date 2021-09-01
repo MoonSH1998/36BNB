@@ -32,9 +32,8 @@ function show(feeds) {
 	str += "<div class='user_list_name'>";
 	str += "<span>작성자</span><span>유형</span><span>시간</span><span>-</span>";
 	str += "</div>";
+	
 	for (var i=0; i<feeds.length; i++) {
-	
-	
 	str += "<div class='user_list_atom'><span>"+ feeds[i].user.name + "</span>";
 	str += "<span>" + feeds[i].type + "</span>";
 	str += "<span>" + feeds[i].ts + "</span>";
