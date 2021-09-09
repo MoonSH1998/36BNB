@@ -57,8 +57,6 @@ var SessionStore = {
 },
 };
 
-
-
 var DataCache = {
 	remove: function (name){
 		SessionStore.remove(name);

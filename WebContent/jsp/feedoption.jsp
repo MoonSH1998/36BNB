@@ -8,13 +8,12 @@ request.setCharacterEncoding("utf-8");
 
 		FeedoptionDAO dao = new FeedoptionDAO();
 
-		if (dao.report(jsonstr) == true ) {
+		if (dao.feedoption(jsonstr) == true )
+		{
 			out.print("OK");
-	}
-		else {
-		out.print("ER");
-	}
-    
-    
+		}
+		else
+		{
+			out.print("ER");
+		}
 %>
-

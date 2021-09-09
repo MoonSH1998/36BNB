@@ -155,9 +155,9 @@
 					var id = loginId;
 					var no = no;
 					var fid = fid;
-					var feedoptionobj = {id : id,no: no, fid:fid, type:"heart"};
+					var feedoptionobj = {id : id,no: no, fid:fid, type:"heart" };
 					var params = {id: id, jsonstr: JSON.stringify(feedoptionobj)};
-					var url ="jsp/report.jsp";
+					var url ="jsp/feedoption_heart.jsp";
 						AJAX.call(url, params, function(data) {
 					var code = data.trim();
 
@@ -170,6 +170,7 @@
 					 	}
 					 	});
 					}	
+				
 		
 		function showFeed(fno) {
 				for (var i=0; i<feedList.length; i++) {

@@ -11,7 +11,7 @@ import util.ConnectionPool;
 
 public class FeedoptionDAO {
 	
-	public boolean report(String jsonstr) throws NamingException, SQLException , ParseException{
+	public boolean feedoption(String jsonstr) throws NamingException, SQLException , ParseException{
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
