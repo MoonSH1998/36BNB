@@ -78,28 +78,6 @@ import util.ConnectionPool;
 					if (conn != null) conn.close();
 				}
 			}
-			
-		
-			/*
-			public boolean report(String id, String no, String fid) throws NamingException, SQLException {
-				Connection conn = ConnectionPool.get();
-				PreparedStatement stmt = null;
-					try {
-							String sql = "INSERT INTO report(id,no,fid) VALUES(?, ?, ?)";
-							stmt = conn.prepareStatement(sql);
-							stmt.setString(1, id);
-							stmt.setString(2, no);
-							stmt.setString(3, fid);
-							
-							int count = stmt.executeUpdate();
-							return (count == 1) ? true : false;
-						} finally {
-							if (stmt != null) stmt.close();
-							if (conn != null) conn.close();
-					}
-				}
-			
-				*/
 				
 			public String getList() throws NamingException, SQLException {
 						Connection conn = ConnectionPool.get();
@@ -152,6 +130,23 @@ import util.ConnectionPool;
 		if (conn != null) conn.close();
 	}
 }
+// Check_already_heart_by Moon 1109 	
+public boolean checkHeart(String no, String id) throws NamingException, SQLException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		try {
+				String sql = "select jsonstr from feedoptions where no = ? and id = ?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, no);
+				stmt.setString(2, id);
+				
+				int count = stmt.executeUpdate();
+				return (count == 1) ? true : false;
+			} finally {
+				if (stmt != null) stmt.close(); 
+				if (conn != null) conn.close();
+		}
+	}
 		
 	
 }

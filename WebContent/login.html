@@ -43,7 +43,7 @@
 			$("#ps").focus();
 			return;
 		}
-
+		
 		var url = "jsp/login.jsp?id=" + id + "&ps=" + ps;
 		AJAX.call(url, null, function (data) {
 			var code = data.trim();

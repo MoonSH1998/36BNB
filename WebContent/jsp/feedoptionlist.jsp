@@ -2,7 +2,4 @@
 <%@ page import="dao.*" %>
 <%
 	out.print((new FeedoptionDAO()).getListfeedoption());
-
-
-
 %>

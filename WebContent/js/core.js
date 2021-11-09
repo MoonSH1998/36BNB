@@ -77,5 +77,4 @@ var DataCache = {
 	}
 	return obj.data;
 	},
-	
 };

@@ -122,7 +122,7 @@
 				
 				
 				str += "<div class='main_feed1'  onclick='showFeed(" + feed.no + ")'><span>" + feed.trader + "</span>";
-				str += "<div class = 'heart' onclick ='heart(" + feed.no + "," + feed.user.id + ")'> heart </div>";
+				str += "<div class = 'heart' onclick ='heart(" + feed.no + ")'> heart </div>";
 				str += "<span>" + feed.price + "</span>";
 				str += "</div>";
 				
@@ -139,7 +139,7 @@
 						var imgurl = "images/" + feed.images;
 						var name = (feed.user == null) ? feed.id : feed.user.name;
 						var str = "<div class='feed' onclick='showFeed(" + feed.no + ")'>"
-						str += "<div class = 'heart' onclick ='heart(" + feed.no + "," + feed.user.id + ")'> heart </div>";
+						str += "<div class = 'heart' onclick ='heart(" + feed.no + ")'> heart </div>";
 						str += "<div class='main_feed1'  style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'><span>" + feed.trader + "</span>";
 						str += "<span>" + feed.price + "</span>";
 						str += "</div>";
