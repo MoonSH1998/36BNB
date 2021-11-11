@@ -6,7 +6,7 @@ request.setCharacterEncoding("utf-8");
 	String no = request.getParameter("no");
 	String id = request.getParameter("id");
 	
-	FeedDAO dao = new FeedDAO();
+	FeedoptionDAO dao = new FeedoptionDAO();
 	
 	if (dao.checkHeart(id,no) == true )
 	{

@@ -130,23 +130,7 @@ import util.ConnectionPool;
 		if (conn != null) conn.close();
 	}
 }
-// Check_already_heart_by Moon 1109 	
-public boolean checkHeart(String no, String id) throws NamingException, SQLException {
-		Connection conn = ConnectionPool.get();
-		PreparedStatement stmt = null;
-		try {
-				String sql = "select jsonstr from feedoptions where no = ? and id = ?";
-				stmt = conn.prepareStatement(sql);
-				stmt.setString(1, no);
-				stmt.setString(2, id);
-				
-				int count = stmt.executeUpdate();
-				return (count == 1) ? true : false;
-			} finally {
-				if (stmt != null) stmt.close(); 
-				if (conn != null) conn.close();
-		}
-	}
-		
+
+	
 	
 }
