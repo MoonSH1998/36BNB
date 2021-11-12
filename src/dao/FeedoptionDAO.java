@@ -79,7 +79,7 @@ if (conn != null) conn.close();
 	}
 }
 	// Check_already_heart_by Moon 1111
-	public boolean login(String no, String uid) throws NamingException, SQLException, ParseException {
+	public boolean checkHeart(String no, String uid) throws NamingException, SQLException, ParseException {
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -100,8 +100,8 @@ if (conn != null) conn.close();
 			if (stmt != null) stmt.close(); 
 			if (conn != null) conn.close();
 	    }
-	}	
-			
+	}		
+	
 	public boolean deletereport(String list) throws NamingException, SQLException {
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;

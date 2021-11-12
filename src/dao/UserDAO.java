@@ -128,4 +128,23 @@ public class UserDAO {
 			if (conn != null) conn.close();
 			}
 		}
+		
+		//내가 쓴 글 개수 반환 함수 마이 페이지에서 쓸 예정 jsp:countMyFeed, 파라미터 : String id
+		public int countMyFeed(String userId) throws NamingException, SQLException {
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try 
+				{
+				String sql = "select count(*) from feed where id = ?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, userId);
+				rs = stmt.executeQuery();
+				return rs.next() ? rs.getInt(1) : 0;
+			} finally {
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+			}
+		}
 	}

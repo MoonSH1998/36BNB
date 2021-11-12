@@ -78,7 +78,9 @@ import util.ConnectionPool;
 					if (conn != null) conn.close();
 				}
 			}
-				
+			
+			
+			//uni수정 후 uni까지 넣기.
 			public String getList() throws NamingException, SQLException {
 						Connection conn = ConnectionPool.get();
 						PreparedStatement stmt = null;
