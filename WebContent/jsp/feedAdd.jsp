@@ -5,8 +5,9 @@
 <%@ page import="org.apache.commons.fileupload.*" %>
 <%@ page import="org.apache.commons.fileupload.disk.*" %>
 <%@ page import="org.apache.commons.fileupload.servlet.*"%>
-	
-<%	
+
+<%
+//,,,? 여기는 잠시만요 ,,,,,
 			//String uid = null, ucon = null, ufname = null;
 			String jsonstr = null, ufname = null;
 			byte[] ufile = null;

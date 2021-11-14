@@ -16,6 +16,7 @@
 		<span class="title">회원가입</span>
 		<p>아래 정보를 모두 입력해주세요</p>
 		<input id="id" type="email" placeholder="이메일">
+		<input id="uni" type="text" placeholder="학교">
 		<input id="name" type="text" placeholder="이름">
 		<input id="stu_num" type="text" placeholder="학번">
 		<SELECT id=sex>
@@ -58,6 +59,12 @@
 		$("#stu_num").focus();
 		return;
 	}
+		var uni = $("#uni").val().trim();
+		if (uni == "") {
+		alert("학교을 입력해 주세요.");
+		$("#uni").focus();
+		return;
+	}
 		var birth = $("#birth").val().trim();
 		if (birth == "") {
 		alert("생년월일을 입력해 주세요.");
@@ -83,7 +90,7 @@
 		return;
 	}			
 
-	var usrobj = {id: id, name: name, stu_num: stu_num,  birth: birth,sex: sex, phone_num: phone_num, ps: ps};
+	var usrobj = {id: id, name: name, uni: uni, stu_num: stu_num,  birth: birth,sex: sex, phone_num: phone_num, ps: ps};
 	var params = {id: id, jsonstr: JSON.stringify(usrobj)};
 	var url ="jsp/signup.jsp";
 	AJAX.call(url, params, function(data) {
