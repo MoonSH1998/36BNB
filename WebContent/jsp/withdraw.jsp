@@ -1,6 +1,7 @@
 <%@ page contentType="text/html" pageEncoding="utf-8" %>
 <%@ page import="dao.*" %>
 <%
+//회원 탈퇴, 관리자페이지 전용입니다.
 request.setCharacterEncoding("utf-8");
 	
 	String uid = request.getParameter("id");
