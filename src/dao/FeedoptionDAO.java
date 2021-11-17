@@ -9,8 +9,75 @@ import org.json.simple.parser.ParseException;
 
 import util.ConnectionPool;
 
-public class FeedoptionDAO {
+	public class FeedoptionDAO
+	{
+		
+		//이거 json삭제하는게 더 효율적일수도.. 삭제 고민중
+		/*
+		public boolean feedoption(String jsonstr) throws NamingException, SQLException , ParseException{
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try
+			{
+				synchronized(this)
+				{
+					JSONParser parser = new JSONParser();
+					JSONObject jsonobj = (JSONObject)parser.parse(jsonstr);
+					String uid = jsonobj.get("id").toString();
+					String sql = "SELECT jsonstr FROM user WHERE id = ?";
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, uid);
+					rs = stmt.executeQuery();
+					
+					sql = "select jsonstr from feedoption";
+					rs = stmt.executeQuery();
+					
+					String compareNo = jsonobj.get("no").toString();
+					String compareId = jsonobj.get("id").toString();
+					String compareType = jsonobj.get("type").toString();
+					
+					
+					
+					
+					
+					
+					String sql = "SELECT list FROM feedoption ORDER BY list DESC LIMIT 1";
+					stmt = conn.prepareStatement(sql);
+					rs = stmt.executeQuery();
+					int max = (!rs.next()) ? 0 : rs.getInt("list");
+					stmt.close(); rs.close();
+					jsonobj.put("list", max + 1);
+				
+		
+			// phase 2. add "user" property ------------------------------
+			
+		if (rs.next()) {
+		String usrstr = rs.getString("jsonstr");
+		JSONObject usrobj = (JSONObject) parser.parse(usrstr);
+		}
+		stmt.close(); rs.close();
+		
+		sql = "INSERT INTO feedoption(list, jsonstr) VALUES(?, ?)";
+stmt = conn.prepareStatement(sql); 
+stmt.setInt(1, max + 1);
+stmt.setString(2, jsonobj.toJSONString());
+
+int count = stmt.executeUpdate();
+return (count == 1) ? true : false;
+}
+}finally {
+if (rs != null) rs.close();
+if (stmt != null) stmt.close();
+if (conn != null) conn.close();
+	}
+}
 	
+	
+	
+	
+	
+	*/
 	public boolean feedoption(String jsonstr) throws NamingException, SQLException , ParseException{
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;
@@ -54,6 +121,19 @@ if (stmt != null) stmt.close();
 if (conn != null) conn.close();
 	}
 }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public String getListfeedoption() throws NamingException, SQLException {
 		Connection conn = ConnectionPool.get();

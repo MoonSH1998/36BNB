@@ -78,7 +78,9 @@
 					show(feedList);
 				}
 				else{
-					AJAX.call("jsp/feedGetGroup.jsp", null, function(data) {
+					var params = {maxNo:minNo,uid:uid};
+					AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {
+						
 						feedList = JSON.parse(data.trim());
 						DataCache.set("mainCache", feedList);
 						console.log(feeds);

@@ -11,30 +11,27 @@ request.setCharacterEncoding("utf-8");
 	var params = {id: id, jsonstr: JSON.stringify(usrobj)};
 	var url ="jsp/signup.jsp";
 	AJAX.call(url, params, function(data) {
-	var code = data.trim();
-	if(code == "EX") {
-	alert("이미 가입한 회원입니다.");
-	}
-	else if(code == "ER") {
-	alert("회원가입 처리중 에러가 발생하였습니다.");
-	}
-	else {
-	alert("회원 가입이 완료되었습니다.");
-	window.location.href = "main.html";
-	}
-	});}
 	
+		응답 메세지는 OK:로그인 NU:해당 학교 없음->요청메세지를 보내세요 ER->에러 EX->이미 존재하는 아이디
+	}
 	*/
+	String uni = "1";
 	String uid = request.getParameter("id");
-	String jsonstr = request.getParameter("jsonstr");
-
+	String jsonstr = request.getParameter("jsonstr"); 
 		UserDAO dao = new UserDAO();
+		//String uni = dao.getUni(uid);
 		if (dao.exists(uid)) {
 		out.print("EX");
 		return;
 		}
-		if (dao.insert(uid, jsonstr) == true ) {
+		else if (dao.checkUni(uni)==0)
+		{
+			out.print("NU");
+			return;
+		}
+		else if (dao.insert(uid, jsonstr) == true ) {
 			session.setAttribute("id", uid);
+			session.setAttribute("uni", uni);
 			out.print("OK");
 	}
 		else {
