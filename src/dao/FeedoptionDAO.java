@@ -12,9 +12,7 @@ import util.ConnectionPool;
 	public class FeedoptionDAO
 	{
 		
-		//이거 json삭제하는게 더 효율적일수도.. 삭제 고민중
-		/*
-		public boolean feedoption(String jsonstr) throws NamingException, SQLException , ParseException{
+		public int feedHeart(String no, String id) throws NamingException, SQLException{
 			Connection conn = ConnectionPool.get();
 			PreparedStatement stmt = null;
 			ResultSet rs = null;
@@ -22,62 +20,67 @@ import util.ConnectionPool;
 			{
 				synchronized(this)
 				{
-					JSONParser parser = new JSONParser();
-					JSONObject jsonobj = (JSONObject)parser.parse(jsonstr);
-					String uid = jsonobj.get("id").toString();
-					String sql = "SELECT jsonstr FROM user WHERE id = ?";
-					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, uid);
-					rs = stmt.executeQuery();
-					
-					sql = "select jsonstr from feedoption";
-					rs = stmt.executeQuery();
-					
-					String compareNo = jsonobj.get("no").toString();
-					String compareId = jsonobj.get("id").toString();
-					String compareType = jsonobj.get("type").toString();
-					
-					
-					
-					
-					
-					
-					String sql = "SELECT list FROM feedoption ORDER BY list DESC LIMIT 1";
+					String sql = "SELECT * FROM feedHeart where id = ? and no = ?";
 					stmt = conn.prepareStatement(sql);
 					rs = stmt.executeQuery();
-					int max = (!rs.next()) ? 0 : rs.getInt("list");
-					stmt.close(); rs.close();
-					jsonobj.put("list", max + 1);
-				
-		
-			// phase 2. add "user" property ------------------------------
-			
-		if (rs.next()) {
-		String usrstr = rs.getString("jsonstr");
-		JSONObject usrobj = (JSONObject) parser.parse(usrstr);
+					// heart존재하지 않을 때 저장 후 return 1
+					if(!rs.next())
+					{
+						sql = "insert into feedHeart values(?, ?)";
+						stmt.setString(1, no);
+						stmt.setString(2, id);
+						return 1;
+					}
+					//Heart 이미 존재할 때 클릭 시 heart 삭제하기 return 2
+					else if(rs.next())
+					{
+						sql = "delete from feedHeart where no = ? and id = ?";
+						stmt.setString(1, no);
+						stmt.setString(2, id);
+						return 2;
+					}
+					else
+					{
+						return 0;
+					}
+				}
+			}
+			finally
+			{
+				if (rs != null) rs.close();
+				if (stmt != null) stmt.close();
+				if (conn != null) conn.close();
+			}
 		}
-		stmt.close(); rs.close();
-		
-		sql = "INSERT INTO feedoption(list, jsonstr) VALUES(?, ?)";
-stmt = conn.prepareStatement(sql); 
-stmt.setInt(1, max + 1);
-stmt.setString(2, jsonobj.toJSONString());
-
-int count = stmt.executeUpdate();
-return (count == 1) ? true : false;
-}
-}finally {
-if (rs != null) rs.close();
-if (stmt != null) stmt.close();
-if (conn != null) conn.close();
-	}
-}
+		public boolean feedReport(String no, String id, String content) throws NamingException, SQLException{
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try
+			{
+				synchronized(this)
+				{
+					String sql = "insert into feedHeart values(?, ?, ?)";
+					stmt.setString(1, no);
+					stmt.setString(2, id);
+					stmt.setString(3, content);
+					
+					stmt = conn.prepareStatement(sql);
+					rs = stmt.executeQuery();
+					return ((!rs.next())) ? false : true;
+				}
+			}
+			finally
+			{
+				if (rs != null) rs.close();
+				if (stmt != null) stmt.close();
+				if (conn != null) conn.close();
+			}
+		}
+					
+					
 	
 	
-	
-	
-	
-	*/
 	public boolean feedoption(String jsonstr) throws NamingException, SQLException , ParseException{
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;

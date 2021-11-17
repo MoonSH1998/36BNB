@@ -16,10 +16,17 @@ CREATE TABLE IF NOT EXISTS feed (
 	uni VARCHAR(128),
 	jsonstr VARCHAR(8192)
 	);
-/*feed heart,repoert 저장되는 테이블*/
-create table if not exists feedoption(
- 	list INT UNSIGNED PRIMARY KEY,
- 	jsonstr VARCHAR(1024)
+
+	
+create table if not exists feedHeart(
+ 	no varchar(128),
+ 	id varchar(128)
+ );
+ 
+ create table if not exists feedReport(
+ 	no varchar(128),
+ 	id varchar(128),
+ 	content varchar(1024)
  );
  
 /*uni 추가 요청 테이블 cnt는 요청 개수*/
