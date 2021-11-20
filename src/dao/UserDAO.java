@@ -29,18 +29,12 @@ public class UserDAO {
 					}
 				}
 	//uni정보를 받아오는 함수
-	public String getUni(String id) throws NamingException, SQLException, ParseException {
+	public String getUni(String jsonstr) throws NamingException, SQLException, ParseException {
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try
 		{
-			String sql = "SELECT jsonstr FROM user WHERE id = ?";
-			conn = ConnectionPool.get();
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, id);	
-			rs = stmt.executeQuery();
-			String jsonstr = rs.getString("jsonstr");
 			JSONObject obj = (JSONObject) (new JSONParser()).parse(jsonstr);
 			String uni = obj.get("uni").toString();
 			return uni;
@@ -52,19 +46,19 @@ public class UserDAO {
 			if (conn != null) conn.close();
 		}
 	}
+	
 	//회원가입 시 회원가입하려는 uni가 회원가입가능한 학교인지 체크->1반환시 성공
-	public int checkUni(String uni) throws NamingException, SQLException, ParseException {
+	public boolean checkUni(String uni) throws NamingException, SQLException{
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try
 		{
-			String sql = "SELECT * FROM uniList WHERE uni = ?";
-			conn = ConnectionPool.get();
+			String sql = "SELECT * FROM uni_list WHERE uniList = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, uni);	
 			rs = stmt.executeQuery();
-			return (rs.next() == true) ? 1 : 0;
+			return !(rs.next());
 		} 
 		finally 
 		{

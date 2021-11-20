@@ -15,26 +15,30 @@ request.setCharacterEncoding("utf-8");
 		응답 메세지는 OK:로그인 NU:해당 학교 없음->요청메세지를 보내세요 ER->에러 EX->이미 존재하는 아이디
 	}
 	*/
-	String uni = "1";
+	
+	//String uni = request.getParameter("uni");
 	String uid = request.getParameter("id");
 	String jsonstr = request.getParameter("jsonstr"); 
-		UserDAO dao = new UserDAO();
-		//String uni = dao.getUni(uid);
-		if (dao.exists(uid)) {
+	UserDAO dao = new UserDAO();
+	String uni = dao.getUni(jsonstr);
+	if (dao.exists(uid))
+	{
 		out.print("EX");
-		return;
-		}
-		else if (dao.checkUni(uni)==0)
-		{
-			out.print("NU");
-			return;
-		}
-		else if (dao.insert(uid, jsonstr) == true ) {
-			session.setAttribute("id", uid);
-			session.setAttribute("uni", uni);
-			out.print("OK");
 	}
-		else {
+	
+	else if ( dao.checkUni(uni) )
+	{
+		out.print("NU");
+	}
+	
+	else if (dao.insert(uid, jsonstr) == true )
+	{
+		session.setAttribute("id", uid);
+		session.setAttribute("uni", uni);
+		out.print("OK");
+	}
+	else
+	{
 		out.print("ER");
 	}
 %>
