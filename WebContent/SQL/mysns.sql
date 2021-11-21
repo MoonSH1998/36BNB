@@ -20,11 +20,13 @@ CREATE TABLE IF NOT EXISTS feed (
 	
 create table if not exists feedHeart(
  	no varchar(128),
+ 	fid varchar(128),
  	id varchar(128)
  );
  
  create table if not exists feedReport(
  	no varchar(128),
+ 	fid varchar(128),
  	id varchar(128),
  	content varchar(1024)
  );

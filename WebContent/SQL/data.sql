@@ -4,3 +4,5 @@ INSERT INTO feed VALUES("121","7","4", "{\"no\":\"2\",\"images\":null,\"price\":
 
 INSERT INTO user VALUES("4", "{\"id\":\"4\",\"name\":\"3\",\"uni\":\"3\",\"stu_num\":\"3\",\"birth\":\"3\",\"sex\":\"man\",\"phone_num\":\"3\",\"ps\":\"3\"}");
 INSERT INTO user VALUES("5", "{\"id\":\"5\",\"name\":\"3\",\"uni\":\"4\",\"stu_num\":\"3\",\"birth\":\"3\",\"sex\":\"man\",\"phone_num\":\"3\",\"ps\":\"3\"}");
+
+insert into feed values("153", "1", "1", "{\"id\":\"1\", \"title\":\"1\", \"start\":\"2021-11-11\", \"end\":\"2021-11-11\", \"type\":\"sell\", \"price\":\"1\", \"content\":\"111\", \"ts:2021-11-11\", \"images\":NULL\"}")

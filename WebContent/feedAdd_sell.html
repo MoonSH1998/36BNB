@@ -106,9 +106,10 @@
     	trader = node.value;
     	}
   		}) 
+  		var title = "1";
 		
 	var imgobj = $("#image")[0].files[0];
-	var jsonobj = {id: id, type: "내놔요", start:start, end:end, price:price, trader:trader, content: content, ts: getTime()};
+	var jsonobj = {id: id, title = title, start:start, end:end, type: "내놔요", trader:trader, price:price, content: content, ts: getTime()};
 	if (imgobj != null) {
 		jsonobj.images = [imgobj.name];
 	}

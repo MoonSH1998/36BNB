@@ -20,7 +20,7 @@
 		
 		<div class="emp"></div>
 		<div id="list"></div>
-
+				<div class="session" onclick="getsession()">내정보asfsfasfasfsafssssssssssssssssssssssssss</div>
 		<!--   이건 나중에 써먹기.
 		<div class="menu" onclick="addFeed()">글쓰기</div>
 		<div class="menu" onclick="">친구보기</div>
@@ -63,7 +63,8 @@
 		<script src="js/jquery-3.6.0.min.js"></script> 
 		<script src="js/core.js"></script>
 		<script>
-		
+		//console.log(session.get("uni"));
+		//out.print(uni);
 		$(document).ready(function() {
 			Page.init(start);
 			});
@@ -78,7 +79,7 @@
 					show(feedList);
 				}
 				else{
-					var params = {maxNo:minNo,uid:uid};
+					var params = {maxNo:minNo};
 					AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {
 						
 						feedList = JSON.parse(data.trim());
@@ -99,6 +100,8 @@
 				}
 				$("#list").append(str);
 				}
+			
+			
 			
 			function getNext(){
 				var params = {maxNo:minNo};

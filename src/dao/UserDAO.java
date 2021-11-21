@@ -186,4 +186,38 @@ public class UserDAO {
 			if (conn != null) conn.close();
 			}
 		}
+		public int countMyReport(String userId) throws NamingException, SQLException {
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try 
+				{
+				String sql = "select count(*) from feedReport where fid = ?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, userId);
+				rs = stmt.executeQuery();
+				return rs.next() ? rs.getInt(1) : 0;
+			} finally {
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+			}
+		}
+		public int countMyHeart(String userId) throws NamingException, SQLException {
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try 
+				{
+				String sql = "select count(*) from feedHeart where fid = ?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, userId);
+				rs = stmt.executeQuery();
+				return rs.next() ? rs.getInt(1) : 0;
+			} finally {
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+			}
+		}
 	}
