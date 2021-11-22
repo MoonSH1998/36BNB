@@ -20,9 +20,7 @@
 		
 		<div class="emp"></div>
 		<div id="list"></div>
-		<div class="session" onclick="getsession()">내정보asfsfasfasfsafssssssssssssssssssssssssss</div>
-
-		<div id="uni"></div>
+		
 		<!--   이건 나중에 써먹기.
 		<div class="menu" onclick="addFeed()">글쓰기</div>
 		<div class="menu" onclick="">친구보기</div>
@@ -91,17 +89,6 @@
 					});
 				}
 			}
-			
-			function getsession() {
-	 			var params = null;
-					AJAX.call("jsp/getsession.jsp", params, function(data) {
-						var id = data.trim();
-						console.log(id);
-						$("#uni").append(id);
-					});
-				}
-			
-			
 			
 			function show(feeds) {
 				// set minNo to detect the end of the list

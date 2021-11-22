@@ -38,7 +38,7 @@
 					}
 				}
 			}
-			
+			String id = (String)session.getAttribute("id");
 			FeedDAO dao = new FeedDAO();
 			UserDAO dao1 = new UserDAO();
 			String uni = dao1.getUni("id");
