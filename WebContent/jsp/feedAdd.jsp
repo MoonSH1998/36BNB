@@ -40,8 +40,9 @@
 			}
 			
 			FeedDAO dao = new FeedDAO();
-			String uni = (String)session.getAttribute("uni");
-		 	if (dao.insert(jsonstr, uni) == true)
+			UserDAO dao1 = new UserDAO();
+			String uni = dao1.getUni("id");
+			if (dao.insert(jsonstr, uni) == true)
 		 	{
 				out.print("OK"); // response.sendRedirect("main.jsp");
 			}

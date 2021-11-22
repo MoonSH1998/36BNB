@@ -62,6 +62,8 @@ import util.ConnectionPool;
 				if (conn != null) conn.close();
 			}
 		}
+		
+		
 		/*
 		//insert uni적용 완료_1116
 		public boolean insert(String jsonstr, String uni) throws NamingException, SQLException , ParseException{

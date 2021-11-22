@@ -6,9 +6,9 @@
 //(maxno=현재 mainpage에서 뽑은 글의 제일 작은 no) ex 10 11 12 13 14글들을 뽑아왔으면 다음엔 9까지의 5개를 내림차순으로 뽑아와야하니 maxno=10이 됩니다.
 	request.setCharacterEncoding("utf-8");
 	String maxNo = request.getParameter("maxNo");
-	String uni = (String)session.getAttribute("uni");
+	UserDAO dao1 = new UserDAO();
+	String uni = dao1.getUni("id");
 	FeedDAO dao = new FeedDAO();
-	out.print(uni);
 	out.print(dao.getGroup(maxNo, uni));
 	
 //out.print((new FeedDAO()).getGroup(request.getParameter("maxNo"),(String)session.getAttribute("uni")));

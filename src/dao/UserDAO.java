@@ -29,7 +29,30 @@ public class UserDAO {
 					}
 				}
 	//uni정보를 받아오는 함수
-	public String getUni(String jsonstr) throws NamingException, SQLException, ParseException {
+	public String getUni(String id) throws NamingException, SQLException, ParseException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try
+		{
+			String sql = "select jsonstr from user where id = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, id);
+			rs = stmt.executeQuery();
+			String jsonstr = rs.getString("jsonstr");
+			JSONObject obj = (JSONObject) (new JSONParser()).parse(jsonstr);
+			String uni = obj.get("uni").toString();
+			return uni;
+		} 
+		finally 
+		{
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close(); 
+			if (conn != null) conn.close();
+		}
+	}
+	
+	public String getUni_json(String jsonstr) throws NamingException, SQLException, ParseException {
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;

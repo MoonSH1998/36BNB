@@ -24,6 +24,11 @@ create table if not exists feedHeart(
  	id varchar(128)
  );
  
+ 	
+create table if not exists test(
+ 	jsonstr VARCHAR(8192)
+ );
+ 
  create table if not exists feedReport(
  	no varchar(128),
  	fid varchar(128),

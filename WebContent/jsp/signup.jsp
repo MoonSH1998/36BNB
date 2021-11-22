@@ -20,7 +20,7 @@ request.setCharacterEncoding("utf-8");
 	String uid = request.getParameter("id");
 	String jsonstr = request.getParameter("jsonstr"); 
 	UserDAO dao = new UserDAO();
-	String uni = dao.getUni(jsonstr);
+	String uni = dao.getUni_json(jsonstr);
 	if (dao.exists(uid))
 	{
 		out.print("EX");
@@ -34,7 +34,6 @@ request.setCharacterEncoding("utf-8");
 	else if (dao.insert(uid, jsonstr) == true )
 	{
 		session.setAttribute("id", uid);
-		session.setAttribute("uni", uni);
 		out.print("OK");
 	}
 	else

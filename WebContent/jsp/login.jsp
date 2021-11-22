@@ -19,8 +19,6 @@ request.setCharacterEncoding("utf-8");
        out.print("NE"); // out.print("아이디가 존재하지 않습니다.");
     }
     else if (code == 3){
-    	String uni = dao.getUni(uid);
-    	session.setAttribute("uni", uni);
     	session.setAttribute("id", uid);
     	out.print("AD");
     }

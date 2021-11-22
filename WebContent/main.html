@@ -20,12 +20,15 @@
 		
 		<div class="emp"></div>
 		<div id="list"></div>
-				<div class="session" onclick="getsession()">내정보asfsfasfasfsafssssssssssssssssssssssssss</div>
+		<div class="session" onclick="getsession()">내정보asfsfasfasfsafssssssssssssssssssssssssss</div>
+
+		<div id="uni"></div>
 		<!--   이건 나중에 써먹기.
 		<div class="menu" onclick="addFeed()">글쓰기</div>
 		<div class="menu" onclick="">친구보기</div>
 		<div class="menu" onclick="">내정보</div>
 		<div class="button" onclick="getNext()">작성글 더보기</div>
+		
  -->
 		<div class="empty_box"></div>
 		<nav class="nav">
@@ -63,8 +66,7 @@
 		<script src="js/jquery-3.6.0.min.js"></script> 
 		<script src="js/core.js"></script>
 		<script>
-		//console.log(session.get("uni"));
-		//out.print(uni);
+		
 		$(document).ready(function() {
 			Page.init(start);
 			});
@@ -89,6 +91,18 @@
 					});
 				}
 			}
+			
+			function getsession() {
+	 			var params = null;
+					AJAX.call("jsp/getsession.jsp", params, function(data) {
+						var id = data.trim();
+						console.log(id);
+						$("#uni").append(id);
+					});
+				}
+			
+			
+			
 			function show(feeds) {
 				// set minNo to detect the end of the list
 				if (feeds.length > 0) {

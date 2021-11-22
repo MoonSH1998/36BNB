@@ -1,7 +1,7 @@
 package dao;
 
 public class UserObj {
-    private String id, name, uni,  stu_num, birth, sex, phone_num, ps;
+    private String id, name, uni, stu_num, birth, sex, phone_num, ps;
 	
     public UserObj(String id, String name, String uni, String stu_num, String birth, String sex, String phone_num, String ps) {
     	this.id = id;

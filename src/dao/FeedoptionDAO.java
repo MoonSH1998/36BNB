@@ -114,6 +114,38 @@ import util.ConnectionPool;
 		}
 	}
 	
+	// Check_already_heart_by Moon 1111
+	public boolean checkHeart(String no, String uid) throws NamingException, SQLException
+	{
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try
+		{
+			String sql = "SELECT * FROM feedHeart where no = ? and id = ?";
+			conn = ConnectionPool.get();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, no);
+			stmt.setString(2, uid);
+			rs = stmt.executeQuery();
+			
+			if (rs.next())
+			{
+				return true;
+			}
+			else 
+			{
+				return false;
+			}
+		}
+		finally
+		{
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close(); 
+			if (conn != null) conn.close();
+	    }
+	}
+	
 /*
 public boolean feedoption(String jsonstr) throws NamingException, SQLException , ParseException{
 Connection conn = ConnectionPool.get();
@@ -158,33 +190,8 @@ if (stmt != null) stmt.close();
 if (conn != null) conn.close();
 }
 }
-*/
-
+*/		
 	/*
-	// Check_already_heart_by Moon 1111
-	public boolean checkHeart(String no, String uid) throws NamingException, SQLException, ParseException {
-		Connection conn = ConnectionPool.get();
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		try {
-		String sql = "SELECT jsonstr FROM feedoption";
-		conn = ConnectionPool.get();
-		stmt = conn.prepareStatement(sql);
-		
-		String jsonstr = rs.getString("jsonstr");
-		JSONObject obj = (JSONObject) (new JSONParser()).parse(jsonstr);
-		String type = obj.get("type").toString();
-		String id = obj.get("id").toString();
-		String fno = obj.get("no").toString();
-		if (uid.equals((id))&type.equals("heart")&no.equals((fno))) return true;
-		else return false;
-		} finally {
-			if (rs != null) rs.close();
-			if (stmt != null) stmt.close(); 
-			if (conn != null) conn.close();
-	    }
-	}		
-	
 	public boolean deletereport(String list) throws NamingException, SQLException {
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;
