@@ -11,8 +11,7 @@
 	UserDAO dao1 = new UserDAO();
 	String json = dao1.get(id);
 	String uni = dao1.getUni_json(json);
-    
-	FeedDAO dao = new FeedDAO();
+    FeedDAO dao = new FeedDAO();
 	out.print(dao.getGroup(maxNo, uni));
 	
 //out.print((new FeedDAO()).getGroup(request.getParameter("maxNo"),(String)session.getAttribute("uni")));

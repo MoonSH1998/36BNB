@@ -79,8 +79,8 @@
 				var feeds = DataCache.get("mainCache");
 	 			console.log(feeds);
 				if(feeds != null){
-					var params = {id:uid};
-					AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {
+					var params = {id:uid, maxNo:"99"};
+					AJAX.call("jsp/feedlist.jsp", null, function(data) {
 						feedList = JSON.parse(data.trim());
 						DataCache.set("mainCache", feedList);
 						console.log(feeds);
@@ -90,7 +90,7 @@
 				}
 				else{
 					var uid = uid;
-					var params = {id:uid};
+					var params = {id:uid, maxNo:"99"};
 					AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {
 						
 						feedList = JSON.parse(data.trim());

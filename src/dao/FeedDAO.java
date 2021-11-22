@@ -132,7 +132,7 @@ import util.ConnectionPool;
 				if (conn != null) conn.close();
 			}
 		}
-			
+		
 		public String getList() throws NamingException, SQLException
 		{
 			Connection conn = ConnectionPool.get();
@@ -193,7 +193,68 @@ import util.ConnectionPool;
 				if (stmt != null) stmt.close(); 
 				if (conn != null) conn.close();
 			}
-		}		
-	
-	
-}
+		}
+			/*
+		public String getList() throws NamingException, SQLException
+		{
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try
+			{
+				String sql = "SELECT jsonstr FROM feed";
+				stmt = conn.prepareStatement(sql);
+				//stmt.setString(1, "7");
+				rs = stmt.executeQuery();
+				String str = "[";
+				int cnt = 0;
+				while(rs.next())
+				{
+					if (cnt++ > 0) str += ", ";
+					str += rs.getString("jsonstr");
+				}
+				return str + "]";
+			}
+			finally
+			{
+				if (rs != null) rs.close(); 
+				if (stmt != null) stmt.close(); 
+				if (conn != null) conn.close();
+			}
+		}
+			
+		public String getGroup(String maxNo, String uni) throws NamingException, SQLException
+		{
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try
+			{
+				String sql = "SELECT jsonstr FROM feed";
+				stmt = conn.prepareStatement(sql);
+				//stmt.setString(1, uni);
+				if (maxNo != null)
+				{
+					sql += " where no < 290";
+					//stmt.setString(1, maxNo);
+				}
+				sql += " ORDER BY no desc limit 100";
+				rs = stmt.executeQuery();
+				String str = "[";
+				int cnt = 0;
+				while(rs.next())
+				{
+					if (cnt++ > 0) str += ", ";
+					str += rs.getString("jsonstr");
+				}
+				return str + "]";
+			}
+			finally
+			{
+				if (rs != null) rs.close(); 
+				if (stmt != null) stmt.close(); 
+				if (conn != null) conn.close();
+			}
+		}
+		*/
+	}
