@@ -10,16 +10,18 @@
 <title>MySNS</title>
 </head>
 <body>
-
+  
 	<div class="main_head">
+		
 		<a class="bell_new" href="//알림링크걸기"><img src="img/bell_new.svg"></a>
 		<span class="title">두유가 찾는방<br>여기 다 모아놨어요</span>
 		<div class="title_text">오늘 <span class="new_count">#개</span>의 방이 추가되었어요!</div>
 		<button class="go_sell_btn" type="button" onclick="//내놔요링크걸기">방 찾아보기</button>
 		</div>
-		
 		<div class="emp"></div>
 		<div id="list"></div>
+	
+		<div id="uid" onclick="con()">출력테스트</div>
 		
 		<!--   이건 나중에 써먹기.
 		<div class="menu" onclick="addFeed()">글쓰기</div>
@@ -28,6 +30,8 @@
 		<div class="button" onclick="getNext()">작성글 더보기</div>
 		
  -->
+		
+		
 		<div class="empty_box"></div>
 		<nav class="nav">
 			<ul class="nav__list">
@@ -75,11 +79,18 @@
 				var feeds = DataCache.get("mainCache");
 	 			console.log(feeds);
 				if(feeds != null){
+					var params = {id:uid};
+					AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {
+						feedList = JSON.parse(data.trim());
+						DataCache.set("mainCache", feedList);
+						console.log(feeds);
+					});
 					feedList = feeds;
 					show(feedList);
 				}
 				else{
-					var params = {maxNo:minNo};
+					var uid = uid;
+					var params = {id:uid};
 					AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {
 						
 						feedList = JSON.parse(data.trim());
@@ -90,7 +101,7 @@
 				}
 			}
 			
-			function show(feeds) {
+		function show(feeds) {
 				// set minNo to detect the end of the list
 				if (feeds.length > 0) {
 				minNo = feeds[feeds.length - 1].no;
@@ -105,7 +116,8 @@
 			
 			
 			function getNext(){
-				var params = {maxNo:minNo};
+				var id = loginId;
+				var params = {id:id, maxNo:minNo};
 				AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {
 					var feeds = JSON.parse(data.trim());
 					if(feeds.length > 0){

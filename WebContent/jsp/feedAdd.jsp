@@ -38,10 +38,13 @@
 					}
 				}
 			}
-			String id = (String)session.getAttribute("id");
+			String id = request.getParameter("id");
 			FeedDAO dao = new FeedDAO();
 			UserDAO dao1 = new UserDAO();
-			String uni = dao1.getUni("id");
+			String json = dao1.get(id);
+			String uni = dao1.getUni_json(json);
+		    
+			
 			if (dao.insert(jsonstr, uni) == true)
 		 	{
 				out.print("OK"); // response.sendRedirect("main.jsp");

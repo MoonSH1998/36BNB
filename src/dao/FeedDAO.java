@@ -142,6 +142,7 @@ import util.ConnectionPool;
 			{
 				String sql = "SELECT jsonstr FROM feed";
 				stmt = conn.prepareStatement(sql);
+				//stmt.setString(1, "7");
 				rs = stmt.executeQuery();
 				String str = "[";
 				int cnt = 0;
@@ -172,10 +173,10 @@ import util.ConnectionPool;
 				stmt.setString(1, uni);
 				if (maxNo != null)
 				{
-					sql += " WHERE no < ?";
-					stmt.setString(1, maxNo);
+					sql += " and no < 90";
+					//stmt.setString(1, maxNo);
 				}
-				sql += " ORDER BY no DESC LIMIT 5 ";
+				sql += " ORDER BY no desc LIMIT 5";
 				rs = stmt.executeQuery();
 				String str = "[";
 				int cnt = 0;

@@ -28,6 +28,7 @@
 	<div>
 		<div id="myFeed">내가 쓴 글</div>
 		<div id="myReview">받은 후기</div>
+		<div id="uid" onclick="con()">출력테스트</div>
 		<div id="heart">찜한 글</div>
 	</div>
 		
@@ -74,6 +75,30 @@
 		<script src="js/core.js"></script>
 		<script>
 		
+		
+		$(document).ready(function() {
+			Page.init(start);
+			});
+		
+		var userObj = null;
+
+		function start(uid) {
+			var params = {id : uid};
+			
+			AJAX.call("jsp/userGet.jsp", params, function(data) {
+			userObj = JSON.parse(data.trim());
+			setPage(userObj);
+			
+			AJAX.call("jsp/test.jsp", params, function(data) {
+			var params = {id : uid};
+			console.log(data.trim());
+			});
+			
+		});
+	}
+		
+		/*
+		
 		$(document).ready(function() {
 			Page.init(start);
 			});
@@ -85,19 +110,27 @@
 			AJAX.call("jsp/userGet.jsp", params, function(data) {
 			userObj = JSON.parse(data.trim());
 			setPage(userObj);
-			console.log(userObj.id);
+			
+			AJAX.call("jsp/test.jsp", params, function(data) {
+			console.log(data.trim());
+			});
+		
+			//console.log(userObj.uni);
 			showPhoto(userObj);
+			
 			AJAX.call("jsp/feedlist.jsp", null, function(data) {
 				var feeds = JSON.parse(data.trim());
-	
-			countMyFeed(feeds, userObj);
-			});	
+		countMyFeed(feeds, userObj);
+			});
+			
+			
 		});
 	}
 		
 		function countMyFeed(feed, user) {
 			var count = 0;
 			console.log(user.id);
+			
 			for (var i=0; i<feed.length; i++) {
 				if(feed[i].id == user.id){
 					count++;	
@@ -126,7 +159,7 @@
 		function fixPhoto(){
 			alert("사진 수정 기능 추가중");
 		}
-		
+		*/
 		function setPage(uobj) {
 			if (uobj == null) return;
 			$("#id").html(uobj.id);

@@ -5,9 +5,12 @@
 	//프로필에서 사용예정 id만 넣어주면 반환해줌
 	request.setCharacterEncoding("utf-8");
 	UserDAO dao = new UserDAO();
-	String id = (String)session.getAttribute("id");
+	String id = request.getParameter("id");
 	String uid = (String)session.getAttribute("uid");
-    String uni = dao.getUni("id");
+	
+	String json = dao.get(id);
+	String uni = dao.getUni_json(json);
+    
     int myFeed = dao.countMyFeed(uid);
     int myReport = dao.countMyReport(uid);
     int myHeart = dao.countMyHeart(uid);
