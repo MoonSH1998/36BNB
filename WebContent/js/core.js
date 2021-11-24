@@ -63,7 +63,7 @@ var DataCache = {
 	},
 	set: function (name, data) {
 		var obj = { ts:Date.now(), data: data };
-		SessionStore.set(name, obj);2
+		SessionStore.set(name, obj);
 	},
 	get: function (name) {
 	var obj = SessionStore.get(name);

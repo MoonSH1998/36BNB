@@ -10,8 +10,8 @@ UserDAO dao = new UserDAO();
 String id = request.getParameter("id");
 //String uid = (String)session.getAttribute("uid");
 
-//String json = dao.get(id);
-//String uni = dao.getUni_json(json);
+String json = dao.get(id);
+String uni = dao.getUni_json(json);
 out.print((new FeedDAO()).getList());
 
 %>

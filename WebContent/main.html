@@ -21,15 +21,18 @@
 		<div class="emp"></div>
 		<div id="list"></div>
 	
-		<div id="uid" onclick="con()">출력테스트</div>
+		
 		
 		<!--   이건 나중에 써먹기.
 		<div class="menu" onclick="addFeed()">글쓰기</div>
 		<div class="menu" onclick="">친구보기</div>
-		<div class="menu" onclick="">내정보</div>
+		<div class="menu" onclick="">내정보</div> -->
 		<div class="button" onclick="getNext()">작성글 더보기</div>
-		
- -->
+		<div class="emp"></div>
+		<div class="emp"></div>
+		<div class="emp">asd</div>
+		<div class="emp">asd</div>		
+
 		
 		
 		<div class="empty_box"></div>
@@ -74,13 +77,28 @@
 			});
 			var minNo = -1;
 			var feedList = [];
+			/*
+			function start(uid) {
+				var params = {id:uid};
+			AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {
+			var feeds = JSON.parse(data.trim());
+			
+			if (feeds.length > 0) {
+			minNo = feeds[feeds.length - 1].no;
+			}
+			console.log(feeds);
+			show(feeds);
+			});
+			
+			}
+			*/
 			
 			function start(uid) {
 				var feeds = DataCache.get("mainCache");
-	 			console.log(feeds);
+	 			//console.log(feeds);
 				if(feeds != null){
-					var params = {id:uid, maxNo:"99"};
-					AJAX.call("jsp/feedlist.jsp", null, function(data) {
+					var params = {id:uid, maxNo:minNo};
+					AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {
 						feedList = JSON.parse(data.trim());
 						DataCache.set("mainCache", feedList);
 						console.log(feeds);
@@ -90,7 +108,7 @@
 				}
 				else{
 					var uid = uid;
-					var params = {id:uid, maxNo:"99"};
+					var params = {id:uid};
 					AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {
 						
 						feedList = JSON.parse(data.trim());
@@ -100,6 +118,7 @@
 					});
 				}
 			}
+			
 			
 		function show(feeds) {
 				// set minNo to detect the end of the list
@@ -116,7 +135,7 @@
 			
 			
 			function getNext(){
-				var id = loginId;
+				var id = uid;
 				var params = {id:id, maxNo:minNo};
 				AJAX.call("jsp/feedGetGroup.jsp", params, function(data) {
 					var feeds = JSON.parse(data.trim());
@@ -140,7 +159,7 @@
 				
 				
 				str += "<div class='main_feed1'  onclick='showFeed(" + feed.no + ")'><span>" + feed.trader + "</span>";
-				str += "<div class = 'heart' onclick ='heart(" + feed.no + ")'> heart </div>";
+				//str += "<div class = 'heart' onclick ='heart(" + feed.no + ")'> heart </div>";
 				str += "<span>" + feed.price + "</span>";
 				str += "</div>";
 				
@@ -173,8 +192,7 @@
 					var id = loginId;
 					var no = no;
 					var fid = fid;
-					var feedoptionobj = {id : id,no: no, fid:fid, type:"heart" };
-					var params = {id: id, jsonstr: JSON.stringify(feedoptionobj)};
+					var params = {id : id,no: no, fid:fid};
 					var url ="jsp/feedoption_heart.jsp";
 						AJAX.call(url, params, function(data) {
 					var code = data.trim();
@@ -194,9 +212,12 @@
 				for (var i=0; i<feedList.length; i++) {
 				if (feedList[i].no == fno) {
 				Page.go("feedView.html", feedList[i]);
+				//Page.go("feedView.html", feedList[fno]);
 				return;
 				}
-			}
+				}
 		}
+			
+		
 				</script>
 				

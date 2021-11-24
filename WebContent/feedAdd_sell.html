@@ -46,7 +46,7 @@
 
 	<div class="line"></div>
 	<input id="image" type="file">
-	<div class="submit_feedadd" onclick="upload()">글 작성 완료</div>
+	<div class="submit_feedadd" onclick="upload()">1111글 작성 완료</div>
 </div>
 </body>
 
@@ -109,7 +109,7 @@
   		var title = "1";
 		
 	var imgobj = $("#image")[0].files[0];
-	var jsonobj = {id: id, title = title, start:start, end:end, type: "내놔요", trader:trader, price:price, content: content, ts: getTime()};
+	var jsonobj = {id: id, title : null, start:start, end:end, type: "내놔요", trader:trader, price:price, content: content, ts: getTime()};
 	if (imgobj != null) {
 		jsonobj.images = [imgobj.name];
 	}
@@ -139,9 +139,9 @@
 		var year = date.getFullYear();
 		var month = ("0" + (1 + date.getMonth())).slice(-2);
 		var day = ("0" + date.getDate()).slice(-2);
-		//var hour = ("0" + date.getHours()).slice(-2);
-		//var min = ("0" + date.getMinutes()).slice(-2);
-		//var sec = ("0" + date.getSeconds()).slice(-2);
-		return year + "-" + month + "-" + day; // + " " + hour + ":" + min + ":" + sec;
+		var hour = ("0" + date.getHours()).slice(-2);
+		var min = ("0" + date.getMinutes()).slice(-2);
+		var sec = ("0" + date.getSeconds()).slice(-2);
+		return year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
 	}
 </script>

@@ -19,23 +19,28 @@ CREATE TABLE IF NOT EXISTS feed (
 
 	
 create table if not exists feedHeart(
- 	no varchar(128),
+ 	list INT UNSIGNED PRIMARY KEY,
+	no varchar(128),
  	fid varchar(128),
  	id varchar(128)
  );
  
- 	
-create table if not exists test(
- 	jsonstr VARCHAR(8192)
- );
- 
  create table if not exists feedReport(
+ 	list INT UNSIGNED PRIMARY KEY,
+ 	jsonstr VARCHAR(8192),
+ 	state varchar(128)
+ );
+ /*
+ create table if not exists feedReport(
+ 	list INT UNSIGNED PRIMARY KEY,
+ 	jsonstr VARCHAR(8192)
  	no varchar(128),
  	fid varchar(128),
  	id varchar(128),
+ 	type varchar(128),
  	content varchar(1024)
  );
- 
+ */
 /*uni 추가 요청 테이블 cnt는 요청 개수*/
  create table if not exists add_uni(
  	uni varchar(128) PRIMARY KEY,

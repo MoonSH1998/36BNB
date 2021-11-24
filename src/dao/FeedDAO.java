@@ -13,7 +13,7 @@ import util.ConnectionPool;
 
 	public class FeedDAO 
 	{
-		public boolean insert(String jsonstr, String uni) throws NamingException, SQLException , ParseException
+		public boolean insert(String jsonstr, String id, String uni) throws NamingException, SQLException , ParseException
 		{
 			Connection conn = ConnectionPool.get();
 			PreparedStatement stmt = null;
@@ -29,25 +29,24 @@ import util.ConnectionPool;
 					stmt.close(); rs.close();
 					JSONParser parser = new JSONParser();
 					JSONObject jsonobj = (JSONObject) parser.parse(jsonstr);
-					jsonobj.put("no", max + 1);
+					//jsonobj.put("no", max + 1);
 		
-					String uid = jsonobj.get("id").toString();
 					sql = "SELECT jsonstr FROM user WHERE id = ?";
 					stmt = conn.prepareStatement(sql);
-					stmt.setString(1, uid);
+					stmt.setString(1, id);
 					rs = stmt.executeQuery();
 					if (rs.next())
 					{
 						String usrstr = rs.getString("jsonstr");
 						JSONObject usrobj = (JSONObject) parser.parse(usrstr);
-						usrobj.remove("password");
+						usrobj.remove("ps");
 						jsonobj.put("user", usrobj);
 					}
 					stmt.close(); rs.close();
 					sql = "INSERT INTO feed(no, id, uni, jsonstr) VALUES(?, ?, ?, ?)";
 					stmt = conn.prepareStatement(sql); 
 					stmt.setInt(1, max + 1);
-					stmt.setString(2, uid);
+					stmt.setString(2, id);
 					stmt.setString(3, uni);
 					stmt.setString(4, jsonobj.toJSONString());
 					
@@ -142,7 +141,6 @@ import util.ConnectionPool;
 			{
 				String sql = "SELECT jsonstr FROM feed";
 				stmt = conn.prepareStatement(sql);
-				//stmt.setString(1, "7");
 				rs = stmt.executeQuery();
 				String str = "[";
 				int cnt = 0;
@@ -160,7 +158,43 @@ import util.ConnectionPool;
 				if (conn != null) conn.close();
 			}
 		}
-			
+		
+		public String getGroup(String maxNo, String uni) throws NamingException, SQLException
+		{
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try
+			{
+				String sql = "SELECT jsonstr FROM (select * from feed where uni = ? order by no desc)f";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, uni);
+				if (maxNo != null)
+				{
+					sql += " where f.no < 99" + 	maxNo;
+					//stmt.setString(1, maxNo);
+				}
+				else 
+				sql += " LIMIT 5";
+				rs = stmt.executeQuery();
+				String str = "[";
+				int cnt = 0;
+				while(rs.next())
+				{
+					if (cnt++ > 0) str += ", ";
+					str += rs.getString("jsonstr");
+				}
+				return str + "]";
+			}
+			finally
+			{
+				if (rs != null) rs.close(); 
+				if (stmt != null) stmt.close(); 
+				if (conn != null) conn.close();
+			}
+		}
+		
+			/*
 		public String getGroup(String maxNo, String uni) throws NamingException, SQLException
 		{
 			Connection conn = ConnectionPool.get();
@@ -171,10 +205,10 @@ import util.ConnectionPool;
 				String sql = "SELECT jsonstr FROM feed where uni = ?";
 				stmt = conn.prepareStatement(sql);
 				stmt.setString(1, uni);
-				if (maxNo != null)
+				if (maxNo != "-1")
 				{
-					sql += " and no < 90";
-					//stmt.setString(1, maxNo);
+					sql += " and no < ?";
+					stmt.setString(1, maxNo);
 				}
 				sql += " ORDER BY no desc LIMIT 5";
 				rs = stmt.executeQuery();
@@ -194,6 +228,7 @@ import util.ConnectionPool;
 				if (conn != null) conn.close();
 			}
 		}
+		*/
 			/*
 		public String getList() throws NamingException, SQLException
 		{
