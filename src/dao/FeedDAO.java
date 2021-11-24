@@ -223,6 +223,24 @@ import util.ConnectionPool;
 			}
 		}
 		
+		public int todayCount(String today) throws NamingException, SQLException {
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try 
+				{
+				String sql = "select count(*) from (select json_extract(jsonstr, '$.ts') as 'k' from feed)f where f.k >= ?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, today);
+				rs = stmt.executeQuery();
+				return rs.next() ? rs.getInt(1) : 0;
+			} finally {
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+			}
+		}
+		
 		
 		
 			/*
