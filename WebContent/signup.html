@@ -92,7 +92,7 @@
 	}			
 
 	
-	var usrobj = {id: id, name: name, uni: uni, stu_num: stu_num,  birth: birth,sex: sex, phone_num: phone_num, ps: ps};
+	var usrobj = {id: id, name: name, uni: uni, stu_num: stu_num, user_images : null,  birth: birth,sex: sex, phone_num: phone_num, ps: ps};
 	var params = {id: id, jsonstr: JSON.stringify(usrobj), uni:uni};
 	var url ="jsp/signup.jsp";
 	AJAX.call(url, params, function(data) {

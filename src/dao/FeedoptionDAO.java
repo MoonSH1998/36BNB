@@ -66,6 +66,7 @@ import util.ConnectionPool;
 			}
 		}
 		
+		
 		public boolean delHeart(String no, String fid, String id) throws NamingException, SQLException{
 			Connection conn = ConnectionPool.get();
 			PreparedStatement stmt = null;

@@ -8,9 +8,9 @@
 	FeedDAO dao = new FeedDAO();
 	String today = request.getParameter("today");
 	today = today + "00";
-	int todayCount = dao.todayCount(today);
-    out.print(todayCount);
-    
+	//int todayCount = dao.todayCount(today);
+    //out.print(todayCount);
+    out.print(today);
     
   	
 %>

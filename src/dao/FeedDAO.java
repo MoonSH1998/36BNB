@@ -30,7 +30,7 @@ import util.ConnectionPool;
 					stmt.close(); rs.close();
 					JSONParser parser = new JSONParser();
 					JSONObject jsonobj = (JSONObject) parser.parse(jsonstr);
-					//jsonobj.put("no", max + 1);
+					jsonobj.put("no", max + 1);
 		
 					sql = "SELECT jsonstr FROM user WHERE id = ?";
 					stmt = conn.prepareStatement(sql);
@@ -200,7 +200,7 @@ import util.ConnectionPool;
 				stmt.setString(1, uni);
 				if (maxNo != null)
 				{
-					sql += " where f.no < 99" + 	maxNo;
+					sql += " where f.no < " + maxNo;
 					//stmt.setString(1, maxNo);
 				}
 				else 
