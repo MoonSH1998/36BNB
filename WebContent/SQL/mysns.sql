@@ -27,6 +27,7 @@ create table if not exists feedHeart(
  
  create table if not exists feedReport(
  	list INT UNSIGNED PRIMARY KEY,
+ 	fid varchar(128),
  	jsonstr VARCHAR(8192),
  	state varchar(128)
  );

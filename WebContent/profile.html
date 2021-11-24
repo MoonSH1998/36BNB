@@ -20,19 +20,37 @@
 	
 	<div class="line"></div>
 	
-	<div id="myPhoto"></div>
+	<div id="myPhoto"></div> 
 	
 	<div id="name"></div>
-	<div id="stu_num"></div>
+	<div>
+	<span id="uni"></span>
+	<span id="stu_num"></span>
+	<span>학번</span>
+	</div>
 	
 	<div>
-		<div id="myFeed">내가 쓴 글</div>
-		<div id="myReview">받은 후기</div>
-		<div id="uid" onclick="con()">출력테스트</div>
-		<div id="heart">찜한 글</div>
+	
+	<div>
+		<span>
+			<div>내가 쓴 글</div>
+			<div id="feedCount"></div>
+		</span>
+		<span>
+			<div>받은 신고</div>
+			<div id="reportCount"></div>
+		</span>
+		<span>
+		<div>찜한 글</div>
+		<div id="heartCount"></div>
+		</span>
 	</div>
 		
-  			<img class="profileImg"src="images/profile_def.svg" alt="프로필 이미지">
+	</div>
+	
+	<div id="myFeed"></div>
+		
+  			<!-- <img class="profileImg"src="images/profile_def.svg" alt="프로필 이미지">  -->
   			
   			<div><a a href ="jsp/logout.jsp">로그아웃</a></div>
 
@@ -79,65 +97,107 @@
 		$(document).ready(function() {
 			Page.init(start);
 			});
-		
+		var minNo = -1;
+		var myfeed = [];
 		var userObj = null;
-
-		function start(uid) {
-			var params = {id : uid};
-			
-			AJAX.call("jsp/userGet.jsp", params, function(data) {
-			userObj = JSON.parse(data.trim());
-			setPage(userObj);
-			
-			AJAX.call("jsp/test.jsp", params, function(data) {
-			var params = {id : uid};
-			console.log(data.trim());
-			});
-			
-		});
-	}
-		
-		/*
-		
-		$(document).ready(function() {
-			Page.init(start);
-			});
-		
-		var userObj = null;
-		
 		function start(uid) {
 			var params = {id : uid};
 			AJAX.call("jsp/userGet.jsp", params, function(data) {
 			userObj = JSON.parse(data.trim());
 			setPage(userObj);
-			
-			AJAX.call("jsp/test.jsp", params, function(data) {
-			console.log(data.trim());
-			});
-		
-			//console.log(userObj.uni);
 			showPhoto(userObj);
-			
-			AJAX.call("jsp/feedlist.jsp", null, function(data) {
-				var feeds = JSON.parse(data.trim());
-		countMyFeed(feeds, userObj);
 			});
+			AJAX.call("jsp/feedCount.jsp", params, function(data) {
+				var feedCount = data.trim();
+				$("#feedCount").html(feedCount);
+				});
 			
+			AJAX.call("jsp/reportCount.jsp", params, function(data) {
+				var reportCount = data.trim();
+				$("#reportCount").html(reportCount);
+				});
 			
-		});
-	}
-		
-		function countMyFeed(feed, user) {
-			var count = 0;
-			console.log(user.id);
+			AJAX.call("jsp/heartCount.jsp", params, function(data) {
+				var heartCount = data.trim();
+				$("#heartCount").html(heartCount);
+				});
 			
-			for (var i=0; i<feed.length; i++) {
-				if(feed[i].id == user.id){
-					count++;	
-				}
-			}
-			$("#myFeed").append(count);
+			AJAX.call("jsp/myFeed.jsp", params, function(data) {
+				myfeed = JSON.parse(data.trim());
+				console.log(myfeed);
+				show(myfeed);
+				});
 		}
+		
+		function setPage(uobj) {
+			if (uobj == null) return;
+			$("#id").html(uobj.id);
+			$("#name").html(uobj.name);
+			$("#stu_num").html(uobj.stu_num.substring(2,4));
+			$("#uni").html(uobj.uni);
+			
+		}
+		
+		function show(feeds) {
+			// set minNo to detect the end of the list
+			if (feeds.length > 0) {
+			minNo = feeds[feeds.length - 1].no;
+			}
+			var str = "";
+			for (var i=0; i<feeds.length; i++) {
+			str += getFeedCode(feeds[i]);
+			}
+			$("#myFeed").append(str);
+			}
+		
+	
+		
+		function getFeedCode(feed) {
+			if (feed.images == null){
+		var name = (feed.user == null) ? feed.id : feed.user.name;
+		var stuNum = Math.floor(((feed.user.stu_num)/1000000)%100);			//추가된 xx학번에 대한 변수 추가. by_성하_0805
+		var str = "<div class='feed'>";
+		
+		
+		str += "<div class='main_feed1'  onclick='showFeed(" + feed.no + ")'><span>" + feed.trader + "</span>";
+		str += "<span>" + feed.price + "</span>";
+		str += "</div>";
+		
+		str += "<div class='main_feed2'  onclick='showFeed(" + feed.no + ")'><span>" + feed.ts + "</span>";
+		str += "<span>" + feed.content + "</span>"
+		str += "<span>" + feed.start + "  ~  " + feed.end  + "까지 방" + feed.type + "</span>";
+		str += "<span>" + stuNum + "학번" + "</span>";
+		
+		str += "</div>";
+		return str;
+			}
+			
+			else {
+				var imgurl = "images/" + feed.images;
+				var name = (feed.user == null) ? feed.id : feed.user.name;
+				var str = "<div class='feed' onclick='showFeed(" + feed.no + ")'>"
+				str += "<div class = 'heart' onclick ='heart(" + feed.no + ")'> heart </div>";
+				str += "<div class='main_feed1'  style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'><span>" + feed.trader + "</span>";
+				str += "<span>" + feed.price + "</span>";
+				str += "</div>";
+				str += "<div class='main_feed2'><span>" + feed.ts + "</span>";
+				str += "<span>" + feed.content + "</span>"
+				str += "<span>" + feed.start + "  ~  " + feed.end  + "까지 방" + feed.type + "</span>";
+			 	str += "</div>";
+				return str;
+				}
+				}
+		
+		
+		function showFeed(fno) {
+			for (var i=0; i<feedList.length; i++) {
+			if (feedList[i].no == fno) {
+			Page.go("feedView.html", feedList[i]);
+			return;
+			}
+			}
+		}
+			
 		
 		function showPhoto(uobj){
 			if (uobj.images == null){
@@ -155,19 +215,6 @@
 			$("#myPhoto").append(str);
 			console.log(str);
 		}
-		
-		function fixPhoto(){
-			alert("사진 수정 기능 추가중");
-		}
-		*/
-		function setPage(uobj) {
-			if (uobj == null) return;
-			$("#id").html(uobj.id);
-			$("#name").html(uobj.name);
-			$("#stu_num").html(uobj.stu_num);
-			
-		}
-	
 	
 </script>
 	

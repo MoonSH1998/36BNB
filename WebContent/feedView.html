@@ -163,10 +163,10 @@ function feedHeart(no,fid)
 
 function feedReport(no, fid)
 {
+	var content = prompt("신고 내용을 입력해주세요");
 	var id = loginId;
 	var no = no;
 	var fid = fid;
-	var content = "여기 신고 내용 적을 수 있게 수정해야함"
 	var feedoptionobj = {no : no, fid : fid, id : id, content : content }
 	var params = {jsonstr: JSON.stringify(feedoptionobj)};
 	var url ="jsp/feedReport.jsp";

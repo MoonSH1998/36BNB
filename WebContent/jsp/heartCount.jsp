@@ -6,17 +6,8 @@
 	request.setCharacterEncoding("utf-8");
 	UserDAO dao = new UserDAO();
 	String id = request.getParameter("id");
-	String uid = (String)session.getAttribute("uid");
 	
-	String json = dao.get(id);
-	String uni = dao.getUni_json(json);
-    
-    int myFeed = dao.countMyFeed(uid);
-    int myReport = dao.countMyReport(uid);
-    int myHeart = dao.countMyHeart(uid);
-    
-    out.print(myFeed);
-    out.print(myReport);
+	int myHeart = dao.countMyHeart(id);
     out.print(myHeart);
     
     

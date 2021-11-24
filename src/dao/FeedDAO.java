@@ -18,6 +18,7 @@ import util.ConnectionPool;
 			Connection conn = ConnectionPool.get();
 			PreparedStatement stmt = null;
 			ResultSet rs = null;
+			ResultSet rs1 = null;
 			try
 			{
 				synchronized(this)
@@ -34,22 +35,22 @@ import util.ConnectionPool;
 					sql = "SELECT jsonstr FROM user WHERE id = ?";
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, id);
-					rs = stmt.executeQuery();
-					if (rs.next())
+					rs1 = stmt.executeQuery();
+					if (rs1.next())
 					{
-						String usrstr = rs.getString("jsonstr");
+						String usrstr = rs1.getString("jsonstr");
 						JSONObject usrobj = (JSONObject) parser.parse(usrstr);
 						usrobj.remove("ps");
 						jsonobj.put("user", usrobj);
 					}
-					stmt.close(); rs.close();
+					stmt.close(); rs1.close();
+					
 					sql = "INSERT INTO feed(no, id, uni, jsonstr) VALUES(?, ?, ?, ?)";
 					stmt = conn.prepareStatement(sql); 
 					stmt.setInt(1, max + 1);
 					stmt.setString(2, id);
 					stmt.setString(3, uni);
 					stmt.setString(4, jsonobj.toJSONString());
-					
 					int count = stmt.executeUpdate();
 					return (count == 1) ? true : false;
 				}
@@ -132,6 +133,34 @@ import util.ConnectionPool;
 			}
 		}
 		
+		public String myFeed(String id) throws NamingException, SQLException
+		{
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try
+			{
+				String sql = "SELECT jsonstr FROM (select * from feed where id = ? order by no desc)f";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, id);
+				rs = stmt.executeQuery();
+				String str = "[";
+				int cnt = 0;
+				while(rs.next())
+				{
+					if (cnt++ > 0) str += ", ";
+					str += rs.getString("jsonstr");
+				}
+				return str + "]";
+			}
+			finally
+			{
+				if (rs != null) rs.close(); 
+				if (stmt != null) stmt.close(); 
+				if (conn != null) conn.close();
+			}
+		}
+		
 		public String getList() throws NamingException, SQLException
 		{
 			Connection conn = ConnectionPool.get();
@@ -193,6 +222,8 @@ import util.ConnectionPool;
 				if (conn != null) conn.close();
 			}
 		}
+		
+		
 		
 			/*
 		public String getGroup(String maxNo, String uni) throws NamingException, SQLException
@@ -291,5 +322,57 @@ import util.ConnectionPool;
 				if (conn != null) conn.close();
 			}
 		}
+		
+		public boolean insert(String jsonstr, String id, String uni) throws NamingException, SQLException , ParseException
+		{
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			ResultSet rs1 = null;
+			try
+			{
+				synchronized(this)
+				{
+					String sql = "SELECT no FROM feed ORDER BY no DESC LIMIT 1";
+					stmt = conn.prepareStatement(sql);
+					rs = stmt.executeQuery();
+					int max = (!rs.next()) ? 0 : rs.getInt("no");
+					stmt.close(); rs.close();
+					JSONParser parser = new JSONParser();
+					JSONObject jsonobj = (JSONObject) parser.parse(jsonstr);
+					//jsonobj.put("no", max + 1);
+		
+					sql = "SELECT jsonstr FROM user WHERE id = ?";
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, id);
+					rs1 = stmt.executeQuery();
+					if (rs1.next())
+					{
+						String usrstr = rs1.getString("jsonstr");
+						JSONObject usrobj = (JSONObject) parser.parse(usrstr);
+						usrobj.remove("ps");
+						jsonobj.put("user", usrobj);
+					}
+					stmt.close(); rs1.close();
+					
+					sql = "INSERT INTO feed(no, id, uni, jsonstr) VALUES(?, ?, ?, ?)";
+					stmt = conn.prepareStatement(sql); 
+					stmt.setInt(1, max + 1);
+					stmt.setString(2, id);
+					stmt.setString(3, uni);
+					stmt.setString(4, jsonobj.toJSONString());
+					
+					int count = stmt.executeUpdate();
+					return (count == 1) ? true : false;
+				}
+			}
+			finally
+			{
+				if (rs != null) rs.close();
+				if (stmt != null) stmt.close();
+				if (conn != null) conn.close();
+			}
+		}
+		
 		*/
 	}

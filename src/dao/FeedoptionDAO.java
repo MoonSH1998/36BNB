@@ -110,11 +110,13 @@ import util.ConnectionPool;
 					JSONObject jsonobj = (JSONObject)parser.parse(jsonstr);
 					stmt.close(); rs.close();
 					
-					sql = "INSERT INTO feedReport(list, jsonstr, state) VALUES(?, ?, ?)";
+					sql = "INSERT INTO feedReport(list, fid, jsonstr, state) VALUES(?, ?, ?, ?)";
 					stmt = conn.prepareStatement(sql); 
+					String fid = jsonobj.get("fid").toString();
 					stmt.setInt(1, max + 1);
-					stmt.setString(2, jsonobj.toJSONString());
-					stmt.setString(3, "신고접수");
+					stmt.setString(2, fid);
+					stmt.setString(3, jsonobj.toJSONString());
+					stmt.setString(4, "신고접수");
 					int count = stmt.executeUpdate();
 					return (count == 1) ? true : false;
 				}
@@ -126,67 +128,69 @@ import util.ConnectionPool;
 				if (conn != null) conn.close();
 			}
 		}		
-					
-	public String getListfeedoption() throws NamingException, SQLException
-	{
-		Connection conn = ConnectionPool.get();
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		try
+		public boolean checkHeart(String no, String uid) throws NamingException, SQLException
 		{
-			String sql = "SELECT jsonstr FROM feedoption";
-			stmt = conn.prepareStatement(sql);
-			rs = stmt.executeQuery();
-			String str = "[";
-			int cnt = 0;
-			while(rs.next())
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try
 			{
-				if (cnt++ > 0) str += ", ";
-				str += rs.getString("jsonstr");
+				String sql = "SELECT * FROM feedHeart where no = ? and id = ?";
+				conn = ConnectionPool.get();
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, no);
+				stmt.setString(2, uid);
+				rs = stmt.executeQuery();
+				
+				if (rs.next())
+				{
+					return true;
+				}
+				else 
+				{
+					return false;
+				}
 			}
-		return str + "]";
+			finally
+			{
+				if (rs != null) rs.close();
+				if (stmt != null) stmt.close(); 
+				if (conn != null) conn.close();
+		    }
 		}
-		finally
-		{
-			if (rs != null) rs.close(); 
-			if (stmt != null) stmt.close(); 
-			if (conn != null) conn.close();
-		}
-	}
+	
 	/*
 	// Check_already_heart_by Moon 1111
-	public boolean checkHeart(String no, String uid) throws NamingException, SQLException
+	
+	
+		
+public String getListfeedoption() throws NamingException, SQLException
+{
+Connection conn = ConnectionPool.get();
+PreparedStatement stmt = null;
+ResultSet rs = null;
+try
+{
+	String sql = "SELECT jsonstr FROM feedoption";
+	stmt = conn.prepareStatement(sql);
+	rs = stmt.executeQuery();
+	String str = "[";
+	int cnt = 0;
+	while(rs.next())
 	{
-		Connection conn = ConnectionPool.get();
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		try
-		{
-			String sql = "SELECT * FROM feedHeart where no = ? and id = ?";
-			conn = ConnectionPool.get();
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, no);
-			stmt.setString(2, uid);
-			rs = stmt.executeQuery();
-			
-			if (rs.next())
-			{
-				return true;
-			}
-			else 
-			{
-				return false;
-			}
-		}
-		finally
-		{
-			if (rs != null) rs.close();
-			if (stmt != null) stmt.close(); 
-			if (conn != null) conn.close();
-	    }
+		if (cnt++ > 0) str += ", ";
+		str += rs.getString("jsonstr");
 	}
-	*/
-/*
+return str + "]";
+}
+finally
+{
+	if (rs != null) rs.close(); 
+	if (stmt != null) stmt.close(); 
+	if (conn != null) conn.close();
+}
+}
+		
 public boolean feedoption(String jsonstr) throws NamingException, SQLException , ParseException{
 Connection conn = ConnectionPool.get();
 PreparedStatement stmt = null;
