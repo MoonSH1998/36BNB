@@ -47,6 +47,24 @@ public class UserDAO {
 		}
 	}
 	
+	public String badget(String userId) throws NamingException, SQLException {
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+		String sql = "SELECT jsonstr FROM user WHERE id = ?";
+		stmt = conn.prepareStatement(sql);
+		stmt.setString(1, userId);
+		
+		rs = stmt.executeQuery();
+		return rs.next() ? rs.getString("jsonstr") : "{}";
+		} finally {
+		if (rs != null) rs.close();
+		if (stmt != null) stmt.close();
+		if (conn != null) conn.close();
+		}
+	}
+	
 	public String getUni(String id) throws NamingException, SQLException, ParseException {
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;

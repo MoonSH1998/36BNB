@@ -30,14 +30,13 @@ function start(uid) {
 function show(feedoptions) {
 	var str ="";
 	str += "<div class='user_list_name'>";
-	str += "<span>신고자</span><span>신고글</span><span>피신고자</span><span>상태</span><span>처리</span>";
+	str += "<span>신고자</span><span>신고글</span><span>상태</span><span>처리</span>";
 	str += "</div>";
 	for (var i=0; i<feedoptions.length; i++) {
 	
 	
 	str += "<div class='user_list_atom'><span>"+ feedoptions[i].id + "</span>";
 	str += "<span>" + feedoptions[i].no + "</span>";
-	str += "<span>" + feedoptions[i].fid + "</span>";
 	str += "<span>" + feedoptions[i].state + "</span>";
 	if(feedoptions[i].state == "신고접수"){
 		str += "<span onclick='check_report(" + feedoptions[i].list + ")'>신고확인</span></div>";
