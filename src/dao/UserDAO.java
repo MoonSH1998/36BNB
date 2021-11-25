@@ -192,6 +192,28 @@ public class UserDAO {
 					if (conn != null) conn.close();
 				}
 			}
+		public String getReport() throws NamingException, SQLException{
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try {
+				String sql = "SELECT jsonstr FROM feedReport ";
+				stmt = conn.prepareStatement(sql);
+				rs = stmt.executeQuery();
+				
+				String str = "[";
+				int cnt = 0;
+				while(rs.next()) {
+				if (cnt++ > 0) str += ", ";
+				str += rs.getString("jsonstr");
+				}
+				return str + "]";
+			} finally {
+				if (rs != null) rs.close(); 
+				if (stmt != null) stmt.close(); 
+				if (conn != null) conn.close();
+			}
+		}
 		
 		
 		public String get_id(String jsonstr) throws NamingException, SQLException, ParseException {

@@ -7,15 +7,15 @@ request.setCharacterEncoding("utf-8");
 //둘 다 String형식으로 주시면됩니다 / id는 세션에 저장되어있어 안주셔도돼요
 //OK받을 시 신고 입력 / ER받을 시 er 뜨게 하면 됩니다.
 		String jsonstr = request.getParameter("jsonstr");
-			
+	
 		FeedoptionDAO dao = new FeedoptionDAO();
 
 		if (dao.feedReport(jsonstr) == true )
 		{
-			out.print("OK");
+	out.print("OK");
 		}
 		else
 		{
-			out.print("ER");
+	out.print("ER");
 		}
 %>

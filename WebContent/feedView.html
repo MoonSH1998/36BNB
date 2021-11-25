@@ -167,7 +167,7 @@ function feedReport(no, fid)
 	var id = loginId;
 	var no = no;
 	var fid = fid;
-	var feedoptionobj = {no : no, fid : fid, id : id, content : content }
+	var feedReportobj = {no : no, fid : fid, id : id, content : content, state : "신고접수" }
 	var params = {jsonstr: JSON.stringify(feedoptionobj)};
 	var url ="jsp/feedReport.jsp";
 		AJAX.call(url, params, function(data)

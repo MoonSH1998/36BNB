@@ -22,7 +22,7 @@ Page.init(start);
 });
 
 function start(uid) {
-	AJAX.call("jsp/feedoptionlist.jsp", null, function(data) {
+	AJAX.call("jsp/listReport.jsp", null, function(data) {
 	var users = JSON.parse(data.trim());
 	show(users);
 	});
@@ -30,7 +30,7 @@ function start(uid) {
 function show(feedoptions) {
 	var str ="";
 	str += "<div class='user_list_name'>";
-	str += "<span>신고자</span><span>신고글</span><span>피신고자</span><span>확인 후 삭제</span>";
+	str += "<span>신고자</span><span>신고글</span><span>피신고자</span><span>상태</span><span>처리</span>";
 	str += "</div>";
 	for (var i=0; i<feedoptions.length; i++) {
 	
@@ -38,55 +38,63 @@ function show(feedoptions) {
 	str += "<div class='user_list_atom'><span>"+ feedoptions[i].id + "</span>";
 	str += "<span>" + feedoptions[i].no + "</span>";
 	str += "<span>" + feedoptions[i].fid + "</span>";
-	str += "<span onclick='deletereport(" + feedoptions[i].list + ")'>확인완료</span></div>";
+	str += "<span>" + feedoptions[i].state + "</span>";
+	if(feedoptions[i].state == "신고접수"){
+		str += "<span onclick='check_report(" + feedoptions[i].list + ")'>신고확인</span></div>";
+	}
+	else if(feedoptions[i].state == "신고확인"){
+		str += "<span onclick='ok_report(" + feedoptions[i].list + ")'>처리완료</span></div>";
+	}
+	else {
+		str += "<span onclick='delete_report(" + feedoptions[i].list + ")'>삭제하기</span></div>";
+	}
+	
 	
 	}
 	$("#list").append(str);
 	}
 	
 	
-function deletereport(list) {
+function check_report(list) {
 	
-	var url ="jsp/deletereport.jsp?list=" + list;
 	
-		AJAX.call(url, null, function(data) {
-	var code = data.trim();
-
-	  if(code == "OK") {
-		  
-	 	alert("신고 접수 완료.");
-	 	window.location.href = "report.html";
-	 	}
-	 else if (code =="ER"){
-	 		alert("신고 처리 중 오류가 발생하였습니다.");
-	 	}
+	var url ="jsp/checkReport.jsp";
+	var list = list;
+	var params ={list : list};
+		AJAX.call(url, params, function(data) {
+	var con = data.trim();
+	
+	  alert(con);
+	
+	  window.location.href = "report.html";
 	 	});
 	}	
 	
+	function ok_report(list)
+	{
+		var url ="jsp/ok_report.jsp";
+		var list = list;
+		var params ={list : list};
+			AJAX.call(url, params, function(data) {
+			});
+		alert("신고 처리 완료.");
+		window.location.href = "report.html";
+	}
+	
+	function delete_report(list)
+	{
+		var url ="jsp/deleteReport.jsp";
+		var list = list;
+		var params ={list : list};
+			AJAX.call(url, params, function(data) {
+			});
+		alert("신고 내용을 삭제합니다.");
+		window.location.href = "report.html";
+	}
 	
 	
-		
-		
 
-/*
-function delete_feed(no) {
 	
-	var url ="jsp/delete_feed.jsp?no=" + no ;
-
-	AJAX.call(url, null, function(data) {
-	var code = data.trim();
-  if(code == "OK") {
- 	alert("글 삭제가 완료되었습니다.");
- 	window.location.href = "feedlist.html";
- 	}
- else if (code =="ER"){
- 		alert("글 삭제 중 오류가 발생하였습니다.");
- 	}
- 	});
-	
-}
-	
-	*/
 
 
 	</script>

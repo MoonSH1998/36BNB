@@ -10,7 +10,5 @@
 	today = today + "00";
 	int todayCount = dao.todayCount(today);
     out.print(todayCount);
-    
-    
-  	
+ 
 %>

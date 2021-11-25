@@ -14,24 +14,24 @@ request.setCharacterEncoding("utf-8");
 		
 		if(state==1)
 		{
-			if(dao.delHeart(no, fid, id) == true)
-			{
-				out.print("DE");
-			}
-			else
-			{
-				out.print("ER");
-			}
+	if(dao.delHeart(no, fid, id) == true)
+	{
+		out.print("DE");
+	}
+	else
+	{
+		out.print("ER");
+	}
 		}
 		else
 		{
-			if(dao.insertHeart(no, fid, id)==true)
-			{
-				out.print("OK");
-			}
-			else
-			{
-				out.print("ER");
-			}
+	if(dao.insertHeart(no, fid, id)==true)
+	{
+		out.print("OK");
+	}
+	else
+	{
+		out.print("ER");
+	}
 		}
 %>

@@ -66,6 +66,101 @@ import util.ConnectionPool;
 			}
 		}
 		
+		public void ch_report1(String no) throws NamingException, SQLException{
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try
+			{
+				String sql = "UPDATE feedReport SET state = '신고확인' where list = ?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, no);
+				stmt.executeUpdate();
+				stmt.close();
+			}
+			finally
+			{
+				if (stmt != null) stmt.close();
+				if (conn != null) conn.close();
+			}
+		}
+		
+		
+		public void ch_report(String no) throws NamingException, SQLException{
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try
+			{
+				String sql = "update feedReport set jsonstr= JSON_SET(jsonstr, '$.state', '신고확인') where list = ?";
+				stmt = conn.prepareStatement(sql); 
+				stmt.setString(1, no);
+				stmt.executeUpdate();
+				stmt.close();
+				
+			}
+			finally
+			{
+				if (stmt != null) stmt.close();
+				if (conn != null) conn.close();
+			}
+		}
+		
+		public void ok_report(String no) throws NamingException, SQLException{
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try
+			{
+				String sql = "update feedReport set jsonstr= JSON_SET(jsonstr, '$.state', '처리완료') where list = ?";
+				stmt = conn.prepareStatement(sql); 
+				stmt.setString(1, no);
+				stmt.executeUpdate();
+				stmt.close();
+				
+			}
+			finally
+			{
+				if (stmt != null) stmt.close();
+				if (conn != null) conn.close();
+			}
+		}
+		public void ok_report1(String no) throws NamingException, SQLException{
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try
+			{
+				String sql = "UPDATE feedReport SET state = '처리완료' where list = ?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, no);
+				stmt.executeUpdate();
+				stmt.close();
+			}
+			finally
+			{
+				if (stmt != null) stmt.close();
+				if (conn != null) conn.close();
+			}
+		}
+		public int delReport(String no) throws NamingException, SQLException{
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try
+			{
+				String sql = "delete from feedReport where list = ?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, no);
+				stmt.executeUpdate();
+				return 1;
+			}
+			finally
+			{
+				if (stmt != null) stmt.close();
+				if (conn != null) conn.close();
+			}
+		}
 		
 		public boolean delHeart(String no, String fid, String id) throws NamingException, SQLException{
 			Connection conn = ConnectionPool.get();
@@ -109,6 +204,7 @@ import util.ConnectionPool;
 					stmt.close(); rs.close();
 					JSONParser parser = new JSONParser();
 					JSONObject jsonobj = (JSONObject)parser.parse(jsonstr);
+					jsonobj.put("list", max + 1);
 					stmt.close(); rs.close();
 					
 					sql = "INSERT INTO feedReport(list, fid, jsonstr, state) VALUES(?, ?, ?, ?)";
@@ -159,7 +255,50 @@ import util.ConnectionPool;
 				if (conn != null) conn.close();
 		    }
 		}
-	
+		
+		public String check_state(String no) throws NamingException, SQLException, ParseException {
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try
+			{
+				String sql="select json_extract(jsonstr, '$.content') as s FROM (select * from feedReport where list = ?)f";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, no);
+				rs = stmt.executeQuery();
+				String a;
+				a = (!rs.next()) ? rs.getString("s") : rs.getString("s"); 
+				return a;
+				
+			} 
+			finally 
+			{
+				if (rs != null) rs.close();
+				if (stmt != null) stmt.close(); 
+				if (conn != null) conn.close();
+			}
+		}
+		/*
+		public String check_state1(String no) throws NamingException, SQLException, ParseException {
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try
+			{
+				String sql = "select"
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, no);
+				rs = stmt.executeQuery();
+				return id;
+			} 
+			finally 
+			{
+				if (rs != null) rs.close();
+				if (stmt != null) stmt.close(); 
+				if (conn != null) conn.close();
+			}
+		}
+	*/
 	/*
 	// Check_already_heart_by Moon 1111
 	
