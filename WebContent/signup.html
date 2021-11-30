@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
 <head>
 <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
 <meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
@@ -13,20 +13,26 @@
 		</header>
 
 	<div class="section  signup_main">
-		<span class="title">회원가입</span>
+		<span class="signuptitle">회원가입</span>
 		<p>아래 정보를 모두 입력해주세요</p>
 		<input id="id" type="email" placeholder="이메일">
 		<input id="uni" type="text" placeholder="학교">
 		<input id="name" type="text" placeholder="이름">
 		<input id="stu_num" type="text" placeholder="학번">
-		<SELECT id=sex>
-         <OPTION VALUE=man>남자</OPTION>
-         <OPTION VALUE=woman>여자</OPTION>
-         </SELECT>
 		<input id="birth" type="text" placeholder="생년월일">
 		<input id="phone_num" type="text" placeholder="전화번호">
 		<input id="ps" type="password" placeholder="비밀번호">
-
+		<div id="genderinput">
+			<label class="radio-input">
+				<input type="radio" name="cp_item" value="man" checked="checked">
+				<span>남자</span>
+			</label>
+			<label class="radio-input">
+				<input type="radio" name="cp_item" value="woman">
+				<span>여자</span>
+			</label>
+		</div>
+		<p>우리 학교가 없나요? <a href="">학교 추가 요청 보내기</a></p>
 		<input type="submit" class="signup_btn" value="회원가입" onclick="signup()">
 			<a href="login.html"><span>로그인</span></a>
 	</div>
@@ -71,10 +77,10 @@
 		$("#birth").focus();
 		return;
 	}
-		var sex = $("#sex").val().trim();
-		if (birth == "") {
+		var sex = $("#cp_item"); //.val().trim();
+		if (sex == "") {
 		alert("성별을 선택해 주세요.");
-		$("#sex").focus();
+		$("#cp_item").focus();
 		return;
 	}
 		var phone_num = $("#phone_num").val().trim();
@@ -92,7 +98,7 @@
 	}			
 
 	
-	var usrobj = {id: id, name: name, uni: uni, stu_num: stu_num, user_images : null,  birth: birth,sex: sex, phone_num: phone_num, ps: ps};
+	var usrobj = {id: id, name: name, uni: uni, stu_num: stu_num,  birth: birth,sex: sex, phone_num: phone_num, ps: ps};
 	var params = {id: id, jsonstr: JSON.stringify(usrobj), uni:uni};
 	var url ="jsp/signup.jsp";
 	AJAX.call(url, params, function(data) {

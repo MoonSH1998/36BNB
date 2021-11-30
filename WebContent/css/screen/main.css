@@ -102,7 +102,9 @@ body {
 .main_feed1 :last-child{
 	right: 0;
 }
-
+.heart{
+	float: right; margin-right : 5px; color : red;
+}
 .main_feed2 {
   display: flex;
   position : relative;

@@ -21,37 +21,56 @@ $(document).ready(function() {
 Page.init(start);
 });
 function start(uid) {
-	AJAX.call("jsp/badUserList.jsp", null, function(data) {
+	AJAX.call("jsp/userList.jsp", null, function(data) {
 	var users = JSON.parse(data.trim());
 	show(users);
-	});
-	}
+});
+}
 function show(users) {
+	var a = null;
 	var str ="";
 		str += "<div class='user_list_name'>";
-		str += "<span>아이디</span><span>이름</span><span>성별</span><span>-</span>";
+		str += "<span>아이디</span><span>받은 신고</span><span>받은 좋아요</span><span>좋아요-신고</span>";
 		str += "</div>";
-	for (var i=0; i<users.length; i++) {
+	
+		for (var i=0; i<users.length; i++) {
 		str += "<div class='user_list_atom'><span>"+ users[i].id + "</span>";
-		str += "<span>" + users[i].name + "</span>";
+		str += "<span>" + countf(user[i].id) + "</span>";
 		str += "<span>" + users[i].sex + "</span>";
 		str += "<span onclick='withdraw(" + users[i].id + ")'>   삭제하기  </span></div>";
-	}
-	$("#list").append(str);
+		}
+		$("#list").append(str);
 	}
 
-function withdraw(id) {
-	var url ="jsp/withdraw.jsp?id=" + id ;
-		AJAX.call(url, null, function(data) {
-	var code = data.trim();
-		if(code == "OK") {
-		 	alert("회원 탈퇴가 완료되었습니다.");
-		 	window.location.href = "admin.html";
-	 	}
-		 else if (code =="ER"){
- 			alert("회원 탈퇴 처리 중 오류가 발생하였습니다.");
- 		}	
- 	});
+function countf(uid) {
+	AJAX.call("jsp/feedCount.jsp", {id : uid}, function(data) {
+	var count = data.trim();
+	
+	$("#feedCount").html(feedCount);
+	return str = count;
+	
+});
 }
+/*	
+	var params = {id : uid};
+	AJAX.call("jsp/feedCount.jsp", params, function(data) {
+		var feedCount = data.trim();
+		$("#feedCount").html(feedCount);
+		});
+}
+	
+	AJAX.call("jsp/reportCount.jsp", params, function(data) {
+		var reportCount = data.trim();
+		$("#reportCount").html(reportCount);
+		});
+	
+	AJAX.call("jsp/heartCount.jsp", params, function(data) {
+		var heartCount = data.trim();
+		$("#heartCount").html(heartCount);
+		});
+
+}
+*/
+
 </script>
 	  

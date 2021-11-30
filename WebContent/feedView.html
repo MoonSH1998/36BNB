@@ -45,7 +45,7 @@ function getFeedCode(feed){
 		str +="<div class='feedview_action'>";
 		str += "<span onclick='view_num(" + feed.user.phone_num + ")'>연락하기</span>";
 		str += "<span onclick='feedReport(" + feed.no + ',' + feed.user.id +  ")'>신고하기</span>";
-		str += "<div class = 'heart' onclick ='feedHeart(" + feed.no + ',' + feed.user.id + ")'> heart </div>";
+		str += "<div class = 'heart' onclick ='feedHeart(" + feed.no + ',' + feed.user.id + ")'> ♥ </div>";
 		str += "</div>";
 		str += "<div class='feedview_data'>";
 		str += "<span>" + feed.start + "   ~   " + feed.end + "</span>";

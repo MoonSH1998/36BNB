@@ -6,14 +6,13 @@
   justify-content: center;
   display: flex;
   flex-direction: column;
+  padding-bottom: 32px;
 }
 
-.title{
-  margin-top: 4px;
+.signuptitle{
   font-size: 24px;
 }
 
-.signup_btn,
 .signup_main input,
 .withdraw_main input {
   border: 2px solid #e5e5e5;
@@ -25,8 +24,42 @@
   font-family: "Noto Sans KR", sans-serif !important;
 }
 
-.signup_btn {
-  background-color: #fa716f;
+.genderinput{
+  display: flex;
+}
+
+.radio-input input[type="radio"]{
+  display:none;
+}
+
+.radio-input input[type="radio"] + span{
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  display:inline-block;
+  background:none;
+  border:2px solid #e5e5e5;  
+  border-radius: 8px;
+  padding:0px 10px;
+  text-align:center;
+  vertical-align: middle;
+  height:48px;
+  width: 130px;
+  margin-right: 4px;
+  line-height:48px;
+  font-weight:500;
+  cursor:pointer;
+}
+
+.radio-input input[type="radio"]:checked + span{
+  border:2px solid #e5e5e5;
+  background:#FA716F;
+  color:#fff;
+  border-radius: 8px;
+}
+
+.signup_btn{
+  background: #fa716f;
   color: white;
 }
 

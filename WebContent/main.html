@@ -1,4 +1,4 @@
-2<html>
+<html>
 <head>
 <script
 	 src="https://kit.fontawesome.com/6478f529f2.js"
@@ -14,7 +14,7 @@
 	<div class="main_head">
 		
 		<a class="bell_new" href="//알림링크걸기"><img src="img/bell_new.svg"></a>
-		<span class="title">두유가 찾는방<br>여기 다 모아놨어요</span>
+		<span class="title"><span id= "nam"></span>님이 찾는방<br>여기 다 모아놨어요</span>
 		<div class="title_text">오늘 <span id= "new_count"></span> <span class="new_count">개</span>의 방이 추가되었어요!</div>
 		<button class="go_sell_btn" type="button" onclick="//내놔요링크걸기">방 찾아보기</button>
 		</div>
@@ -27,7 +27,6 @@
 		<div class="menu" onclick="addFeed()">글쓰기</div>
 		<div class="menu" onclick="">친구보기</div>
 		<div class="menu" onclick="">내정보</div> -->
-		<div class="button" onclick="getNext()">작성글 더보기</div>
 		<div class="emp"></div>
 		<div class="emp"></div>
 		<div class="emp"></div>
@@ -103,7 +102,8 @@
 						show(feedList);
 					});
 				}
-				//getCount();
+				getCount();
+				getNam(uid);
 					
 			}
 			
@@ -124,7 +124,16 @@
 					
 			}
 			
-			
+function getNam(uid) {
+				
+				AJAX.call("jsp/getNam.jsp", {id : uid}, function(data) {
+					newCount = data.trim();
+					$("#nam").html(newCount);	
+					
+					
+				 	});
+					
+			}
 			
 			
 		function show(feeds) {
@@ -164,14 +173,14 @@
 				var name = (feed.user == null) ? feed.id : feed.user.name;
 				var stuNum = Math.floor(((feed.user.stu_num)/1000000)%100);			//추가된 xx학번에 대한 변수 추가. by_성하_0805
 				var str = "<div class='feed'>";
-				str += "<div class='main_feed1'  onclick='showFeed(" + feed.no + ")'><span>" + feed.trader + "</span>";
-				str += "<div class = 'heart' onclick ='heart(" + feed.no + ")'> heart </div>";
+				str += "<div class='main_feed1'  onclick='showFeed(" + feed.no + ")'> <span>" + feed.trader + "</span>";
+			
 				
 				str += "<span>" + feed.price + "</span>";
 				str += "</div>";
 				
 				str += "<div class='main_feed2'  onclick='showFeed(" + feed.no + ")'><span>" + feed.ts + "</span>";
-				
+				str += "<div class = 'heart' onclick ='heart(" + feed.no + ")'> ♥ </div>";
 				str += "<span>" + feed.content + "</span>"
 				str += "<span>" + feed.start + "  ~  " + feed.end  + "까지 방" + feed.type + "</span>";
 				str += "<span>" + stuNum + "학번" + "</span>";
@@ -184,8 +193,9 @@
 						var imgurl = "images/" + feed.images;
 						var name = (feed.user == null) ? feed.id : feed.user.name;
 						var str = "<div class='feed' onclick='showFeed(" + feed.no + ")'>"
-						str += "<div class = 'heart' onclick ='heart(" + feed.no + ")'> heart </div>";
+						
 						str += "<div class='main_feed1'  style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'><span>" + feed.trader + "</span>";
+						str += "<div class = 'heart' onclick ='heart(" + feed.no + ")'>♥ </div>";
 						str += "<span>" + feed.price + "</span>";
 						str += "</div>";
 						str += "<div class='main_feed2'><span>" + feed.ts + "</span>";

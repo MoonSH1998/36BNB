@@ -10,6 +10,66 @@ import org.json.simple.parser.ParseException;
 import util.ConnectionPool;
 
 public class UserDAO {
+	private Connection conn;//데이터베이스에 접근하게 해주는 하나의 객체
+	private PreparedStatement pstmt;//
+	private ResultSet rs;//정보를 담을 수 있는 객체
+
+	public UserDAO() {//mysql에 접속을 하게 해줌,자동으로 데이터베이스 커넥션이 일어남
+		try {//예외처리
+			String dbURL = "jdbc:mysql://localhost:3306/mysns?serverTimezone=UTC";
+			String dbID="root";
+			String dbPasseord="Ahehfdl7!";
+			Class.forName("com.mysql.jdbc.Driver");//mysql드라이버를 찾는다.
+			//드라이버는 mysql에 접속할 수 있도록 매개체 역할을 하는 하나의 라이브러리
+			conn=DriverManager.getConnection(dbURL,dbID,dbPasseord);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	public int test(String uid) throws NamingException, SQLException {
+	      Connection conn = ConnectionPool.get();
+	      PreparedStatement stmt = null;
+	      ResultSet rs = null;
+	return 1;
+	      /*
+	      try {
+	      String sql = "INSERT INTO test VALUES(?)";
+	      conn = ConnectionPool.get();
+	      stmt = conn.prepareStatement(sql);
+	      stmt.setString(1, uid);
+	      rs = stmt.executeQuery();
+	      return 1;
+	      
+	      } finally {
+	         if (rs != null) rs.close();
+	         if (stmt != null) stmt.close(); 
+	         if (conn != null) conn.close();
+	       }
+*/
+	   }
+	public boolean insertprofile(String jsonstr, String id) throws NamingException, SQLException, ParseException{
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			synchronized(this) {
+			String sql = "UPDATE user SET jsonstr = JSON_SET(jsonstr, '$.user_images', '?') where id = uid;";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, id);
+			stmt.setString(2, jsonobj.toJSONString());
+			
+			int count = stmt.executeUpdate();
+			return (count == 1) ? true : false;
+			}
+			} finally {
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+			}
+		}
+
 	public boolean insert(String uid, String jsonstr) throws NamingException, SQLException {
 				Connection conn = ConnectionPool.get();
 				PreparedStatement stmt = null;
@@ -28,105 +88,6 @@ public class UserDAO {
 							if (conn != null) conn.close();
 					}
 				}
-	//uni정보를 받아오는 함수
-	public String get(String userId) throws NamingException, SQLException {
-		Connection conn = ConnectionPool.get();
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		try {
-		String sql = "SELECT jsonstr FROM user WHERE id = ?";
-		stmt = conn.prepareStatement(sql);
-		stmt.setString(1, userId);
-		
-		rs = stmt.executeQuery();
-		return rs.next() ? rs.getString("jsonstr") : "{}";
-		} finally {
-		if (rs != null) rs.close();
-		if (stmt != null) stmt.close();
-		if (conn != null) conn.close();
-		}
-	}
-	
-	public String badget(String userId) throws NamingException, SQLException {
-		Connection conn = ConnectionPool.get();
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		try {
-		String sql = "SELECT jsonstr FROM user WHERE id = ?";
-		stmt = conn.prepareStatement(sql);
-		stmt.setString(1, userId);
-		
-		rs = stmt.executeQuery();
-		return rs.next() ? rs.getString("jsonstr") : "{}";
-		} finally {
-		if (rs != null) rs.close();
-		if (stmt != null) stmt.close();
-		if (conn != null) conn.close();
-		}
-	}
-	
-	public String getUni(String id) throws NamingException, SQLException, ParseException {
-		Connection conn = ConnectionPool.get();
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		try
-		{
-			String sql = "select jsonstr from user where id = ?";
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, id);
-			rs = stmt.executeQuery();
-			String jsonstr = rs.getString("jsonstr");
-			JSONObject obj = (JSONObject) (new JSONParser()).parse(jsonstr);
-			String uni = obj.get("uni").toString();
-			return uni;
-		} 
-		finally 
-		{
-			if (rs != null) rs.close();
-			if (stmt != null) stmt.close(); 
-			if (conn != null) conn.close();
-		}
-	}
-	
-	public String getUni_json(String jsonstr) throws NamingException, SQLException, ParseException {
-		Connection conn = ConnectionPool.get();
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		try
-		{
-
-			JSONObject obj = (JSONObject) (new JSONParser()).parse(jsonstr);
-			String uni = obj.get("uni").toString();
-			return uni;
-		} 
-		finally 
-		{
-			if (rs != null) rs.close();
-			if (stmt != null) stmt.close(); 
-			if (conn != null) conn.close();
-		}
-	}
-	
-	//회원가입 시 회원가입하려는 uni가 회원가입가능한 학교인지 체크->1반환시 성공
-	public boolean checkUni(String uni) throws NamingException, SQLException{
-		Connection conn = ConnectionPool.get();
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		try
-		{
-			String sql = "SELECT * FROM uni_list WHERE uniList = ?";
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, uni);	
-			rs = stmt.executeQuery();
-			return !(rs.next());
-		} 
-		finally 
-		{
-			if (rs != null) rs.close();
-			if (stmt != null) stmt.close(); 
-			if (conn != null) conn.close();
-		}
-	}
 	
 	public boolean delete(String uid) throws NamingException, SQLException {
 			Connection conn = ConnectionPool.get();
@@ -210,48 +171,24 @@ public class UserDAO {
 					if (conn != null) conn.close();
 				}
 			}
-		public String getReport() throws NamingException, SQLException{
+		public String get(String userId) throws NamingException, SQLException {
 			Connection conn = ConnectionPool.get();
 			PreparedStatement stmt = null;
 			ResultSet rs = null;
 			try {
-				String sql = "SELECT jsonstr FROM feedReport ";
-				stmt = conn.prepareStatement(sql);
-				rs = stmt.executeQuery();
-				
-				String str = "[";
-				int cnt = 0;
-				while(rs.next()) {
-				if (cnt++ > 0) str += ", ";
-				str += rs.getString("jsonstr");
-				}
-				return str + "]";
+			String sql = "SELECT jsonstr FROM user WHERE id = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, userId);
+			
+			rs = stmt.executeQuery();
+			return rs.next() ? rs.getString("jsonstr") : "{}";
 			} finally {
-				if (rs != null) rs.close(); 
-				if (stmt != null) stmt.close(); 
-				if (conn != null) conn.close();
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
 			}
 		}
 		
-		
-		public String get_id(String jsonstr) throws NamingException, SQLException, ParseException {
-			Connection conn = ConnectionPool.get();
-			PreparedStatement stmt = null;
-			ResultSet rs = null;
-			try
-			{
-
-				JSONObject obj = (JSONObject) (new JSONParser()).parse(jsonstr);
-				String id = obj.get("id").toString();
-				return id;
-			} 
-			finally 
-			{
-				if (rs != null) rs.close();
-				if (stmt != null) stmt.close(); 
-				if (conn != null) conn.close();
-			}
-		}
 		//내가 쓴 글 개수 반환 함수 마이 페이지에서 쓸 예정 jsp:countMyFeed, 파라미터 : String id
 		public int countMyFeed(String userId) throws NamingException, SQLException {
 			Connection conn = ConnectionPool.get();
@@ -260,40 +197,6 @@ public class UserDAO {
 			try 
 				{
 				String sql = "select count(*) from feed where id = ?";
-				stmt = conn.prepareStatement(sql);
-				stmt.setString(1, userId);
-				rs = stmt.executeQuery();
-				return rs.next() ? rs.getInt(1) : 0;
-			} finally {
-			if (rs != null) rs.close();
-			if (stmt != null) stmt.close();
-			if (conn != null) conn.close();
-			}
-		}
-		public int countMyReport(String userId) throws NamingException, SQLException {
-			Connection conn = ConnectionPool.get();
-			PreparedStatement stmt = null;
-			ResultSet rs = null;
-			try 
-				{
-				String sql = "select count(*) from feedReport where fid = ?";
-				stmt = conn.prepareStatement(sql);
-				stmt.setString(1, userId);
-				rs = stmt.executeQuery();
-				return rs.next() ? rs.getInt(1) : 0;
-			} finally {
-			if (rs != null) rs.close();
-			if (stmt != null) stmt.close();
-			if (conn != null) conn.close();
-			}
-		}
-		public int countMyHeart(String userId) throws NamingException, SQLException {
-			Connection conn = ConnectionPool.get();
-			PreparedStatement stmt = null;
-			ResultSet rs = null;
-			try 
-				{
-				String sql = "select count(*) from feedHeart where fid = ?";
 				stmt = conn.prepareStatement(sql);
 				stmt.setString(1, userId);
 				rs = stmt.executeQuery();

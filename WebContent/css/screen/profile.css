@@ -1,39 +1,70 @@
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
-.menu_icon{
-	
-	display:flex;
-	justify-content:center;
-	align-items:center;
-	font-weight: bold;
-}
 
-.profile{
-	display:flex;
-	flex-direction: column;
-	justify-content: center;
+#myProfile{
 	align-items: center;
-	margin-top:40px;
-	
-}
-
-.myProfile{
-	display:flex;
-	flex-direction: column;
 	justify-content: center;
+	display: flex;
+	flex-direction: column;
+}
+
+#profile-photo{
+	border-radius: 70%;
+	border-color: #7CB9F2;
+}
+
+#infoname{
+	margin-top: 16px;
+	font-size: 18px;
+}
+
+#infotext{
+	margin-top: 4px;
+	font-size: 16px;
+}
+
+#myinfocontainer{
+	margin-top: 16px;
 	align-items: center;
+	justify-content: center;
+	display: flex;
+	flex-direction: row;
 }
 
-.profileImg{
-	
+#myinfo1{
+	margin-right: 2px;
+	align-items: center;
+	justify-content: center;
+	display: flex;
+	flex-direction: column;
+	margin-right: 24px;
+	border: 2px solid #7CB9F2;
+	border-radius: 8px;
+	padding: 8px;
 }
 
-.profile :first-child {
-	font-size:34px;
-	font-weight: bold;
-	color:black;
+#myinfo2{
+	margin-right: 2px;
+	align-items: center;
+	justify-content: center;
+	display: flex;
+	flex-direction: column;
+	margin-right: 24px;
+	border: 2px solid #7CB9F2;
+	border-radius: 8px;
+	padding: 8px;
 }
 
-.profile :last-child {
-	font-size: 14px;
-	margin: 15px 0px;
+#myinfo3{
+	margin-right: 2px;
+	align-items: center;
+	justify-content: center;
+	display: flex;
+	flex-direction: column;
+	border: 2px solid #7CB9F2;
+	border-radius: 8px;
+	padding: 8px;
 }
+ #feedcontainer{
+ 	margin-right: 20px;
+ 	margin-left: 20px;
+ }
