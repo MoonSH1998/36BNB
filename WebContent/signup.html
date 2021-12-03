@@ -77,12 +77,23 @@
 		$("#birth").focus();
 		return;
 	}
+		/*
 		var sex = $("#cp_item"); //.val().trim();
 		if (sex == "") {
 		alert("성별을 선택해 주세요.");
 		$("#cp_item").focus();
 		return;
-	}
+		}
+		*/
+		
+		 var radio_length = document.getElementsByName("cp_item").length;
+	  		for (var i=0; i<radio_length; i++) {
+	            if (document.getElementsByName("cp_item")[i].checked == true) {
+	            	var sex = (document.getElementsByName("cp_item")[i].value);
+	            }
+	        }
+	    
+		
 		var phone_num = $("#phone_num").val().trim();
 		if (phone_num == "") {
 		alert("전화번호를 입력해 주세요.");

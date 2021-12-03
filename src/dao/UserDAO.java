@@ -14,6 +14,8 @@ public class UserDAO {
 	private PreparedStatement pstmt;//
 	private ResultSet rs;//정보를 담을 수 있는 객체
 
+	
+	/*
 	public UserDAO() {//mysql에 접속을 하게 해줌,자동으로 데이터베이스 커넥션이 일어남
 		try {//예외처리
 			String dbURL = "jdbc:mysql://localhost:3306/mysns?serverTimezone=UTC";
@@ -26,29 +28,8 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 	}
+	*/
 
-
-	public int test(String uid) throws NamingException, SQLException {
-	      Connection conn = ConnectionPool.get();
-	      PreparedStatement stmt = null;
-	      ResultSet rs = null;
-	return 1;
-	      /*
-	      try {
-	      String sql = "INSERT INTO test VALUES(?)";
-	      conn = ConnectionPool.get();
-	      stmt = conn.prepareStatement(sql);
-	      stmt.setString(1, uid);
-	      rs = stmt.executeQuery();
-	      return 1;
-	      
-	      } finally {
-	         if (rs != null) rs.close();
-	         if (stmt != null) stmt.close(); 
-	         if (conn != null) conn.close();
-	       }
-*/
-	   }
 	public boolean insertprofile(String jsonstr, String id) throws NamingException, SQLException, ParseException{
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;
@@ -201,6 +182,33 @@ public class UserDAO {
 				stmt.setString(1, userId);
 				rs = stmt.executeQuery();
 				return rs.next() ? rs.getInt(1) : 0;
+			} finally {
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+			}
+		}
+		//jsonstr받아와서 uni값 돌려주는 메소드
+		public String getUni_json(String jsonstr) throws NamingException, SQLException, ParseException
+		{
+			JSONObject obj = (JSONObject) (new JSONParser()).parse(jsonstr);
+			String uni = obj.get("uni").toString();
+			return uni;
+		}
+		
+		
+		//회원가입 시 입력된 uni정보가 회원가입 가능한 uni list안에 있는지 확인하는 메소드
+		public int checkUni(String uni) throws NamingException, SQLException {
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try 
+				{
+				String sql = "select * from uni_list where uniList = ?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, uni);
+				rs = stmt.executeQuery();
+				return rs.next() ? 1 : 0;
 			} finally {
 			if (rs != null) rs.close();
 			if (stmt != null) stmt.close();

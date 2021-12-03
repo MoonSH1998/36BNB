@@ -26,7 +26,7 @@ request.setCharacterEncoding("utf-8");
 		out.print("EX");
 	}
 	
-	else if ( dao.checkUni(uni) )
+	else if ( dao.checkUni(uni) == 0 )
 	{
 		out.print("NU");
 	}
