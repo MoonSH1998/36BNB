@@ -196,6 +196,13 @@ public class UserDAO {
 			return uni;
 		}
 		
+		public String get_id(String jsonstr) throws NamingException, SQLException, ParseException
+		{
+			JSONObject obj = (JSONObject) (new JSONParser()).parse(jsonstr);
+			String id = obj.get("id").toString();
+			return id;
+		}
+		
 		
 		//회원가입 시 입력된 uni정보가 회원가입 가능한 uni list안에 있는지 확인하는 메소드
 		public int checkUni(String uni) throws NamingException, SQLException {
