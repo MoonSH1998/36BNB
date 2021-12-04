@@ -152,6 +152,30 @@ public class UserDAO {
 					if (conn != null) conn.close();
 				}
 			}
+		
+		public String getReport() throws NamingException, SQLException{
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try {
+				String sql = "SELECT jsonstr FROM feedReport ";
+				stmt = conn.prepareStatement(sql);
+				rs = stmt.executeQuery();
+				
+				String str = "[";
+				int cnt = 0;
+				while(rs.next()) {
+				if (cnt++ > 0) str += ", ";
+				str += rs.getString("jsonstr");
+				}
+				return str + "]";
+			} finally {
+				if (rs != null) rs.close(); 
+				if (stmt != null) stmt.close(); 
+				if (conn != null) conn.close();
+			}
+		}
+		
 		public String get(String userId) throws NamingException, SQLException {
 			Connection conn = ConnectionPool.get();
 			PreparedStatement stmt = null;
@@ -178,6 +202,42 @@ public class UserDAO {
 			try 
 				{
 				String sql = "select count(*) from feed where id = ?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, userId);
+				rs = stmt.executeQuery();
+				return rs.next() ? rs.getInt(1) : 0;
+			} finally {
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+			}
+		}
+		
+		public int countMyHeart(String id) throws NamingException, SQLException {
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try 
+				{
+				String sql = "select count(*) from feedHeart where id = ?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, id);
+				rs = stmt.executeQuery();
+				return rs.next() ? rs.getInt(1) : 0;
+			} finally {
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+			}
+		}
+		
+		public int countMyReport(String userId) throws NamingException, SQLException {
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try 
+				{
+				String sql = "select count(*) from feedReport where fid = ?";
 				stmt = conn.prepareStatement(sql);
 				stmt.setString(1, userId);
 				rs = stmt.executeQuery();
@@ -222,4 +282,9 @@ public class UserDAO {
 			if (conn != null) conn.close();
 			}
 		}
+		
+		
+		
+		
+		
 	}
