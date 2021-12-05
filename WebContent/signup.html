@@ -32,7 +32,7 @@
 				<span>여자</span>
 			</label>
 		</div>
-		<p>우리 학교가 없나요? <a href="">학교 추가 요청 보내기</a></p>
+		<p>우리 학교가 없나요? <a onclick="requ_uni()"'>학교 추가 요청 보내기</a></p>
 		<input type="submit" class="signup_btn" value="회원가입" onclick="signup()">
 			<a href="login.html"><span>로그인</span></a>
 	</div>
@@ -128,4 +128,32 @@
 	window.location.href = "main.html";
 	}
 	});}
+	
+	function requ_uni()
+	{
+		var content = prompt("추가 요청 보낼 학교이름을 적어주세요");
+		if (content == "") {
+			alert("요청할 학교 이름을 입력해주세요.");
+			return;
+		}
+		var params = {content : content};
+		var url ="jsp/requ_uni.jsp";
+			AJAX.call(url, params, function(data)
+					{
+						var code = data.trim();
+						if(code == "OK")
+						{
+						 	alert("요청이 완료되었습니다.");
+					 	}
+			 			else if (code =="EX")
+			 			{
+			 				alert("페이지가 이미 존재하는 학교입니다.");
+			 			}
+			 			else
+			 			{
+			 				alert("처리 중 에러가 발생했습니다.");
+			 			}
+			 		});
+	}		
+	
 	</script>

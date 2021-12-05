@@ -21,6 +21,13 @@
 		<div id="profile-photo">
 			<div id="myPhoto"></div> 
 		</div>
+		
+		<div class="form">
+			<input id="images" type="file">
+			<div class="submit_feedadd" onclick="fixPhoto()">글 작성 완료</div>
+			
+		</div>
+		
 		<div id="infoname">
 			<div id="name"></div>
 		</div>
@@ -100,7 +107,9 @@
 		var minNo = -1;
 		var myfeed = [];
 		var userObj = null;
+		var id= null;
 		function start(uid) {
+			id=uid;
 			var params = {id : uid};
 			AJAX.call("jsp/userGet.jsp", params, function(data) {
 			userObj = JSON.parse(data.trim());
@@ -135,7 +144,6 @@
 			$("#name").html(uobj.name);
 			$("#stu_num").html(uobj.stu_num.substring(2,4));
 			$("#uni").html(uobj.uni);
-			
 		}
 		
 		function show(feeds) {
@@ -201,13 +209,13 @@
 		
 		function showPhoto(uobj){
 			if (uobj.images == null){
-				var str = "<img class='userPhoto' onclick='fixPhoto()'";
+				var str = "<img class='userPhoto'";
 				   str += "style='background-size : contain; background-repeat: no-repeat; background-position:center; width : 100px; height : 100px;' src=\"img/uimg.png\">";
 				//no_img css작업..+ onclick=> 이미지 추가 작업.
 			}
 			else{
-			var userimgurl = "img/" + uobj.images;
-			var str = "<div class = 'userPhoto' onclick='fixPhoto' ";
+			var userimgurl = "images/" + uobj.images;
+			var str = "<div class = 'userPhoto'";
 			   str += "style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 100%; background-image: url(\"" + userimgurl + "\")'>";
 			   str += "</div>"
 			}
@@ -215,7 +223,34 @@
 			$("#myPhoto").append(str);
 			console.log(str);
 		}
-	
+		
+		
+		function fixPhoto() {
+			
+			var jsonobj = {id:id};	
+			var imgobj = $("#images")[0].files[0];
+			if (imgobj != null) {
+				jsonobj.images = [imgobj.name];
+			}
+			var params = new FormData();
+			
+			params.append("jsonstr", JSON.stringify(jsonobj));
+			params.append("id", id);
+			
+			var url = "jsp/myprofile_img.jsp";
+			AJAX.call(url, params, function(data) {	
+			
+			var code = data.trim();
+			if (code == "ER") {
+			alert("이미지 변경 중 오류가 발생하였습니다.");
+			}
+			else {
+			alert("이미지 정보가 변경되었습니다.");
+			window.location.href = "profile.html";
+		
+		}
+		}, true);
+		}
 </script>
 	
  <script>

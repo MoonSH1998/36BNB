@@ -20,7 +20,7 @@ if(item.isFormField()) {
 String value = item.getString("utf-8");
 if (name.equals("jsonstr")) jsonstr = value;
 }else {
-	if (name.equals("user_images")) {
+	if (name.equals("images")) {
 		ufname = item.getName();
 		ufile = item.get();
 		String root = application.getRealPath(java.io.File.separator);
@@ -29,9 +29,8 @@ if (name.equals("jsonstr")) jsonstr = value;
 	}
 }
 UserDAO dao = new UserDAO();
-String id = dao.get_id(jsonstr);
-String json = dao.get(id);
-if (dao.insertprofile(jsonstr, id)) {
+
+if (dao.insertprofile(jsonstr)) {
 out.print("OK"); // response.sendRedirect("main.jsp");
 }
 else {

@@ -27,10 +27,7 @@
 		<div class="menu" onclick="addFeed()">글쓰기</div>
 		<div class="menu" onclick="">친구보기</div>
 		<div class="menu" onclick="">내정보</div> -->
-		<div class="emp"></div>
-		<div class="emp"></div>
-		<div class="emp"></div>
-		<div class="emp"></div>		
+		
 
 		
 		
@@ -184,7 +181,7 @@ function getNam(uid) {
 				str += "<span>" + feed.content + "</span>"
 				str += "<span>" + feed.start + "  ~  " + feed.end  + "까지 방" + feed.type + "</span>";
 				str += "<span>" + stuNum + "학번" + "</span>";
-				
+				str += "</div>";
 				str += "</div>";
 				return str;
 					}
@@ -201,6 +198,7 @@ function getNam(uid) {
 						str += "<div class='main_feed2'><span>" + feed.ts + "</span>";
 						str += "<span>" + feed.content + "</span>"
 						str += "<span>" + feed.start + "  ~  " + feed.end  + "까지 방" + feed.type + "</span>";
+					 	str += "</div>";
 					 	str += "</div>";
 						return str;
 						}
@@ -232,14 +230,18 @@ function getNam(uid) {
 				
 		
 		function showFeed(fno) {
-				for (var i=0; i<feedList.length; i++) {
-				if (feedList[i].no == fno) {
-				Page.go("feedView.html", feedList[i]);
-				//Page.go("feedView.html", feedList[fno]);
-				return;
+				//for (var i=0; i<feedList.length; i++) {
+				var i=0;
+				while(1)
+				{
+					if (feedList[i].no == fno)
+					{
+						Page.go("feedView.html", feedList[i]);
+						return;
+					}
+					i++;
 				}
 				}
-		}
 		
 		
 </script>

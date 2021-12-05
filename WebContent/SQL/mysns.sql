@@ -44,7 +44,7 @@ create table if not exists feedHeart(
  */
 /*uni 추가 요청 테이블 cnt는 요청 개수*/
  create table if not exists add_uni(
- 	uni varchar(128) PRIMARY KEY,
+ 	uni varchar(128),
  	cnt int(128)
  );
  

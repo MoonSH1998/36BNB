@@ -29,17 +29,17 @@ public class UserDAO {
 		}
 	}
 	*/
-
+	/*
 	public boolean insertprofile(String jsonstr, String id) throws NamingException, SQLException, ParseException{
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
 			synchronized(this) {
-			String sql = "UPDATE user SET jsonstr = JSON_SET(jsonstr, '$.user_images', '?') where id = uid;";
+			String sql = "UPDATE user SET jsonstr = ? where id = ?;";
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, id);
-			stmt.setString(2, jsonobj.toJSONString());
+			stmt.setString(1, jsonstr);
+			stmt.setString(2, id);
 			
 			int count = stmt.executeUpdate();
 			return (count == 1) ? true : false;
@@ -47,6 +47,64 @@ public class UserDAO {
 			} finally {
 			if (rs != null) rs.close();
 			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+			}
+		}
+		*/
+
+	public boolean insertprofile(String jsonstr) throws NamingException, SQLException, ParseException{
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		PreparedStatement stmt1 = null;
+		ResultSet rs = null;
+		try {
+			synchronized(this) {
+				JSONParser parser = new JSONParser();
+				JSONObject obj = (JSONObject) (new JSONParser()).parse(jsonstr);
+				String uid = (String) obj.get("id");
+				
+				String sql = "select jsonstr from user where id = ?;";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, uid);
+				rs = stmt.executeQuery();
+				stmt.close();
+				if (rs.next())
+				{
+					String json = rs.getString("jsonstr");
+					
+					JSONObject obj1 = (JSONObject) (new JSONParser()).parse(json);
+					String name  = obj1.get("name").toString();
+					String uni = obj1.get("uni").toString();
+					String stu_num = obj1.get("stu_num").toString();
+					String birth = obj1.get("birth").toString();
+					String sex = obj1.get("sex").toString();
+					String phone_num = obj1.get("phone_num").toString();
+					String ps = obj1.get("ps").toString();
+					
+					obj.put("uni", uni);
+				}
+				
+				sql = "UPDATE user SET jsonstr = ? where id = ?;";
+				stmt1 = conn.prepareStatement(sql);
+				stmt.setString(1, obj.toJSONString());
+				stmt1.setString(2, uid);
+				int count = stmt1.executeUpdate();
+				stmt1.close(); rs.close();
+				return (count == 1) ? true : false;
+				
+
+				
+				
+				
+				//String sql = "UPDATE user SET jsonstr = JSON_SET(jsonstr, '$.images', '?') where id = ?;";
+				//stmt = conn.prepareStatement(sql);
+				//stmt.setString(1, images);
+				//stmt.setString(2, uid);
+			}
+			} finally {
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (stmt1 != null) stmt1.close();
 			if (conn != null) conn.close();
 			}
 		}
@@ -158,7 +216,7 @@ public class UserDAO {
 			PreparedStatement stmt = null;
 			ResultSet rs = null;
 			try {
-				String sql = "SELECT jsonstr FROM feedReport ";
+				String sql = "SELECT jsonstr FROM feedReport";
 				stmt = conn.prepareStatement(sql);
 				rs = stmt.executeQuery();
 				
@@ -282,6 +340,46 @@ public class UserDAO {
 			if (conn != null) conn.close();
 			}
 		}
+		
+		public boolean requ_uni(String uni) throws NamingException, SQLException
+		{
+			Connection conn = ConnectionPool.get();
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			
+			try
+			{
+				String sql = "select * from add_uni where uni = ?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, uni);
+				rs = stmt.executeQuery();
+				int a = rs.next() ? 1 : 0;
+				rs.close(); stmt.close();
+				
+				if(a==1)
+				{
+					sql = "update add_uni set cnt = cnt+1 where uni = ?";
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, uni);
+					int count = stmt.executeUpdate();
+					stmt.close();
+					return (count == 1) ? true : false;
+				}
+				else
+				{
+						sql = "insert into add_uni values(? , 1)";
+						stmt = conn.prepareStatement(sql);
+						stmt.setString(1, uni);
+						int count = stmt.executeUpdate();
+						stmt.close();
+						return (count == 1) ? true : false;
+				}
+			} finally {
+						if (stmt != null) stmt.close();
+						if (conn != null) conn.close();
+						if (rs != null) stmt.close();
+				}
+			}
 		
 		
 		
