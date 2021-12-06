@@ -172,7 +172,6 @@ function getNam(uid) {
 				var str = "<div class='feed'>";
 				str += "<div class='main_feed1'  onclick='showFeed(" + feed.no + ")'> <span>" + feed.trader + "</span>";
 			
-				
 				str += "<span>" + feed.price + "</span>";
 				str += "</div>";
 				
@@ -187,7 +186,7 @@ function getNam(uid) {
 					}
 					
 					else {
-						var imgurl = "images/" + feed.images;
+						var imgurl = "img/" + feed.images;
 						var name = (feed.user == null) ? feed.id : feed.user.name;
 						var str = "<div class='feed' onclick='showFeed(" + feed.no + ")'>"
 						

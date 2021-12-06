@@ -105,7 +105,7 @@
 				$("#list").append(str);
 				}
 				function getFeedCode(feed) {
-						var imgurl = "images/" + feed.images;
+						var imgurl = "img/" + feed.images;
 						var name = (feed.user == null) ? feed.id : feed.user.name;
 						var str = "<div class='sell' onclick='showFeed(" + feed.no + ")'>";
 						str += "<div class='sell_feed1'  style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'>";

@@ -51,55 +51,41 @@ public class UserDAO {
 			}
 		}
 		*/
-
-	public boolean insertprofile(String jsonstr) throws NamingException, SQLException, ParseException{
+/*
+		public boolean insertprofile(String jsonstr1) throws NamingException, SQLException, ParseException{
 		Connection conn = ConnectionPool.get();
 		PreparedStatement stmt = null;
 		PreparedStatement stmt1 = null;
 		ResultSet rs = null;
 		try {
 			synchronized(this) {
-				JSONParser parser = new JSONParser();
-				JSONObject obj = (JSONObject) (new JSONParser()).parse(jsonstr);
-				String uid = (String) obj.get("id");
-				
-				String sql = "select jsonstr from user where id = ?;";
-				stmt = conn.prepareStatement(sql);
-				stmt.setString(1, uid);
-				rs = stmt.executeQuery();
-				stmt.close();
-				if (rs.next())
-				{
-					String json = rs.getString("jsonstr");
+					JSONObject obj1 = (JSONObject) (new JSONParser()).parse(jsonstr1);
+					String uid = obj1.get("id").toString();
+					obj1.remove("id");
 					
-					JSONObject obj1 = (JSONObject) (new JSONParser()).parse(json);
-					String name  = obj1.get("name").toString();
-					String uni = obj1.get("uni").toString();
-					String stu_num = obj1.get("stu_num").toString();
-					String birth = obj1.get("birth").toString();
-					String sex = obj1.get("sex").toString();
-					String phone_num = obj1.get("phone_num").toString();
-					String ps = obj1.get("ps").toString();
+					String sql = "select jsonstr from user where id = ?";
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, uid);
+					rs = stmt.executeQuery();		
+					if (!rs.next()) return false;
+					String jsonstr = rs.getString("jsonstr");
+					JSONObject obj = (JSONObject) (new JSONParser()).parse(jsonstr);
 					
-					obj.put("uni", uni);
-				}
+					if(obj.get("images")!=null)
+					{
+						obj.remove("images");
+					}
+					obj.put(jsonstr, obj1.toJSONString());
+					
+					sql = "UPDATE user SET jsonstr = ? where id = ?";
 				
-				sql = "UPDATE user SET jsonstr = ? where id = ?;";
 				stmt1 = conn.prepareStatement(sql);
-				stmt.setString(1, obj.toJSONString());
+				stmt1.setString(1, obj.toJSONString());
 				stmt1.setString(2, uid);
 				int count = stmt1.executeUpdate();
-				stmt1.close(); rs.close();
+				stmt1.close(); 
 				return (count == 1) ? true : false;
-				
-
-				
-				
-				
-				//String sql = "UPDATE user SET jsonstr = JSON_SET(jsonstr, '$.images', '?') where id = ?;";
-				//stmt = conn.prepareStatement(sql);
-				//stmt.setString(1, images);
-				//stmt.setString(2, uid);
+	
 			}
 			} finally {
 			if (rs != null) rs.close();
@@ -108,7 +94,93 @@ public class UserDAO {
 			if (conn != null) conn.close();
 			}
 		}
+	
+String json = response.toJSONString()
 
+출처: https://kingpodo.tistory.com/11 [킹포도의 코딩]
+		
+
+	public boolean insertprofile(String jsonstr1) throws NamingException, SQLException, ParseException{
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			synchronized(this) {
+					JSONObject obj1 = (JSONObject) (new JSONParser()).parse(jsonstr1);
+					String uid = obj1.get("id").toString();
+					String images = obj1.get("images").toString();
+					
+					String sql = "update user set jsonstr = json_set(jsonstr, '$.images', ? ) where id = ?";
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, uid);
+					int count = stmt.executeUpdate();
+					stmt.close(); 
+					return (count == 1) ? true : false;
+					
+	
+			}
+			} finally {
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+			}
+		}
+	*/
+	
+	public boolean insertprofile(String jsonstr1) throws NamingException, SQLException, ParseException{
+		Connection conn = ConnectionPool.get();
+		PreparedStatement stmt = null;
+		PreparedStatement stmt1 = null;
+		ResultSet rs = null;
+		try {
+			synchronized(this) {
+					JSONObject obj1 = (JSONObject) (new JSONParser()).parse(jsonstr1);
+					String uid = obj1.get("id").toString();
+					
+					String sql = "select jsonstr from user where id = ?";
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, uid);
+					rs = stmt.executeQuery();		
+					if (!rs.next()) return false;
+					String jsonstr = rs.getString("jsonstr");
+					
+					JSONObject obj = (JSONObject) (new JSONParser()).parse(jsonstr);
+					String uni = obj.get("uni").toString();
+					String name = obj.get("name").toString();
+					String stu_num = obj.get("stu_num").toString();
+					String birth = obj.get("birth").toString();
+					String sex = obj.get("sex").toString();
+					String phone_num = obj.get("phone_num").toString();
+					String ps = obj.get("ps").toString();
+					obj1.put("uni", uni);
+					obj1.put("name", name);
+					obj1.put("stu_num", stu_num);
+					obj1.put("birth", birth);
+					obj1.put("sex", sex);
+					obj1.put("phone_num", phone_num);
+					obj1.put("ps", ps);
+					
+					String json = obj1.toJSONString();
+					
+					sql = "UPDATE user SET jsonstr = ? where id = ?";
+				
+				stmt1 = conn.prepareStatement(sql);
+				stmt1.setString(1, json);
+				stmt1.setString(2, uid);
+				int count = stmt1.executeUpdate();
+				stmt1.close(); 
+				return (count == 1) ? true : false;
+	
+			}
+			} finally {
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (stmt1 != null) stmt1.close();
+			if (conn != null) conn.close();
+			}
+		}
+	
+	
 	public boolean insert(String uid, String jsonstr) throws NamingException, SQLException {
 				Connection conn = ConnectionPool.get();
 				PreparedStatement stmt = null;

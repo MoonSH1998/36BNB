@@ -181,7 +181,7 @@
 			}
 			
 			else {
-				var imgurl = "images/" + feed.images;
+				var imgurl = "img/" + feed.images;
 				var name = (feed.user == null) ? feed.id : feed.user.name;
 				var str = "<div class='feed' onclick='showFeed(" + feed.no + ")'>"
 				str += "<div class = 'heart' onclick ='heart(" + feed.no + ")'> heart </div>";
@@ -214,10 +214,10 @@
 				//no_img css작업..+ onclick=> 이미지 추가 작업.
 			}
 			else{
-			var userimgurl = "images/" + uobj.images;
-			var str = "<div class = 'userPhoto'";
-			   str += "style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 100%; background-image: url(\"" + userimgurl + "\")'>";
-			   str += "</div>"
+			var userimgurl = "img/" + uobj.images;
+			var str = "<div><img class='userPhoto'";
+			   str += "style= 'background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 100%;' src=\"" + userimgurl + "\"'>";
+				str +="</div>";
 			}
 			
 			$("#myPhoto").append(str);
