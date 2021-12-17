@@ -1,5 +1,9 @@
 <html>
 <head>
+<script>
+	 src="https://kit.fontawesome.com/6478f529f2.js"
+	 crossorigin="anonymous">
+ </script>
 <meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
 <meta charset="utf-8" />
 <link rel="stylesheet" href="css/core.css">
@@ -18,13 +22,15 @@
 	<div class="line"></div>
 	
 	<div id="myprofile">
-		<div id="profile-photo">
-			<div id="myPhoto"></div> 
-		</div>
+		
 		
 		<div class="form">
-			<input id="images" type="file">
-			<div class="submit_feedadd" onclick="fixPhoto()">글 작성 완료</div>
+			<label className="input-file-button" for="images">
+				<div class="myPhoto" id="myPhoto"></div>
+			</label>
+			<input type="file" id="images" style="display: none;"/>
+
+			<div class="submit_feedadd_profile" onclick="fixPhoto()">이미지 변경</div>
 			
 		</div>
 		
@@ -52,14 +58,14 @@
 			</div>
 		</div>
 	</div>
-	
+	<div class="logout"><a a href ="jsp/logout.jsp">로그아웃</a></div>
 	<div id="feedcontainer">
 	<div id="myFeed"></div>
 	</div>
 		
   			<!-- <img class="profileImg"src="images/profile_def.svg" alt="프로필 이미지">  -->
   			
-  			<div><a a href ="jsp/logout.jsp">로그아웃</a></div>
+  			
 
   					
 			
@@ -73,21 +79,21 @@
 					</a>
 				</li>
 				<li class="nav__btn">
-					<a class="nav__link blue" href="need.html">
+					<a class="nav__link" href="need.html">
 						<i class="fas fa-search"></i>
 						<span>구해요</span>
 					</a>
 				</li>
 				<li class="nav__btn">
 					<a class="nav__link" href="sell.html">
-						<i class="fas fa-tag blue"></i>
-						<span class="blue">내놔요</span>
+						<i class="fas fa-tag"></i>
+						<span>내놔요</span>
 					</a>
 				</li>
 				<li class="nav__btn">
-					<a class="nav__link" href="profile.html">
-						<i class="far fa-user"></i>
-						<span>내 계정</span>
+					<a class="nav__link blue" href="profile.html">
+						<i class="far fa-user blue"></i>
+						<span class="blue">내 계정</span>
 					</a>
 				</li>
 			</ul>
@@ -161,21 +167,67 @@
 	
 		
 		function getFeedCode(feed) {
+			if(feed.trader == "man")
+				var t="남자만";
+			else if(feed.trader == "woman")
+				var t ="여자만" ;
+			else var t = "성별무관";
+			var feed_date = Math.floor(feed.ts / 10000);
+			var feed_hour = Math.floor((feed.ts % 10000) / 100);
+			var feed_min = feed.ts % 100;
+			
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = ("0" + (1 + date.getMonth())).slice(-2);
+			var day = ("0" + date.getDate()).slice(-2);
+			var hour = ("0" + date.getHours()).slice(-2);
+			var min = ("0" + date.getMinutes()).slice(-2);
+			var today = (year + month + day + hour + min); 
+			if(today == feed.ts) var timee= "방금 전";
+			else if(Math.floor(today/10000) == feed_date){
+				if(feed_hour == hour)
+					{
+					var timee = min - feed_min + "분 전";
+					}
+				else
+					{
+					var timee = hour - feed_hour + "시간 전";
+					}
+			}
+			else if((Math.floor(today/10000) - Math.floor(feed.ts/10000)) <= 7)
+			{
+				var timee = Math.floor(today/10000) - feed.date +"일 전";
+			}
+			else
+				var timee = Math.floor(feed.ts/10000) + "일";
+			console.log(timee);
+			
 			if (feed.images == null){
 		var name = (feed.user == null) ? feed.id : feed.user.name;
+		if(feed.user.images==null)
+		{
+			var userimgurl = "img/uimg.png";
+		}
+		else
+		{
+			var userimgurl = "img/" + feed.user.images;
+		}
 		var stuNum = Math.floor(((feed.user.stu_num)/1000000)%100);			//추가된 xx학번에 대한 변수 추가. by_성하_0805
 		var str = "<div class='feed'>";
 		
 		
-		str += "<div class='main_feed1'  onclick='showFeed(" + feed.no + ")'><span>" + feed.trader + "</span>";
-		str += "<span>" + feed.price + "</span>";
+		str += "<div class='main_feed1'  style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'>";
+		str += "<div class = 'heart' onclick ='heart(" + feed.no + ")'>♥ </div>";
 		str += "</div>";
-		
-		str += "<div class='main_feed2'  onclick='showFeed(" + feed.no + ")'><span>" + feed.ts + "</span>";
-		str += "<span>" + feed.content + "</span>"
-		str += "<span>" + feed.start + "  ~  " + feed.end  + "까지 방" + feed.type + "</span>";
-		str += "<span>" + stuNum + "학번" + "</span>";
-		
+		str += "<div class='main_feed2'>"
+		str += "<div class='feed_a'>" + feed.start + "  ~  " + feed.end +  "</div>";
+		str += "<div class='feed_b'>" + feed.title + "</div>";
+		str += "<div class='feed_c'>" + feed.content + "</div>"
+		str += "<div class='ex'>"
+		str +=" <div class='ex1'>" + t + "</div> <div class='ex2'>" + feed.price + "</div><div class='date_t'>" + timee + "</div>";
+		str += "</div>"
+		str += "<div class='stuNum1'>" + "<img class='userPhoto';  style='background-size : contain'; src=\"" + userimgurl + "\"'> <span> " + stuNum + "학번 " + feed.user.name + "</span></div>" + "</div>";
+	 	str += "</div>";
 		str += "</div>";
 		return str;
 			}
@@ -184,13 +236,18 @@
 				var imgurl = "img/" + feed.images;
 				var name = (feed.user == null) ? feed.id : feed.user.name;
 				var str = "<div class='feed' onclick='showFeed(" + feed.no + ")'>"
-				str += "<div class = 'heart' onclick ='heart(" + feed.no + ")'> heart </div>";
-				str += "<div class='main_feed1'  style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'><span>" + feed.trader + "</span>";
-				str += "<span>" + feed.price + "</span>";
+				str += "<div class='main_feed1'  style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'>";
+				str += "<div class = 'heart' onclick ='heart(" + feed.no + ")'>♥ </div>";
 				str += "</div>";
-				str += "<div class='main_feed2'><span>" + feed.ts + "</span>";
-				str += "<span>" + feed.content + "</span>"
-				str += "<span>" + feed.start + "  ~  " + feed.end  + "까지 방" + feed.type + "</span>";
+				str += "<div class='main_feed2'>"
+				str += "<div class='feed_a'>" + feed.start + "  ~  " + feed.end +  "</div>";
+				str += "<div class='feed_b'>" + feed.title + "</div>";
+				str += "<div class='feed_c'>" + feed.content + "</div>"
+				str += "<div class='ex'>"
+				str +=" <div class='ex1'>" + feed.trader + "</div> <div class='ex2'>" + feed.price + "</div><div class='date_t'>" + timee + "</div>";
+				str += "</div>"
+				str += "<div class='stuNum1'>" + "<img class='userPhoto';  style='background-size : contain'; src=\"" + userimgurl + "\"'> <span> " + stuNum + "학번 " + feed.user.name + "</span></div>" + "</div>";
+			 	str += "</div>";
 			 	str += "</div>";
 				return str;
 				}
@@ -209,14 +266,14 @@
 		
 		function showPhoto(uobj){
 			if (uobj.images == null){
-				var str = "<img class='userPhoto'";
-				   str += "style='background-size : contain; background-repeat: no-repeat; background-position:center; width : 100px; height : 100px;' src=\"img/uimg.png\">";
+				var str = "<img class='userPhoto1'";
+				   str += "style='background-size : contain; background-repeat: no-repeat; background-position:center; width : 150px; height : 150px;' src=\"img/uimg.png\">";
 				//no_img css작업..+ onclick=> 이미지 추가 작업.
 			}
 			else{
 			var userimgurl = "img/" + uobj.images;
 			var str = "<div><img class='userPhoto'";
-			   str += "style= 'background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 100%;' src=\"" + userimgurl + "\"'>";
+			   str += "style= 'background-size : contain; background-repeat: no-repeat; background-position: center center; width : 150px; height : 150px; background-size: 100%;' src=\"" + userimgurl + "\"'>";
 				str +="</div>";
 			}
 			
@@ -226,13 +283,13 @@
 		
 		
 		function fixPhoto() {
-			
+			var params = new FormData();
 			var jsonobj = {id:id};	
 			var imgobj = $("#images")[0].files[0];
 			if (imgobj != null) {
 				jsonobj.images = [imgobj.name];
 			}
-			var params = new FormData();
+			
 			
 			params.append("jsonstr", JSON.stringify(jsonobj));
 			params.append("id", id);
@@ -253,7 +310,7 @@
 		}
 </script>
 	
- <script>
- 	src="https://kit.fontawesome.com/6478f529f2.js";
- 	crossorigin="anonymous"
- </script>
+  <script
+			 src="https://kit.fontawesome.com/6478f529f2.js"
+			 crossorigin="anonymous"
+		   ></script>

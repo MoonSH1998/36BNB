@@ -16,8 +16,6 @@
 
 	<div class="feed_add" onclick="addFeed()">글 작성하기</div>	
 	
-	<div class="button" onclick="getNext()">작성글 더보기</div>
-	
 	<div id="list">
 	</div>
 	
@@ -111,20 +109,62 @@
 				$("#list").append(str);
 				}
 			function getFeedCode(feed) {
+				var feed_date = Math.floor(feed.ts / 10000);
+				var feed_hour = Math.floor((feed.ts % 10000) / 100);
+				var feed_min = feed.ts % 100;
 				
+				var date = new Date();
+				var year = date.getFullYear();
+				var month = ("0" + (1 + date.getMonth())).slice(-2);
+				var day = ("0" + date.getDate()).slice(-2);
+				var hour = ("0" + date.getHours()).slice(-2);
+				var min = ("0" + date.getMinutes()).slice(-2);
+				var today = (year + month + day + hour + min); 
+				if(today == feed.ts) var timee= "방금 전";
+				else if(Math.floor(today/10000) == feed_date){
+					if(feed_hour == hour)
+						{
+						var timee = min - feed_min + "분 전";
+						}
+					else
+						{
+						var timee = hour - feed_hour + "시간 전";
+						}
+				}
+				else if((Math.floor(today/10000) - Math.floor(feed.ts/10000)) <= 7)
+				{
+					var timee = Math.floor(today/10000) - feed.date +"일 전";
+				}
+				else
+					var timee = Math.floor(feed.ts/10000) + "일";
+				console.log(timee);
+				if(feed.user.images==null)
+				{
+					var userimgurl = "img/uimg.png";
+				}
+				else
+				{
+					var userimgurl = "img/" + feed.user.images;
+				}
+				var stuNum = Math.floor(((feed.user.stu_num)/1000000)%100);	
+					if(feed.trader == "man")
+						var t="남자만";
+					else if(feed.trader == "woman")
+						var t ="여자만" ;
+					else var t = "성별무관";
 					var name = (feed.user == null) ? feed.id : feed.user.name;
 					var str = "<div class='need' onclick='showFeed(" + feed.no + ")'>";
-					str += "<div class='need_date'>";
-					str += "<span>" + feed.start + "</span>";
-					str += "<span> ~ </span>";
-					str += "<span>" + feed.end + "</span>";
-					str += "</div>";
+					str += "<div class='need_date'>" + feed.start + "~" + feed.end + "</div>";
+					str += "<div class='need_title'>" + feed.title + "</div>";
 					str += "<div class='need_content'>" + feed.content + "</div>";
-					str += "<div class='need_info'><span>" + feed.trader + "</span>";
-					str += "<span>" + feed.price + "</span>";
-					str += "<span>" + feed.ts + "</span></div>"
 					
-					str += "<div class='need_user_info'>" + feed.user.name + "</div></div>";
+					str += "<div class='need_info'><span>" + t + "</span>";
+					str += "<span>" + feed.price + "</span>";
+					str += "<span>" + timee + "</span></div>"
+					
+					str += "<div class='stuNum1'><img class='userPhoto';  style='background-size : contain'; src=\"" + userimgurl + "\"'> <span> " + stuNum + "학번 " + feed.user.name + "</span></div>";
+					str += "</div>";
+					str += "</div>";
 
 					
 					

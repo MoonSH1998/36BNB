@@ -20,6 +20,11 @@ function start(uid, feed) {
 		$("#content").append(getFeedCode(feed));
 }	
 function getFeedCode(feed){
+	if(feed.trader == "man")
+		var t="남자만";
+	else if(feed.trader == "woman")
+		var t ="여자만" ;
+	else var t = "성별무관";
 	var name = (feed.user == null) ? feed.id : feed.user.name;
 	var str = "<div class='feedview_header'>";
 	//우선 여기부터 고치기
@@ -33,97 +38,36 @@ function getFeedCode(feed){
 		str += "</div>";
 		str += "<div class='line'></div>";
 		str += "<div class='feedview_main'>";
-		str += "<div class='feedview_user'>";
-		str += "<span>" + feed.user.name + "</span>";
 		str += 	"</div>";
 		if(feed.images !== null)
 		{
-		var imgurl = "images/" + feed.images[0];
+		var imgurl = "img/" + feed.images[0];
 		str += "<div class='image'  style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'>";
 		str += "</div>";
 		}
-		str +="<div class='feedview_action'>";
-		str += "<span onclick='view_num(" + feed.user.phone_num + ")'>연락하기</span>";
-		str += "<span onclick='feedReport(" + feed.no + ',' + feed.user.id +  ")'>신고하기</span>";
-		str += "<div class = 'heart' onclick ='feedHeart(" + feed.no + ',' + feed.user.id + ")'> ♥ </div>";
-		str += "</div>";
 		str += "<div class='feedview_data'>";
-		str += "<span>" + feed.start + "   ~   " + feed.end + "</span>";
-		str += "<span> 1박당" + feed.price + "원" + feed.type + "</span>"; 
-		str += "<span>" + feed.trader + "  거래가능 </span>" ;
-		str += "<span>" + feed.content + "</span>" ;
-		str += "</div>"
-	
-	return str;
-}
-/*
-function getFeedCode(feed){
-	var name = (feed.user == null) ? feed.id : feed.user.name;
-	var str = "<div class='feedview_header'>";
-	if(feed.images !== null)
-		{
-			str += "<a class='back_icon' href ='main.html'><img src='img/back_arrow.svg'></a>";
-			str += "<div class='feedview_header_user'>";
-			//heart 수정필요_ui+위치변경_0910_Moon
-			str += "<div class = 'heart' onclick ='feedHeart(" + feed.no + ',' + feed.user.id + ")'> heart </div>";
+				str += "<div class='feedview_user'>";
+				str += "<span>" + feed.user.name + "</span>";
+				str += "</div>";
 			
-			str += "<span>" + feed.user.id + "</span>";
-			str += "<span> 게시물 </span>";
-			str += "</div>"
-			
-			str += "</div>";
-			str += "<div class='line'></div>";
-			str += "<div class='feedview_main'>";
-			str += "<div class='feedview_user'>";
-			str += "<span>" + feed.user.name + "</span>";
-			str += 	"</div>";
-			var imgurl = "images/" + feed.images[0];
-			str += "<div class='image'  style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'>";
-			
-			str += "</div>";
-			str +="<div class='feedview_action'>";
-			str += "<span onclick='view_num(" +feed.user.phone_num + ")'>연락하기</span>";
-			str += "<span onclick='feedoption_report(" + feed.no + ")'>신고하기</span>";
-			str += "</div>";
-			str += "<div class='feedview_data'>";
-			str += "<span>" + feed.start + "   ~   " + feed.end + "</span>";
-			str += "<span> 1박당" + feed.price + "원" + feed.type + "</span>"; 
-			str += "<span>" + feed.trader + "  거래가능 </span>" ;
-			str += "<span>" + feed.content + "</span>" ;
-			str += "</div>"
-		}
-	
-	else
-	{	
-		//우선 여기부터 고치기
-		str += "<a class='back_icon' href ='main.html'><img src='img/back_arrow.svg'></a>";
-		//heart 수정필요_ui+위치변경_0910_Moon
-		
-		str += "<div class='feedview_header_user'>";
-		str += "<span>" + feed.user.id + "</span>";
-		str += "<span> 게시물 </span>";
-		str += "</div>"
+			str += "<span onclick='view_num(" + feed.user.phone_num + ")'>연락하기</span>";
+			str += "<span onclick='feedReport(" + feed.no + ',' + "\"" + feed.user.id + "\"" +  ")'>신고하기</span>";
+		str += "</div>";
+		str +="<div class='feedview_tag'>";
+			str += "<span> 가격 : " + feed.price + "원" + "</span>"; 
+			str += "<span>" +t  + "  거래가능 </span>" ;
 		str += "</div>";
 		str += "<div class='line'></div>";
-		str += "<div class='feedview_main'>";
-		str += "<div class='feedview_user'>";
-		str += "<span>" + feed.user.name + "</span>";
-		str += 	"</div>";
-		str +="<div class='feedview_action'>";
-		str += "<span onclick='view_num(" + feed.user.phone_num + ")'>연락하기</span>";
-		str += "<span onclick='feedReport(" + feed.no + ',' + feed.user.id +  ")'>신고하기</span>";
-		str += "<div class = 'heart' onclick ='feedHeart(" + feed.no + ',' + feed.user.id + ")'> heart </div>";
-		str += "</div>";
-		str += "<div class='feedview_data'>";
-		str += "<span>" + feed.start + "   ~   " + feed.end + "</span>";
-		str += "<span> 1박당" + feed.price + "원" + feed.type + "</span>"; 
-		str += "<span>" + feed.trader + "  거래가능 </span>" ;
-		str += "<span>" + feed.content + "</span>" ;
+		str +="<div class='feedview_content'>";
+		str += "<div>" + feed.title + "</div>";
+			str += "<div>" + feed.start + "   ~   " + feed.end + "</div>";
+			str += "<div class = 'heart' onclick ='feedHeart(" + feed.no + ',' + "\"" +feed.user.id + "\"" + ")'>  🤍  </div>";
+			str += "<span>" + feed.content + "</span>" ;
 		str += "</div>"
-	}
+	
 	return str;
 }
-*/
+
 $(document).ready(function () 
 {
 	Page.init(setup);
@@ -161,12 +105,12 @@ function feedHeart(no,fid)
 			 	});
 }		
 
-function feedReport(no, fid)
+function feedReport(no, fidd)
 {
 	var content = prompt("신고 내용을 입력해주세요");
 	var id = loginId;
 	var no = no;
-	var fid = fid;
+	var fid = fidd;
 	var feedoptionobj = {no : no, fid : fid, id : id, content : content, state : "신고접수" }
 	var params = {jsonstr: JSON.stringify(feedoptionobj)};
 	var url ="jsp/feedReport.jsp";

@@ -28,26 +28,25 @@ function start(uid) {
 }
 function show(users) {
 	var a = null;
+	
 	var str ="";
 		str += "<div class='user_list_name'>";
-		str += "<span>아이디</span><span>받은 신고</span><span>받은 좋아요</span><span>좋아요-신고</span>";
+		str += "<span>아이디</span><span>받은 신고 횟수</span><span>받은 좋아요</span><span>좋아요-신고</span>";
 		str += "</div>";
 	
 		for (var i=0; i<users.length; i++) {
 		str += "<div class='user_list_atom'><span>"+ users[i].id + "</span>";
-		str += "<span>" + countf(user[i].id) + "</span>";
+		str += "<span>" + countf(users[i].id) + "</span>";
 		str += "<span>" + users[i].sex + "</span>";
-		str += "<span onclick='withdraw(" + users[i].id + ")'>   삭제하기  </span></div>";
+		str += "<span onclick='withdraw(" + users[i].id + ")'>"  + countf(users[i].id) - users[i].sex + "</span></div>";
 		}
 		$("#list").append(str);
 	}
 
 function countf(uid) {
-	AJAX.call("jsp/feedCount.jsp", {id : uid}, function(data) {
+	AJAX.call("jsp/reportCount.jsp", {id : uid}, function(data) {
 	var count = data.trim();
-	
-	$("#feedCount").html(feedCount);
-	return str = count;
+	return count;
 	
 });
 }

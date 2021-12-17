@@ -13,18 +13,43 @@
 		<a class="back_icon" href="sell.html"><img src="img/back_arrow.svg"></a>
 		<span class="need_title">내놔요 글 작성하기</span>
 	</header>
-	
-<div class="line"></div>
 
 <div class="form">
-	<div class="f_input">
-	<p class="start_date">거래희망 시작 날</p>
-	<input type="date" id="start"  min="2021-01-01" max="2022-12-31">
-	<p class="end_date">거래희망 종료 날</p>
-	<input type="date" id="end"  min="2021-01-01" max="2022-12-31">
-
-<div class="inv_line"></div>
-
+		<table class="add_form">
+			<tr>
+				<td>거래희망 시작 날</td>
+				<td><input type="date" id="start" value="xxxx-xx-xx" min="2021-01-01" max="2022-12-31"></td>
+			</tr>
+			<tr>
+				<td>거래희망 종료 날</td>
+				<td><input type="date" id="end" value="xxxx-xx-xx" min="2021-01-01" max="2022-12-31"></td>
+			</tr>
+			<tr>
+				<td colspan="2">거래 대상의 성별을 선택해주세요</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input type="radio" id="man" name="trader" value="man">
+					<label for="man">남자</label>
+					<input type="radio" id="woman" name="trader" value="woman">
+					<label for="woman">여자</label>
+					<input type="radio" id="no" name="trader" value="no">
+					<label for="no">성별무관</label>
+				</td>
+			</tr>	
+			<tr>
+				<td >1박당 가격</td>
+				<td><input id="price" type="text" placeholder="숫자만 입력해주세요"> <span>원</span></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="text" id="title" placeholder="제목"></td>
+			</tr>
+			<tr>
+				<td colspan="2"><textarea id="content"></textarea></td>
+			</tr>
+		</table>
+	</div>
+<!--  
 	<p>거래 대상의 성별을 선택해주세요</p>
 	<div>
 		<input type="radio" id="man" name="trader" value="man">
@@ -45,7 +70,8 @@
 	</div>
 
 	<div class="line"></div>
-	<input id="images" type="file">
+	-->
+	<div id="images_btn"><label>이미지 넣기<input id="images" type="file" style="display:none;"></label></div>
 	<div class="submit_feedadd" onclick="upload()">글 작성 완료</div>
 </div>
 </body>
@@ -92,6 +118,12 @@
 		if (price == "") {
 			alert("1박당 희망 가격을 적어주세요.");
 			$("#price").focus();
+			return;
+		}
+		var titile = $("#title").val().trim();
+		if (title == "") {
+			alert("제목 입력해 주세요.");
+			$("title").focus();
 			return;
 		}
 
@@ -148,8 +180,8 @@
 		var month = ("0" + (1 + date.getMonth())).slice(-2);
 		var day = ("0" + date.getDate()).slice(-2);
 		var hour = ("0" + date.getHours()).slice(-2);
-		//var min = ("0" + date.getMinutes()).slice(-2);
+		var min = ("0" + date.getMinutes()).slice(-2);
 		//var sec = ("0" + date.getSeconds()).slice(-2);
-		return year + month + day + hour;// + ":" + min; + ":" + sec;
+		return year + month + day + hour + min;// + ":" + sec;
 	}
 </script>
