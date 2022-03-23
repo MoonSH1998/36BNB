@@ -10,19 +10,19 @@ import org.json.simple.parser.ParseException;
 import util.ConnectionPool;
 
 public class UserDAO {
-	private Connection conn;//µ¥ÀÌÅÍº£ÀÌ½º¿¡ Á¢±ÙÇÏ°Ô ÇØÁÖ´Â ÇÏ³ªÀÇ °´Ã¼
+	private Connection conn;//ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼
 	private PreparedStatement pstmt;//
-	private ResultSet rs;//Á¤º¸¸¦ ´ãÀ» ¼ö ÀÖ´Â °´Ã¼
+	private ResultSet rs;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½Ã¼
 
 	
 	/*
-	public UserDAO() {//mysql¿¡ Á¢¼ÓÀ» ÇÏ°Ô ÇØÁÜ,ÀÚµ¿À¸·Î µ¥ÀÌÅÍº£ÀÌ½º Ä¿³Ø¼ÇÀÌ ÀÏ¾î³²
-		try {//¿¹¿ÜÃ³¸®
+	public UserDAO() {//mysqlï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½,ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ Ä¿ï¿½Ø¼ï¿½ï¿½ï¿½ ï¿½Ï¾î³²
+		try {//ï¿½ï¿½ï¿½ï¿½Ã³ï¿½ï¿½
 			String dbURL = "jdbc:mysql://localhost:3306/mysns?serverTimezone=UTC";
 			String dbID="root";
 			String dbPasseord="Ahehfdl7!";
-			Class.forName("com.mysql.jdbc.Driver");//mysqlµå¶óÀÌ¹ö¸¦ Ã£´Â´Ù.
-			//µå¶óÀÌ¹ö´Â mysql¿¡ Á¢¼ÓÇÒ ¼ö ÀÖµµ·Ï ¸Å°³Ã¼ ¿ªÇÒÀ» ÇÏ´Â ÇÏ³ªÀÇ ¶óÀÌºê·¯¸®
+			Class.forName("com.mysql.jdbc.Driver");//mysqlï¿½ï¿½ï¿½ï¿½Ì¹ï¿½ï¿½ï¿½ Ã£ï¿½Â´ï¿½.
+			//ï¿½ï¿½ï¿½ï¿½Ì¹ï¿½ï¿½ï¿½ mysqlï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½Å°ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½
 			conn=DriverManager.getConnection(dbURL,dbID,dbPasseord);
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -97,7 +97,7 @@ public class UserDAO {
 	
 String json = response.toJSONString()
 
-ÃâÃ³: https://kingpodo.tistory.com/11 [Å·Æ÷µµÀÇ ÄÚµù]
+ï¿½ï¿½Ã³: https://kingpodo.tistory.com/11 [Å·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½]
 		
 
 	public boolean insertprofile(String jsonstr1) throws NamingException, SQLException, ParseException{
@@ -324,7 +324,6 @@ String json = response.toJSONString()
 			}
 		}
 		
-		//³»°¡ ¾´ ±Û °³¼ö ¹ÝÈ¯ ÇÔ¼ö ¸¶ÀÌ ÆäÀÌÁö¿¡¼­ ¾µ ¿¹Á¤ jsp:countMyFeed, ÆÄ¶ó¹ÌÅÍ : String id
 		public int countMyFeed(String userId) throws NamingException, SQLException {
 			Connection conn = ConnectionPool.get();
 			PreparedStatement stmt = null;
@@ -378,12 +377,18 @@ String json = response.toJSONString()
 			if (conn != null) conn.close();
 			}
 		}
-		//jsonstr¹Þ¾Æ¿Í¼­ uni°ª µ¹·ÁÁÖ´Â ¸Þ¼Òµå
 		public String getUni_json(String jsonstr) throws NamingException, SQLException, ParseException
 		{
 			JSONObject obj = (JSONObject) (new JSONParser()).parse(jsonstr);
 			String uni = obj.get("uni").toString();
 			return uni;
+		}
+		
+		public String getNam_json(String jsonstr) throws NamingException, SQLException, ParseException
+		{
+			JSONObject obj = (JSONObject) (new JSONParser()).parse(jsonstr);
+			String nam = obj.get("name").toString();
+			return nam;
 		}
 		
 		public String get_id(String jsonstr) throws NamingException, SQLException, ParseException
@@ -394,7 +399,6 @@ String json = response.toJSONString()
 		}
 		
 		
-		//È¸¿ø°¡ÀÔ ½Ã ÀÔ·ÂµÈ uniÁ¤º¸°¡ È¸¿ø°¡ÀÔ °¡´ÉÇÑ uni list¾È¿¡ ÀÖ´ÂÁö È®ÀÎÇÏ´Â ¸Þ¼Òµå
 		public int checkUni(String uni) throws NamingException, SQLException {
 			Connection conn = ConnectionPool.get();
 			PreparedStatement stmt = null;

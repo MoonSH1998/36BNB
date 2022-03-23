@@ -20,15 +20,6 @@
 		</div>
 		<div class="emp"></div>
 		<div id="list"></div>
-	
-		
-		
-		<!--   이건 나중에 써먹기.
-		<div class="menu" onclick="addFeed()">글쓰기</div>
-		<div class="menu" onclick="">친구보기</div>
-		<div class="menu" onclick="">내정보</div> -->
-		
-
 		
 		
 		<div class="empty_box"></div>
@@ -116,9 +107,7 @@
 					newCount = data.trim();
 					$("#new_count").html(newCount);	
 					console.log(newCount);
-					
 				 	});
-					
 			}
 			
 function getNam(uid) {
@@ -126,10 +115,7 @@ function getNam(uid) {
 				AJAX.call("jsp/getNam.jsp", {id : uid}, function(data) {
 					newCount = data.trim();
 					$("#nam").html(newCount);	
-					
-					
 				 	});
-					
 			}
 			
 			
@@ -199,7 +185,10 @@ function getNam(uid) {
 				
 				//var today = getTime();
 			
-			if (feed.images == null){
+			/* if (feed.images == null){ */
+				if (feed.images != null){
+				var imgurl = "img/" + feed.images;
+				}
 				var name = (feed.user == null) ? feed.id : feed.user.name;
 				if(feed.user.images==null)
 				{
@@ -215,27 +204,42 @@ function getNam(uid) {
 					var t ="여자만" ;
 				else var t = "성별무관";
 				var stuNum = Math.floor(((feed.user.stu_num)/1000000)%100);			//추가된 xx학번에 대한 변수 추가. by_성하_0805
-				var str = "<div class='feed'>";
+				 var str = "<div class='feed'>";
+				 if (feed.images != null){
+				 str += "<div class='main_feed1'  style='background-size : contain; background-repeat: no-repeat; background-position: center center; background-size: 70%; background-image: url(\"" + imgurl + "\")'>";
+				 }
+				 else{
 				str += "<div class='main_feed1'  onclick='showFeed(" + feed.no + ")'>";
+				 };
 		
-				str += "<div class = 'heart' onclick ='heart(" + feed.no + ")'> ♥ </div>";
+				
 				str += "</div>";
 				
 				str += "<div class='main_feed2'>";
 			
-				str += "<div class='feed_a'>" + feed.start + "  ~  " + feed.end  + "</div>";
+				str += "<div class='feed_a'>" + (feed.start).substring(5,7) + "월" +  (feed.start).substring(8,10) + "일" +
+						"  ~  " + (feed.end).substring(5,7) + "월" +  (feed.end).substring(8,10) + "일" + "</div>";
 				str += "<div class='feed_b'>" + feed.title + "</div>";
 				str += "<div class='feed_c'>" + feed.content + "</div>";
-				str += "<div class='ex'>"
-				str +=" <div class='ex1'>" + t + "</div> <div class='ex2'>" + feed.price + "</div><div class='date_t'>" + timee + "</div>";
+				str += "<div class='ex'>";
+				str += "<div class='ex12'>";
+				str +=" <div class='ex1'>" + t + "</div> <div class='ex2'>" + feed.price + "</div>";
+				str +="</div>";
+				str +="<div class='date_t'>" + timee + "</div>";
 				str += "</div>"
-				str += "<div class='stuNum1'><img class='userPhoto';  style='background-size : contain'; src=\"" + userimgurl + "\"'> <span> " + stuNum + "학번 " + feed.user.name + "</span></div>";
+				str += "<div class='stuNum1'><img class='userPhoto';  style='background-size : contain'; src=\"" + userimgurl + "\"'> <span> " + stuNum + "학번 " + feed.user.name + "</span>";
+				str += "<div class = 'heart' onclick ='heart(" + feed.no + ")'> ♥ </div></div>";
 				str += "</div>";
-				str += "</div>";
+				str += "</div>"; 
+				/* var str = "<div >";
+					str += feed.title;
+					str += ",";
+					str += feed.content;
+					str += "</div>"; */
 				return str;
 					}
 					
-					else {
+					/* else {
 						if(feed.user.images==null)
 						{
 							var userimgurl = "img/uimg.png";
@@ -263,8 +267,8 @@ function getNam(uid) {
 					 	str += "</div>";
 					 	str += "</div>";
 						return str;
-						}
-			}		
+						} 
+			}*/
 				
 				function feedHeart(no,fid)
 				{
@@ -289,8 +293,7 @@ function getNam(uid) {
 				 					}
 							 	});
 				}		
-				
-		
+
 		function showFeed(fno) {
 				//for (var i=0; i<feedList.length; i++) {
 				var i=0;
